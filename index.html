@@ -65,14 +65,92 @@
 </head>
 <body>
 
-<div class="gallery">
-  <img src="image/1.png" alt="">
-  <img src="image/2.png" alt="">
-  <img src="image/3.png" alt="">
-  <img src="image/4.png" alt="">
-  <img src="image/5.png" alt="">
-  <img src="image/6.png" alt="">
+<style>
+  /* 各画像枠のコンテナ */
+  .image-slot {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 正方形を維持 */
+    background-color: #000; /* フェードアウト時の背景色 */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .image-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out; /* 黒へのフェード速度 */
+  }
+
+  .image-slot img.active {
+    opacity: 1;
+  }
+</style>
+
+<div class="grid-container">
+  <div class="image-slot" id="slot-0"></div>
+  <div class="image-slot" id="slot-1"></div>
+  <div class="image-slot" id="slot-2"></div>
+  <div class="image-slot" id="slot-3"></div>
+  <div class="image-slot" id="slot-4"></div>
+  <div class="image-slot" id="slot-5"></div>
 </div>
+
+<script>
+  // たくさんの画像のURLリスト（ここに書き出し終わったファイル名を並べます）
+  const imagePool = [
+    "image/top/001.webp",
+    "image/top/002.webp",
+    "image/top/003.webp",
+    "image/top/004.webp",
+    "image/top/005.webp",
+    "image/top/006.webp",
+    "image/top/007.webp",
+    // ... たくさん追加可能
+  ];
+
+  function updateSlot(slotId) {
+    const slot = document.getElementById(slotId);
+    
+    // 次のランダムな画像を選択
+    const randomImgSrc = imagePool[Math.floor(Math.random() * imagePool.length)];
+    
+    // 新しい画像要素を作成
+    const newImg = document.createElement('img');
+    newImg.src = randomImgSrc;
+    
+    // 前の画像をフェードアウト
+    const oldImg = slot.querySelector('img');
+    if (oldImg) {
+        oldImg.classList.remove('active');
+        // 黒に沈み切るのを待ってから削除
+        setTimeout(() => oldImg.remove(), 1200);
+    }
+
+    slot.appendChild(newImg);
+    
+    // 少し遅らせてフェードイン
+    setTimeout(() => {
+        newImg.classList.add('active');
+    }, 50);
+
+    // 次の切り替え時間をランダムに設定（4秒〜8秒の間など）
+    const nextTime = Math.random() * (8000 - 4000) + 4000;
+    setTimeout(() => updateSlot(slotId), nextTime);
+  }
+
+  // 最初に6つのスロットすべてを開始
+  window.onload = () => {
+    for (let i = 0; i < 6; i++) {
+        // 開始タイミングも少しバラけさせる
+        setTimeout(() => updateSlot(`slot-${i}`), i * 500);
+    }
+  };
+</script>
 
 <div class="overlay">
   <h1 class="coming-soon">Coming Soon...</h1>
