@@ -1,0 +1,51 @@
+<style>
+    body {
+        margin: 0;
+        background-color: #000;
+        overflow: hidden;
+    }
+
+    .bg-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        z-index: -2; /* 画像は最背面へ */
+    }
+
+    .panel {
+        background-size: cover;
+        background-position: center;
+        opacity: 1;
+        transition: opacity 2s ease-in-out; 
+    }
+
+    .panel.fade-out {
+        opacity: 0; 
+    }
+
+    /* 【ここが新しい魔法！】25%の黒いフィルターを追加 */
+    .black-filter {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.25); /* 0.25 = 25%の黒 */
+        z-index: -1; /* 画像（-2）よりは前、コンテンツ（1）よりは後ろ */
+        pointer-events: none; /* マウスの操作を邪魔しないようにする */
+    }
+
+    .content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-align: center;
+        padding-top: 20vh;
+        font-family: sans-serif;
+    }
+</style>
