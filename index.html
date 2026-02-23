@@ -3,159 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YUTO-BOXER | Coming Soon...</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+<title>yuto-boxer.com</title>
 <style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    background-color: #000;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    display: flex; justify-content: center; align-items: center;
-    color: #fff; overflow: hidden;
-  }
+    body {
+        margin: 0;
+        background-color: #000; /* ベースを黒に設定（フェードアウト時にこの黒が見える） */
+        overflow: hidden;
+    }
 
-  /* 6枚の画像を並べるグリッド */
-  .gallery {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 5px; /* 画像の隙間 */
-    filter: brightness(0.6); /* 画像を少し暗くして文字を目立たせる */
-  }
+    /* 画面全体を覆う6分割のグリッド（横3 × 縦2） */
+    .bg-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 横に3つ */
+        grid-template-rows: repeat(2, 1fr);    /* 縦に2つ */
+        z-index: -1; /* 最背面に置く */
+    }
 
-  .gallery img {
-    width: 100%; height: 100%;
-    object-fit: cover; /* 枠に合わせて自動トリミング */
-  }
+    /* 各パネルの設定 */
+    .panel {
+        background-size: cover;
+        background-position: center;
+        opacity: 1;
+        /* 2秒かけてフワッと透明度が変わるアニメーション */
+        transition: opacity 2s ease-in-out; 
+    }
 
-  /* 中央の文字エリア */
-  .overlay {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    pointer-events: none; /* 下の画像に触れるように */
-  }
+    /* このクラスが付くと、透明になって下の黒背景が透ける = 黒フェードアウト */
+    .panel.fade-out {
+        opacity: 0; 
+    }
 
-  .coming-soon {
-    font-family: 'Playfair Display', serif; /* クールで高級感のあるフォント */
-    font-size: clamp(3rem, 10vw, 6rem);
-    font-weight: 900;
-    margin: 0;
-    line-height: 1;
-    /* 金色のグラデーション */
-    background: linear-gradient(to bottom, #cfb53b 22%, #f7ef8a 45%, #cfb53b 50%, #f7ef8a 55%, #aa8029 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(0,0,0,0.8));
-    letter-spacing: -2px;
-  }
-
-  .domain {
-    font-size: 1rem;
-    margin-top: 15px;
-    letter-spacing: 5px;
-    opacity: 0.8;
-    font-weight: 300;
-    color: #eee;
-    text-transform: uppercase;
-  }
+    /* 前面に乗せるコンテンツ（タイトルなど）のスタイルはお好みで */
+    .content {
+        position: relative;
+        z-index: 1;
+        color: white;
+        text-align: center;
+        padding-top: 20vh;
+        font-family: sans-serif;
+    }
 </style>
 </head>
 <body>
 
-<style>
-  /* 各画像枠のコンテナ */
-  .image-slot {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* 正方形を維持 */
-    background-color: #000; /* フェードアウト時の背景色 */
-    overflow: hidden;
-    position: relative;
-  }
+    <div class="bg-grid">
+        <div class="panel" style="background-image: url('https://media.yuto-boxer.com/top/001.webp');"></div>
+        <div class="panel" style="background-image: url('https://media.yuto-boxer.com/top/002.webp');"></div>
+        <div class="panel" style="background-image: url('https://media.yuto-boxer.com/top/003.webp');"></div>
+        <div class="panel" style="background-image: url('https://media.yuto-boxer.com/top/004.webp');"></div>
+        <div class="panel" style="background-image: url('https://media.yuto-boxer.com/top/005.webp');"></div>
+        <div class="panel" style="background-image: url('https://media.yuto-boxer.com/top/006.webp');"></div>
+    </div>
 
-  .image-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out; /* 黒へのフェード速度 */
-  }
-
-  .image-slot img.active {
-    opacity: 1;
-  }
-</style>
-
-<div class="grid-container">
-  <div class="image-slot" id="slot-0"></div>
-  <div class="image-slot" id="slot-1"></div>
-  <div class="image-slot" id="slot-2"></div>
-  <div class="image-slot" id="slot-3"></div>
-  <div class="image-slot" id="slot-4"></div>
-  <div class="image-slot" id="slot-5"></div>
-</div>
+    <div class="content">
+        <h1>yuto-boxer.com</h1>
+        <p>Enter the Ring...</p>
+    </div>
 
 <script>
-  // たくさんの画像のURLリスト（ここに書き出し終わったファイル名を並べます）
-  const imagePool = [
-    "image/top/001.webp",
-    "image/top/002.webp",
-    "image/top/003.webp",
-    "image/top/004.webp",
-    "image/top/005.webp",
-    "image/top/006.webp",
-    "image/top/007.webp",
-    // ... たくさん追加可能
-  ];
+    // すべてのパネルを取得
+    const panels = document.querySelectorAll('.panel');
 
-  function updateSlot(slotId) {
-    const slot = document.getElementById(slotId);
-    
-    // 次のランダムな画像を選択
-    const randomImgSrc = imagePool[Math.floor(Math.random() * imagePool.length)];
-    
-    // 新しい画像要素を作成
-    const newImg = document.createElement('img');
-    newImg.src = randomImgSrc;
-    
-    // 前の画像をフェードアウト
-    const oldImg = slot.querySelector('img');
-    if (oldImg) {
-        oldImg.classList.remove('active');
-        // 黒に沈み切るのを待ってから削除
-        setTimeout(() => oldImg.remove(), 1200);
-    }
+    // 2.5秒ごとにランダムなパネルを選んでフェードアウト＆インさせる
+    setInterval(() => {
+        // 0〜5のランダムな数字を生成
+        const randomIndex = Math.floor(Math.random() * panels.length);
+        const targetPanel = panels[randomIndex];
 
-    slot.appendChild(newImg);
-    
-    // 少し遅らせてフェードイン
-    setTimeout(() => {
-        newImg.classList.add('active');
-    }, 50);
+        // 既にフェードアウト中のパネルが選ばれたら何もしない（チラつき防止）
+        if (targetPanel.classList.contains('fade-out')) return;
 
-    // 次の切り替え時間をランダムに設定（4秒〜8秒の間など）
-    const nextTime = Math.random() * (8000 - 4000) + 4000;
-    setTimeout(() => updateSlot(slotId), nextTime);
-  }
+        // フェードアウト開始（黒くなる）
+        targetPanel.classList.add('fade-out');
 
-  // 最初に6つのスロットすべてを開始
-  window.onload = () => {
-    for (let i = 0; i < 6; i++) {
-        // 開始タイミングも少しバラけさせる
-        setTimeout(() => updateSlot(`slot-${i}`), i * 500);
-    }
-  };
+        // 3秒後にフェードイン（元に戻る）
+        setTimeout(() => {
+            targetPanel.classList.remove('fade-out');
+        }, 3000);
+
+    }, 2500); // 2.5秒間隔で発動（ここの数字を変えると忙しさが変わります）
 </script>
-
-<div class="overlay">
-  <h1 class="coming-soon">Coming Soon...</h1>
-  <div class="domain">yuto-boxer.com</div>
-</div>
 
 </body>
 </html>
