@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>yuto-boxer.com</title>
 <style>
+    /* ＝＝＝ 全体のベース設定 ＝＝＝ */
     body {
         margin: 0;
         background-color: #000;
@@ -12,6 +13,7 @@
         font-family: 'Helvetica Neue', Arial, sans-serif;
     }
 
+    /* ＝＝＝ 背景スライドショーの設定 ＝＝＝ */
     .bg-grid {
         position: fixed;
         top: 0;
@@ -35,18 +37,19 @@
         opacity: 0; 
     }
 
-    /* ★ 30%の黒色フィルター */
+    /* 30%の黒色フィルター */
     .black-filter {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.3); /* 0.3 = 30% */
+        background-color: rgba(0, 0, 0, 0.3);
         z-index: -1; 
         pointer-events: none; 
     }
 
+    /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
     .content {
         position: relative;
         z-index: 1; 
@@ -56,7 +59,6 @@
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
     }
 
-    /* ★ yuto-boxer.com の文字サイズを調整 */
     .content h1 {
         font-size: 1.5rem;
         margin-bottom: 20px;
@@ -64,7 +66,7 @@
         font-weight: normal;
     }
 
-    /* ★ ゆるやかに点滅する Enter the Ring... */
+    /* ゆるやかに点滅する Enter the Ring... */
     .content .enter-link {
         font-size: 1.2rem;
         letter-spacing: 2px;
@@ -78,6 +80,89 @@
         0%, 100% { opacity: 1; }
         50% { opacity: 0.3; }
     }
+
+    /* ＝＝＝ サブメニュー（モーダルを呼び出すリンク） ＝＝＝ */
+    .sub-menu {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        font-size: 0.9rem;
+    }
+    
+    .sub-menu a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        letter-spacing: 1px;
+        transition: color 0.3s;
+        cursor: pointer;
+    }
+
+    .sub-menu a:hover {
+        color: #fff;
+    }
+
+    /* ＝＝＝ コピーライト（画面下部） ＝＝＝ */
+    .copyright {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        z-index: 1;
+    }
+
+    /* ＝＝＝ モーダル（ポップアップ画面）の設定 ＝＝＝ */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        z-index: 100;
+        backdrop-filter: blur(5px);
+    }
+
+    .modal.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        width: 80%;
+        max-width: 600px;
+        padding: 40px;
+        border-radius: 8px;
+        text-align: left;
+        line-height: 1.6;
+        position: relative;
+    }
+
+    /* 各モーダルの色設定（半透明） */
+    #modal-from { background-color: rgba(20, 120, 50, 0.85); color: #fff; } /* 緑 */
+    #modal-msg { background-color: rgba(255, 255, 255, 0.9); color: #333; } /* 白 */
+    #modal-ai { background-color: rgba(180, 0, 0, 0.85); color: #fff; }   /* 赤 */
+    #modal-copy { background-color: rgba(0, 30, 150, 0.85); color: #fff; }  /* 青 */
+
+    /* 閉じるボタン */
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    }
+    .close-btn:hover { opacity: 1; }
 </style>
 </head>
 <body>
@@ -94,13 +179,58 @@
     <div class="black-filter"></div>
 
     <div class="content">
-        <img src="https://media.yuto-boxer.com/logo.png" alt="Coming soon..." style="max-width: 300px; margin-bottom: 15px;">
+        <img src="https://media.yuto-boxer.com/logo.png" alt="yuto-boxer logo" style="max-width: 300px; margin-bottom: 15px;">
         
         <h1>yuto-boxer.com</h1>
-        <a href="clubroom.html" class="enter-link">Enter the Ring...</a>
+        
+        <a href="clubroom/" class="enter-link">Enter the Ring...</a>
+
+        <div class="sub-menu">
+            <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
+            <a onclick="openModal('modal-msg', 'texts/message-to.txt')">Message</a>
+            <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
+            <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
+        </div>
+    </div>
+
+    <div class="copyright">
+        &copy; 2026 yuto-boxer.com All Rights Reserved.
+    </div>
+
+    <div id="modal-from" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-from')">×</span>
+            <h2>From Yuto</h2>
+            <div class="text-content">読み込み中...</div>
+        </div>
+    </div>
+
+    <div id="modal-msg" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-msg')">×</span>
+            <h2>Message</h2>
+            <div class="text-content">読み込み中...</div>
+        </div>
+    </div>
+
+    <div id="modal-ai" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-ai')">×</span>
+            <h2>AI Policy</h2>
+            <div class="text-content">読み込み中...</div>
+        </div>
+    </div>
+
+    <div id="modal-copy" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal-copy')">×</span>
+            <h2>Copyright</h2>
+            <div class="text-content">読み込み中...</div>
+        </div>
     </div>
 
 <script>
+    /* ＝＝＝ 背景スライドショーの処理 ＝＝＝ */
     const totalImages = 93;
     const imageUrls = [];
     for (let i = 1; i <= totalImages; i++) {
@@ -128,6 +258,43 @@
             targetPanel.classList.remove('fade-out');
         }, 2000); 
     }, 3000); 
+
+    /* ＝＝＝ モーダルとテキスト読み込みの処理 ＝＝＝ */
+    function openModal(modalId, textFilePath) {
+        const modal = document.getElementById(modalId);
+        const contentArea = modal.querySelector('.text-content');
+
+        // モーダルを表示
+        modal.classList.add('active');
+
+        // テキストファイルを読み込む
+        fetch(textFilePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('ファイルの読み込みに失敗しました');
+                }
+                return response.text();
+            })
+            .then(text => {
+                // 改行を <br> に変換して表示
+                contentArea.innerHTML = text.replace(/\n/g, '<br>');
+            })
+            .catch(error => {
+                contentArea.innerHTML = 'テキストの読み込みに失敗しました。<br>（※ローカル環境では表示されない場合があります。GitHubに上げて確認してください）';
+                console.error(error);
+            });
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    // 黒い背景部分をクリックしても閉じるようにする
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.remove('active');
+        }
+    }
 </script>
 </body>
 </html>
