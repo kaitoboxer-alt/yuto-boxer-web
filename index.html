@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>yuto-boxer.com</title>
+<title>Boys Boxing & Professional wrestling prod. YUTO</title>
 <style>
     /* ＝＝＝ 全体のベース設定 ＝＝＝ */
     body {
@@ -37,14 +37,14 @@
         opacity: 0; 
     }
 
-    /* ★ 背景の黒フィルター（25%） */
+    /* 背景の黒フィルター（25%） */
     .black-filter {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.25); /* 0.25で25%の黒 */
+        background-color: rgba(0, 0, 0, 0.25);
         z-index: -1; 
         pointer-events: none; 
     }
@@ -66,7 +66,6 @@
         font-weight: normal;
     }
 
-    /* ゆるやかに点滅する Enter the Ring... */
     .content .enter-link {
         font-size: 1.2rem;
         letter-spacing: 2px;
@@ -74,6 +73,7 @@
         text-decoration: none; 
         display: inline-block;
         animation: slowBlink 3s infinite ease-in-out;
+        cursor: pointer;
     }
 
     @keyframes slowBlink {
@@ -81,18 +81,18 @@
         50% { opacity: 0.3; }
     }
 
-    /* ★ ＝＝＝ サブメニュー（右下のボタン群） ＝＝＝ */
+    /* ＝＝＝ サブメニュー（右下のボタン群） ＝＝＝ */
     .sub-menu {
         position: fixed;
-        bottom: 30px; /* 下からの距離 */
-        right: 30px;  /* 右からの距離 */
+        bottom: 30px;
+        right: 30px;
         display: flex;
-        gap: 15px;    /* ボタン同士の隙間 */
+        gap: 15px;
         z-index: 10;
     }
     
     .sub-menu a {
-        background: rgba(20, 20, 20, 0.6); /* すりガラス風の黒 */
+        background: rgba(20, 20, 20, 0.6);
         backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 255, 255, 0.2);
         padding: 10px 15px;
@@ -110,13 +110,13 @@
         background: rgba(50, 50, 50, 0.8);
         color: #fff;
         border-color: rgba(255, 255, 255, 0.6);
-        transform: translateY(-3px); /* マウスを乗せると少し浮く */
+        transform: translateY(-3px);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
     }
 
-    /* ＝＝＝ コピーライト（画面下部中央） ＝＝＝ */
+    /* ＝＝＝ コピーライト ＝＝＝ */
     .copyright {
-        position: fixed; /* absoluteからfixedに変更して安定配置 */
+        position: fixed;
         bottom: 15px;
         left: 0;
         width: 100%;
@@ -128,7 +128,7 @@
         pointer-events: none;
     }
 
-    /* ＝＝＝ モーダル（ポップアップ画面）の設定 ＝＝＝ */
+    /* ＝＝＝ モーダル設定 ＝＝＝ */
     .modal {
         position: fixed;
         top: 0;
@@ -150,18 +150,16 @@
         pointer-events: auto;
     }
 
-    /* モーダルの枠（透明度0のタイトルバー対応版） */
     .modal-content {
         width: 80%;
         max-width: 600px;
         border-radius: 8px;
-        overflow: hidden; /* タイトルバーの角丸を枠に合わせる */
+        overflow: hidden;
         text-align: left;
         position: relative;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
 
-    /* 透明度0のタイトルバー */
     .modal-header {
         background-color: #111111; 
         color: #ffffff;
@@ -179,14 +177,12 @@
         font-weight: bold;
     }
 
-    /* 本文エリア */
     .text-content {
         padding: 30px 40px;
         line-height: 1.8;
         font-size: 0.95rem;
     }
 
-    /* 閉じるボタン */
     .close-btn {
         font-size: 1.8rem;
         cursor: pointer;
@@ -196,11 +192,19 @@
     }
     .close-btn:hover { opacity: 1; }
 
-    /* 各モーダルの本文エリアの色設定（半透明） */
-    #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; } /* 緑 */
-    #modal-msg .text-content { background-color: rgba(255, 255, 255, 0.9); color: #333; } /* 白 */
-    #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }   /* 赤 */
-    #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }  /* 青 */
+    /* 各モーダルの色設定 */
+    #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; }
+    #modal-msg .text-content { background-color: rgba(255, 255, 255, 0.9); color: #333; }
+    #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }
+    #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }
+
+    /* 年齢確認用スタイル */
+    #modal-age-check .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; text-align: center; }
+    .age-btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
+    .age-btn { padding: 10px 30px; border: 2px solid #333; background: transparent; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+    .age-btn.yes { background: #000; color: #fff; }
+    .age-btn.yes:hover { background: #333; }
+    .age-btn.no:hover { background: #eee; }
 
 </style>
 </head>
@@ -218,11 +222,9 @@
     <div class="black-filter"></div>
 
     <div class="content">
-        <img src="https://media.yuto-boxer.com/logo.png" alt="yuto-boxer logo" style="max-width: 300px; margin-bottom: 15px;">
-        
-        <h1>yuto-boxer.com</h1>
-        
-        <a href="clubroom/" class="enter-link">Enter the Ring...</a>
+        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
+        <h1>Boys Boxing & Professional wrestling</h1>
+        <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
     </div>
 
     <div class="sub-menu">
@@ -236,48 +238,30 @@
         &copy; 2026 yuto-boxer.com All Rights Reserved.
     </div>
 
-    <div id="modal-from" class="modal">
+    <div id="modal-age-check" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Loading...</h2>
-                <span class="close-btn" onclick="closeModal('modal-from')">×</span>
+                <h2 class="modal-title">Age Verification</h2>
             </div>
-            <div class="text-content">読み込み中...</div>
+            <div class="text-content">
+                大変申し訳ありませんが、当サイトは表現の都合上、18歳以下の方の閲覧はお断りしております。<br>
+                18歳の誕生日を迎えてから、あらためてお越しいただけると嬉しいです。<br><br>
+                あなたは18歳以上ですか？
+                <div class="age-btn-container">
+                    <button class="age-btn yes" onclick="verifyAge(true)">はい（Enter）</button>
+                    <button class="age-btn no" onclick="verifyAge(false)">いいえ（Exit）</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div id="modal-msg" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Loading...</h2>
-                <span class="close-btn" onclick="closeModal('modal-msg')">×</span>
-            </div>
-            <div class="text-content">読み込み中...</div>
-        </div>
-    </div>
-
-    <div id="modal-ai" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Loading...</h2>
-                <span class="close-btn" onclick="closeModal('modal-ai')">×</span>
-            </div>
-            <div class="text-content">読み込み中...</div>
-        </div>
-    </div>
-
-    <div id="modal-copy" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Loading...</h2>
-                <span class="close-btn" onclick="closeModal('modal-copy')">×</span>
-            </div>
-            <div class="text-content">読み込み中...</div>
-        </div>
-    </div>
+    <div id="modal-from" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-from')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-msg" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-msg')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-ai" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-ai')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-copy" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-copy')">×</span></div><div class="text-content"></div></div></div>
 
 <script>
-    /* ＝＝＝ 背景スライドショーの処理 ＝＝＝ */
+    /* ＝＝＝ 背景スライドショー ＝＝＝ */
     const totalImages = 93;
     const imageUrls = [];
     for (let i = 1; i <= totalImages; i++) {
@@ -286,7 +270,6 @@
     }
 
     const panels = document.querySelectorAll('.panel');
-
     panels.forEach(panel => {
         const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
         panel.style.backgroundImage = `url('${randomImg}')`;
@@ -295,10 +278,8 @@
     setInterval(() => {
         const randomPanelIndex = Math.floor(Math.random() * panels.length);
         const targetPanel = panels[randomPanelIndex];
-
         if (targetPanel.classList.contains('fade-out')) return;
         targetPanel.classList.add('fade-out');
-
         setTimeout(() => {
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
@@ -306,33 +287,42 @@
         }, 2000); 
     }, 3000); 
 
-    /* ＝＝＝ モーダルとテキスト読み込みの処理 ＝＝＝ */
+    /* ＝＝＝ 年齢確認 ＝＝＝ */
+    function checkAge() {
+        document.getElementById('modal-age-check').classList.add('active');
+    }
+
+    function verifyAge(isAdult) {
+        if (isAdult) {
+            window.location.href = "clubroom/";
+        } else {
+            alert("また18歳になった時にお会いしましょう！");
+            window.location.href = "https://www.google.com";
+        }
+    }
+
+    /* ＝＝＝ テキスト読み込み ＝＝＝ */
     function openModal(modalId, textFilePath) {
         const modal = document.getElementById(modalId);
         const titleArea = modal.querySelector('.modal-title');
         const contentArea = modal.querySelector('.text-content');
-
         modal.classList.add('active');
 
         fetch(textFilePath)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('ファイルの読み込みに失敗しました');
-                }
+                if (!response.ok) throw new Error('Failed to load');
                 return response.text();
             })
             .then(text => {
-                // 1行目をタイトル、2行目以降を本文に分ける魔法
                 const lines = text.split('\n');
                 const firstLine = lines.shift(); 
                 const bodyText = lines.join('<br>');
-
                 titleArea.innerText = firstLine;
                 contentArea.innerHTML = bodyText;
             })
             .catch(error => {
                 titleArea.innerText = 'Error';
-                contentArea.innerHTML = 'テキストの読み込みに失敗しました。<br>（※ローカル環境では表示されない場合があります。GitHubに上げて確認してください）';
+                contentArea.innerHTML = '読み込みに失敗しました。';
                 console.error(error);
             });
     }
@@ -345,7 +335,7 @@
         if (event.target.classList.contains('modal')) {
             event.target.classList.remove('active');
         }
-    }
+    };
 </script>
 </body>
 </html>
