@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>部室 - yuto-boxer.com</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-color: #000; 
+        background-image: url('https://media.yuto-boxer.com/02_clubroom/clubroom.webp'); 
+        background-size: cover;
+        /* ★ 背景画像を左端にくっつける！ */
+        background-position: left center; 
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        overflow: hidden; 
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .menu-area {
+        position: absolute;
+        right: 8%;
+        top: 25%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 250px;
+        z-index: 10;
+    }
+
+    .glass-btn {
+        background: rgba(20, 20, 20, 0.7); 
+        backdrop-filter: blur(8px); 
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.15); 
+        border-radius: 8px;
+        padding: 18px 20px;
+        color: #fff;
+        text-decoration: none;
+        text-align: center;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .glass-btn:hover {
+        background: rgba(50, 50, 50, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transform: translateX(-10px); 
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .dialogue-box {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        max-width: 800px;
+        background: linear-gradient(to bottom, rgba(10, 10, 15, 0.85), rgba(0, 0, 0, 0.95));
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 10px;
+        padding: 25px 30px;
+        color: #eee;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        line-height: 1.8;
+        font-size: 1.05rem;
+        z-index: 10;
+    }
+
+    .name-g { color: #ff6b6b; font-weight: bold; margin-right: 10px; } 
+    .name-b { color: #4da8da; font-weight: bold; margin-right: 10px; } 
+    
+    .dialogue-line { margin-bottom: 10px; }
+    .dialogue-line:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+    <div class="menu-area">
+        <a href="#" class="glass-btn">GALLERY</a>
+        <a href="#" class="glass-btn">NOVEL</a>
+        <a href="#" class="glass-btn">PROFILE</a>
+        <a href="#" class="glass-btn">YUTO'S ROOM</a>
+    </div>
+
+    <div class="dialogue-box" id="dialogue-box">
+    </div>
+
+<script>
+    const conversations = [
+        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「なぁ、今日の部活の後、ラーメン行かね？」</div>
+         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「…君は少しは減量という言葉を覚えたらどうだい？ まぁ、付き合うけど。」</div>`,
+        
+        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「見ろよあのリングの光。…ゾクゾクしねぇか？」</div>
+         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「ああ。静かだが、確かに熱を帯びているね。」</div>`,
+        
+        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「おっ、新しい客か？ 右のメニューから好きなとこ選んでくれよな。」</div>
+         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「迷ったら、まずは『Novel』で物語に触れてみるのもおすすめです。」</div>`
+    ];
+
+    window.onload = function() {
+        const randomIndex = Math.floor(Math.random() * conversations.length);
+        document.getElementById("dialogue-box").innerHTML = conversations[randomIndex];
+    };
+</script>
+
+</body>
+</html>

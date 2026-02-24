@@ -7,12 +7,11 @@
 <style>
     body {
         margin: 0;
-        background-color: #000; /* ベースを黒に（フェードアウト時に見える色） */
+        background-color: #000;
         overflow: hidden;
         font-family: 'Helvetica Neue', Arial, sans-serif;
     }
 
-    /* 画面全体を覆う6分割のグリッド（横3 × 縦2） */
     .bg-grid {
         position: fixed;
         top: 0;
@@ -22,71 +21,7 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        z-index: -2; /* 一番後ろ */
-    }
-
-    /* 各パネルの設定 */
-    .panel {
-        background-size: cover;
-        background-position: center;
-        opacity: 1;
-        transition: opacity 2s ease-in-out; /* 2秒かけてフワッとフェード */
-    }
-
-    /* フェードアウト用のクラス */
-    .panel.fade-out {
-        opacity: 0; 
-    }
-
-    /* ★ご要望の「25%の黒色フィルター」★ */
-    .black-filter {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.25); /* 0.25 = 25%の黒 */
-        z-index: -1; /* 画像の手前、文字の奥 */
-        pointer-events: none; /* クリックの邪魔をしない */
-    }
-
-    /* 前面に乗せるコンテンツ（タイトルなど） */
-    .content {
-        position: relative;
-        z-index: 1; /* 一番手前 */
-        color: white;
-        text-align: center;
-        padding-top: 35vh;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* 文字を見やすくする影 */
-    }
-
-    .content h1 {
-        font-size: 4rem;
-        margin-bottom: 10px;
-        letter-spacing: 5px;
-    }
-
-    .content p {
-        font-size: 1.5rem;
-        letter-spacing: 2px;
-    }
-    
-    body {
-        margin: 0;
-        background-color: #000;
-        overflow: hidden;
-    }
-
-    .bg-grid {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        z-index: -2; /* 画像は最背面へ */
+        z-index: -2;
     }
 
     .panel {
@@ -100,25 +35,48 @@
         opacity: 0; 
     }
 
-    /* 【ここが新しい魔法！】25%の黒いフィルターを追加 */
+    /* ★ 30%の黒色フィルター */
     .black-filter {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.25); /* 0.25 = 25%の黒 */
-        z-index: -1; /* 画像（-2）よりは前、コンテンツ（1）よりは後ろ */
-        pointer-events: none; /* マウスの操作を邪魔しないようにする */
+        background-color: rgba(0, 0, 0, 0.3); /* 0.3 = 30% */
+        z-index: -1; 
+        pointer-events: none; 
     }
 
     .content {
         position: relative;
-        z-index: 1;
+        z-index: 1; 
         color: white;
         text-align: center;
-        padding-top: 20vh;
-        font-family: sans-serif;
+        padding-top: 35vh;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
+    }
+
+    /* ★ yuto-boxer.com の文字サイズを調整 */
+    .content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+        font-weight: normal;
+    }
+
+    /* ★ ゆるやかに点滅する Enter the Ring... */
+    .content .enter-link {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: white;
+        text-decoration: none; 
+        display: inline-block;
+        animation: slowBlink 3s infinite ease-in-out;
+    }
+
+    @keyframes slowBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
     }
 </style>
 </head>
@@ -136,48 +94,40 @@
     <div class="black-filter"></div>
 
     <div class="content">
+        <img src="https://media.yuto-boxer.com/logo.png" alt="Coming soon..." style="max-width: 300px; margin-bottom: 15px;">
+        
         <h1>yuto-boxer.com</h1>
-        <p>Enter the Ring...</p>
-        </div>
+        <a href="clubroom.html" class="enter-link">Enter the Ring...</a>
+    </div>
 
 <script>
-    // 1. 93枚の画像URLリストを作成
     const totalImages = 93;
     const imageUrls = [];
     for (let i = 1; i <= totalImages; i++) {
-        const num = String(i).padStart(3, '0'); // 1を001にする魔法
+        const num = String(i).padStart(3, '0');
         imageUrls.push(`https://media.yuto-boxer.com/top/${num}.webp`);
     }
 
     const panels = document.querySelectorAll('.panel');
 
-    // 2. ページを開いた瞬間、最初にランダムで6枚を配置する
     panels.forEach(panel => {
         const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
         panel.style.backgroundImage = `url('${randomImg}')`;
     });
 
-    // 3. 定期的にパネルを暗くして、裏で画像をすり替える（3秒に1回発動）
     setInterval(() => {
         const randomPanelIndex = Math.floor(Math.random() * panels.length);
         const targetPanel = panels[randomPanelIndex];
 
-        // すでに暗くなっているパネルが選ばれたらスキップ
         if (targetPanel.classList.contains('fade-out')) return;
-
-        // 【フェードアウト】パネルを暗くする
         targetPanel.classList.add('fade-out');
 
-        // 【画像すり替え＆フェードイン】2秒後（完全に暗くなった瞬間）に実行
         setTimeout(() => {
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
-            
-            // 画像をすり替えたら再び明るくする
             targetPanel.classList.remove('fade-out');
-        }, 2000); // CSSの transition: opacity 2s; と同じ2000ミリ秒に合わせる
-
-    }, 3000); // 3000ミリ秒（3秒）ごとに切り替わりイベントが発生
+        }, 2000); 
+    }, 3000); 
 </script>
 </body>
 </html>
