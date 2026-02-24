@@ -26,7 +26,6 @@
         z-index: 0;
     }
 
-    /* 背景全体に直接黒フィルターを貼る（確実にかかります） */
     .bg-grid::after {
         content: "";
         position: absolute;
@@ -34,7 +33,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.4); /* 40%の濃さ */
+        background-color: rgba(0, 0, 0, 0.4); 
         z-index: 1;
         pointer-events: none;
     }
@@ -60,21 +59,25 @@
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
     }
 
-    .content h1 {
-        font-size: 3rem; 
+    /* ★修正：大きく表示する正式名称 */
+    .content h1.main-title {
+        font-size: clamp(1.2rem, 4vw, 2.5rem); /* スマホで大きすぎないよう自動調整 */
         font-weight: 900; 
-        margin-bottom: 10px;
-        letter-spacing: 5px;
-        line-height: 1;
+        margin-bottom: 5px;
+        letter-spacing: 2px;
+        line-height: 1.2;
+        /* ★ここにAdobe Fontsのfont-familyを追加します！ */
+        /* 例: font-family: "adobe-font-name", sans-serif; */
     }
 
+    /* ★修正：小さく添えるB.B.PW */
     .content p.sub-title {
-        font-size: 0.9rem;
-        letter-spacing: 2px;
+        font-size: 1.5rem;
+        letter-spacing: 5px;
         opacity: 0.8;
         margin-top: 0;
         margin-bottom: 40px;
-        font-weight: 300;
+        font-weight: bold;
     }
 
     .content .enter-link {
@@ -188,7 +191,6 @@
         font-weight: bold;
     }
 
-    /* はみ出し防止（スクロール設定） */
     .text-content {
         padding: 30px 40px;
         line-height: 1.8;
@@ -225,9 +227,9 @@
         display: flex;
         gap: 15px;
         margin-bottom: 20px;
-        border-bottom: 1px solid rgba(0,0,0,0.2);
+        border-bottom: 1px solid rgba(128,128,128,0.4);
         padding-bottom: 10px;
-        flex-wrap: wrap; /* スマホで折り返す用 */
+        flex-wrap: wrap; 
     }
     
     .lang-tab {
@@ -238,9 +240,10 @@
         font-size: 0.9rem;
     }
     
+    /* currentColorで、背景色に合わせた線の色になります */
     .lang-tab.active {
         opacity: 1;
-        border-bottom: 2px solid #333;
+        border-bottom: 2px solid currentColor; 
     }
 
     .lang-content {
@@ -251,7 +254,6 @@
         display: block; 
     }
 
-    /* フォームのデザイン */
     .msg-form {
         margin-top: 20px;
         display: flex;
@@ -304,17 +306,17 @@
     <div class="content">
         <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" alt="B.B.PW Championship Belt" style="width: 90%; max-width: 400px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.9));">
         
-        <h1>B.B.PW</h1>
-        <p class="sub-title">Boys Boxing & Pro-Wrestling via YUTO</p>
+        <h1 class="main-title">Boys Boxing & Pro-Wrestling via YUTO</h1>
+        <p class="sub-title">B.B.PW</p>
         
         <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
     </div>
 
     <div class="sub-menu">
-        <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
+        <a onclick="openDynamicModal('modal-from', 'message-from')">From Yuto</a>
         <a onclick="openStaticModal('modal-msg')">Message</a>
-        <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
-        <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
+        <a onclick="openDynamicModal('modal-ai', 'policy-ai')">AI Policy</a>
+        <a onclick="openDynamicModal('modal-copy', 'policy-copy')">Copyright</a>
     </div>
 
     <div class="copyright">
@@ -338,9 +340,62 @@
         </div>
     </div>
 
-    <div id="modal-from" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-from')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-ai" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-ai')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-copy" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-copy')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-from" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-from')">×</span>
+            </div>
+            <div class="text-content">
+                <div class="lang-tabs">
+                    <span class="lang-tab active" onclick="switchDynamicLang('modal-from', 'jp', this)">日本語</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-from', 'en', this)">English</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-from', 'tw', this)">繁體字</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-from', 'cn', this)">簡体字</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-from', 'kr', this)">한국어</span>
+                </div>
+                <div class="dynamic-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-ai" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-ai')">×</span>
+            </div>
+            <div class="text-content">
+                <div class="lang-tabs">
+                    <span class="lang-tab active" onclick="switchDynamicLang('modal-ai', 'jp', this)">日本語</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-ai', 'en', this)">English</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-ai', 'tw', this)">繁體字</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-ai', 'cn', this)">簡体字</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-ai', 'kr', this)">한국어</span>
+                </div>
+                <div class="dynamic-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-copy" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-copy')">×</span>
+            </div>
+            <div class="text-content">
+                <div class="lang-tabs">
+                    <span class="lang-tab active" onclick="switchDynamicLang('modal-copy', 'jp', this)">日本語</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-copy', 'en', this)">English</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-copy', 'tw', this)">繁體字</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-copy', 'cn', this)">簡体字</span>
+                    <span class="lang-tab" onclick="switchDynamicLang('modal-copy', 'kr', this)">한국어</span>
+                </div>
+                <div class="dynamic-body"></div>
+            </div>
+        </div>
+    </div>
 
     <div id="modal-msg" class="modal">
         <div class="modal-content">
@@ -350,11 +405,11 @@
             </div>
             <div class="text-content">
                 <div class="lang-tabs">
-                    <span class="lang-tab active" onclick="switchLang('jp', this)">日本語</span>
-                    <span class="lang-tab" onclick="switchLang('en', this)">English</span>
-                    <span class="lang-tab" onclick="switchLang('tw', this)">繁體字</span>
-                    <span class="lang-tab" onclick="switchLang('cn', this)">簡体字</span>
-                    <span class="lang-tab" onclick="switchLang('kr', this)">한국어</span>
+                    <span class="lang-tab active" onclick="switchStaticLang('jp', this)">日本語</span>
+                    <span class="lang-tab" onclick="switchStaticLang('en', this)">English</span>
+                    <span class="lang-tab" onclick="switchStaticLang('tw', this)">繁體字</span>
+                    <span class="lang-tab" onclick="switchStaticLang('cn', this)">簡体字</span>
+                    <span class="lang-tab" onclick="switchStaticLang('kr', this)">한국어</span>
                 </div>
 
                 <div id="lang-jp" class="lang-content active">
@@ -366,7 +421,6 @@
                     基本的にゆーとは日本語しか読めません、国外の方ごめんなさい。</b><br><br>
                     また、基本的に個別の返答は一切いたしませんので、個人を特定できる情報については一切記入しないでください。
                 </div>
-
                 <div id="lang-en" class="lang-content">
                     Thank you very much for visiting "Boys Boxing & Pro-Wrestling via YUTO" today.<br>
                     If you have any thoughts, encouragement, or messages of support, I would be absolutely thrilled to hear from you. Please feel free to drop a message!<br><br>
@@ -376,7 +430,6 @@
                     I am so sorry, but I can basically only read and understand Japanese. I deeply apologize to all my overseas friends!</b><br><br>
                     Also, as a general rule, I do not send individual replies. Therefore, please absolutely DO NOT include any personally identifiable information (such as your name, email, or address) in this form.
                 </div>
-
                 <div id="lang-tw" class="lang-content">
                     感謝您今天造訪「Boys Boxing & Pro-Wrestling via YUTO」。<br>
                     如果您有任何想法、鼓勵或支持的留言，歡迎隨時與我分享，這將會是我最大的動力！<br><br>
@@ -386,7 +439,6 @@
                     非常抱歉，YUTO（我）基本上只能閱讀並理解「日文」。對於海外的朋友們真的非常抱歉，還請多多包涵！</b><br><br>
                     此外，我基本上不會進行個別回覆，因此請絕對不要在表單中填寫任何可識別個人身分的私人資訊（如姓名、電子郵件等）。
                 </div>
-
                 <div id="lang-cn" class="lang-content">
                     感谢您今天访问“Boys Boxing & Pro-Wrestling via YUTO”。<br>
                     如果您有任何想法、鼓励或支持的留言，欢迎随时与我分享，这将会是我最大的动力！<br><br>
@@ -396,7 +448,6 @@
                     非常抱歉，YUTO（我）基本上只能阅读并理解“日文”。对于海外的朋友们真的非常抱歉，还请多多包涵！</b><br><br>
                     此外，我基本上不会进行个别回复，因此请绝对不要在表单中填写任何可识别个人身份的私人信息（如姓名、电子邮件等）。
                 </div>
-
                 <div id="lang-kr" class="lang-content">
                     오늘 'Boys Boxing & Pro-Wrestling via YUTO'를 방문해 주셔서 진심으로 감사드립니다.<br>
                     궁금한 점이나 격려, 응원의 메시지가 있다면 언제든지 편하게 남겨주세요. 저에게 아주 큰 힘이 됩니다!<br><br>
@@ -446,7 +497,6 @@
     function checkAge() {
         document.getElementById('modal-age-check').classList.add('active');
     }
-
     function verifyAge(isAdult) {
         if (isAdult) {
             window.location.href = "clubroom/";
@@ -456,16 +506,69 @@
         }
     }
 
-    /* ＝＝＝ 外部テキスト読み込み ＝＝＝ */
-    function openModal(modalId, textFilePath) {
-        const modal = document.getElementById(modalId);
-        const titleArea = modal.querySelector('.modal-title');
-        const contentArea = modal.querySelector('.text-content');
-        modal.classList.add('active');
+    /* ＝＝＝ モーダルの開閉 ＝＝＝ */
+    function openStaticModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+    }
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.remove('active');
+        }
+    };
 
-        fetch(textFilePath)
+    /* ＝＝＝ 静的メッセージ用タブ切り替え ＝＝＝ */
+    function switchStaticLang(langId, element) {
+        const tabs = element.parentElement.querySelectorAll('.lang-tab');
+        const contents = element.parentElement.parentElement.querySelectorAll('.lang-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById('lang-' + langId).classList.add('active');
+    }
+
+    /* ＝＝＝ 動的テキスト読み込み用（タブ付き対応） ＝＝＝ */
+    function openDynamicModal(modalId, baseFileName) {
+        const modal = document.getElementById(modalId);
+        modal.classList.add('active');
+        modal.setAttribute('data-basename', baseFileName);
+
+        // デフォルトで日本語タブをアクティブにする
+        const tabs = modal.querySelectorAll('.lang-tab');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        if (tabs.length > 0) tabs[0].classList.add('active');
+
+        // デフォルトの言語(jp)を読み込む
+        loadTextFile(modal, baseFileName, 'jp');
+    }
+
+    function switchDynamicLang(modalId, lang, element) {
+        const modal = document.getElementById(modalId);
+        const baseFileName = modal.getAttribute('data-basename');
+        
+        // タブの見た目切り替え
+        const tabs = modal.querySelectorAll('.lang-tab');
+        tabs.forEach(tab => tab.classList.remove('active'));
+        element.classList.add('active');
+
+        // 指定された言語を読み込む
+        loadTextFile(modal, baseFileName, lang);
+    }
+
+    function loadTextFile(modal, baseFileName, lang) {
+        const titleArea = modal.querySelector('.modal-title');
+        const contentArea = modal.querySelector('.dynamic-body');
+        
+        contentArea.innerHTML = 'Loading...'; 
+
+        // 例: texts/message-from-jp.txt
+        const filePath = `texts/${baseFileName}-${lang}.txt`;
+
+        fetch(filePath)
             .then(response => {
-                if (!response.ok) throw new Error('Failed to load');
+                if (!response.ok) throw new Error('File not found');
                 return response.text();
             })
             .then(text => {
@@ -477,36 +580,9 @@
             })
             .catch(error => {
                 titleArea.innerText = 'Error';
-                contentArea.innerHTML = '読み込みに失敗しました。';
+                contentArea.innerHTML = 'テキストファイルの読み込みに失敗しました。<br>Failed to load the text file.';
                 console.error(error);
             });
-    }
-
-    /* ＝＝＝ 静的モーダルの呼び出し ＝＝＝ */
-    function openStaticModal(modalId) {
-        document.getElementById(modalId).classList.add('active');
-    }
-
-    /* ＝＝＝ モーダルを閉じる ＝＝＝ */
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove('active');
-    }
-
-    window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.classList.remove('active');
-        }
-    };
-
-    /* ＝＝＝ 言語タブの切り替え ＝＝＝ */
-    function switchLang(langId, element) {
-        // すべてのタブとコンテンツから 'active' を外す
-        document.querySelectorAll('.lang-tab').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.lang-content').forEach(content => content.classList.remove('active'));
-
-        // クリックされた言語のタブとコンテンツに 'active' をつける
-        element.classList.add('active');
-        document.getElementById('lang-' + langId).classList.add('active');
     }
 </script>
 </body>
