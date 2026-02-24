@@ -37,14 +37,14 @@
         opacity: 0; 
     }
 
-    /* 30%の黒色フィルター */
+    /* ★ 背景の黒フィルター（25%） */
     .black-filter {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.25); /* 0.25で25%の黒 */
         z-index: -1; 
         pointer-events: none; 
     }
@@ -81,37 +81,51 @@
         50% { opacity: 0.3; }
     }
 
-    /* ＝＝＝ サブメニュー（モーダルを呼び出すリンク） ＝＝＝ */
+    /* ★ ＝＝＝ サブメニュー（右下のボタン群） ＝＝＝ */
     .sub-menu {
-        margin-top: 30px;
+        position: fixed;
+        bottom: 30px; /* 下からの距離 */
+        right: 30px;  /* 右からの距離 */
         display: flex;
-        justify-content: center;
-        gap: 20px;
-        font-size: 0.9rem;
+        gap: 15px;    /* ボタン同士の隙間 */
+        z-index: 10;
     }
     
     .sub-menu a {
-        color: rgba(255, 255, 255, 0.7);
+        background: rgba(20, 20, 20, 0.6); /* すりガラス風の黒 */
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.8);
         text-decoration: none;
+        font-size: 0.85rem;
         letter-spacing: 1px;
-        transition: color 0.3s;
+        transition: all 0.3s ease;
         cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
     .sub-menu a:hover {
+        background: rgba(50, 50, 50, 0.8);
         color: #fff;
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-3px); /* マウスを乗せると少し浮く */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
     }
 
-    /* ＝＝＝ コピーライト（画面下部） ＝＝＝ */
+    /* ＝＝＝ コピーライト（画面下部中央） ＝＝＝ */
     .copyright {
-        position: absolute;
-        bottom: 10px;
+        position: fixed; /* absoluteからfixedに変更して安定配置 */
+        bottom: 15px;
+        left: 0;
         width: 100%;
         text-align: center;
         color: rgba(255, 255, 255, 0.4);
         font-size: 0.75rem;
         letter-spacing: 1px;
         z-index: 1;
+        pointer-events: none;
     }
 
     /* ＝＝＝ モーダル（ポップアップ画面）の設定 ＝＝＝ */
@@ -136,33 +150,58 @@
         pointer-events: auto;
     }
 
+    /* モーダルの枠（透明度0のタイトルバー対応版） */
     .modal-content {
         width: 80%;
         max-width: 600px;
-        padding: 40px;
         border-radius: 8px;
+        overflow: hidden; /* タイトルバーの角丸を枠に合わせる */
         text-align: left;
-        line-height: 1.6;
         position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
 
-    /* 各モーダルの色設定（半透明） */
-    #modal-from { background-color: rgba(20, 120, 50, 0.85); color: #fff; } /* 緑 */
-    #modal-msg { background-color: rgba(255, 255, 255, 0.9); color: #333; } /* 白 */
-    #modal-ai { background-color: rgba(180, 0, 0, 0.85); color: #fff; }   /* 赤 */
-    #modal-copy { background-color: rgba(0, 30, 150, 0.85); color: #fff; }  /* 青 */
+    /* 透明度0のタイトルバー */
+    .modal-header {
+        background-color: #111111; 
+        color: #ffffff;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-title {
+        margin: 0;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+    /* 本文エリア */
+    .text-content {
+        padding: 30px 40px;
+        line-height: 1.8;
+        font-size: 0.95rem;
+    }
 
     /* 閉じるボタン */
     .close-btn {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         cursor: pointer;
         opacity: 0.7;
         transition: opacity 0.3s;
+        line-height: 1;
     }
     .close-btn:hover { opacity: 1; }
+
+    /* 各モーダルの本文エリアの色設定（半透明） */
+    #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; } /* 緑 */
+    #modal-msg .text-content { background-color: rgba(255, 255, 255, 0.9); color: #333; } /* 白 */
+    #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }   /* 赤 */
+    #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }  /* 青 */
+
 </style>
 </head>
 <body>
@@ -184,13 +223,13 @@
         <h1>yuto-boxer.com</h1>
         
         <a href="clubroom/" class="enter-link">Enter the Ring...</a>
+    </div>
 
-        <div class="sub-menu">
-            <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
-            <a onclick="openModal('modal-msg', 'texts/message-to.txt')">Message</a>
-            <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
-            <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
-        </div>
+    <div class="sub-menu">
+        <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
+        <a onclick="openModal('modal-msg', 'texts/message-to.txt')">Message</a>
+        <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
+        <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
     </div>
 
     <div class="copyright">
@@ -199,32 +238,40 @@
 
     <div id="modal-from" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-from')">×</span>
-            <h2>From Yuto</h2>
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-from')">×</span>
+            </div>
             <div class="text-content">読み込み中...</div>
         </div>
     </div>
 
     <div id="modal-msg" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-msg')">×</span>
-            <h2>Message</h2>
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-msg')">×</span>
+            </div>
             <div class="text-content">読み込み中...</div>
         </div>
     </div>
 
     <div id="modal-ai" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-ai')">×</span>
-            <h2>AI Policy</h2>
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-ai')">×</span>
+            </div>
             <div class="text-content">読み込み中...</div>
         </div>
     </div>
 
     <div id="modal-copy" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('modal-copy')">×</span>
-            <h2>Copyright</h2>
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-copy')">×</span>
+            </div>
             <div class="text-content">読み込み中...</div>
         </div>
     </div>
@@ -262,12 +309,11 @@
     /* ＝＝＝ モーダルとテキスト読み込みの処理 ＝＝＝ */
     function openModal(modalId, textFilePath) {
         const modal = document.getElementById(modalId);
+        const titleArea = modal.querySelector('.modal-title');
         const contentArea = modal.querySelector('.text-content');
 
-        // モーダルを表示
         modal.classList.add('active');
 
-        // テキストファイルを読み込む
         fetch(textFilePath)
             .then(response => {
                 if (!response.ok) {
@@ -276,10 +322,16 @@
                 return response.text();
             })
             .then(text => {
-                // 改行を <br> に変換して表示
-                contentArea.innerHTML = text.replace(/\n/g, '<br>');
+                // 1行目をタイトル、2行目以降を本文に分ける魔法
+                const lines = text.split('\n');
+                const firstLine = lines.shift(); 
+                const bodyText = lines.join('<br>');
+
+                titleArea.innerText = firstLine;
+                contentArea.innerHTML = bodyText;
             })
             .catch(error => {
+                titleArea.innerText = 'Error';
                 contentArea.innerHTML = 'テキストの読み込みに失敗しました。<br>（※ローカル環境では表示されない場合があります。GitHubに上げて確認してください）';
                 console.error(error);
             });
@@ -289,7 +341,6 @@
         document.getElementById(modalId).classList.remove('active');
     }
 
-    // 黒い背景部分をクリックしても閉じるようにする
     window.onclick = function(event) {
         if (event.target.classList.contains('modal')) {
             event.target.classList.remove('active');
