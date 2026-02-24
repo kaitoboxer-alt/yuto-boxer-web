@@ -29,6 +29,8 @@
 　2,1の一部の例外についてですが、作中に方言（関西弁など）や外国語などで表現が必要になった場合が対象になります。
 　3,生成AIを使用した作品は無料で頒布します（もともと商用目的を想定していません）
 　4,私、ゆーとが生成AIに依頼して描いてもらったイラストや動画、及び、私が書いた小説の学習は容認します。
+　5,意図的に第三者が制作した既存のキャラクターや人物をモチーフに作成することはしません。
+　6,生成AIは細かい指定が難しいです。そのため、リクエストなどには応じることができませんので、あらかじめご了承ください。
 
 堅苦しい内容で、申し訳ありません。
 というわけで、少年たちのボクシング、地下ボクシング、それにプロレス。
@@ -42,205 +44,110 @@
 🇺🇸 英語 (English)
 《Message from Yuto》
 
-Thank you so much for visiting "Boys Boxing & Pro-Wrestling via YUTO" (Please don't tease me about the title being too long and slightly "chuuni" / edgy!).
-To be completely honest about my personal tastes, I absolutely love the sight of boys in that transitional phase from high schoolers to young adults fighting it out as boxers and pro-wrestlers. That's exactly why I created this site.
+Message from Yuto
+Thank you so much for visiting "Boys Boxing & Pro-Wrestling via YUTO". To be completely honest, I absolutely love the sight of boys in that transitional phase from high schoolers to young adults fighting it out as boxers and pro-wrestlers. That's exactly why I created this site.
 
-However, the only thing I can do myself is write text.
-That's when Generative AI appeared.
+However, the only thing I can do myself is write text. That's when Generative AI appeared. While some may feel uneasy about this technology, it allowed me to finally build my ideal world.
 
-Generative AI is evolving rapidly. Of course, I understand that some people may feel uneasy or have differing opinions about it. But thanks to this technology, I was finally able to build my own ideal world.
-I’ve detailed my specific policies in the menu next to this one, but I want to explain my personal intentions here.
+1. What I ask the AI to do:
+- Generate illustrations and videos of boys boxing and wrestling.
+- Help build this website (I handle the basic structure).
+- Translate text into foreign languages.
+- Consult on using free web services.
+- Help create a tool to convert my novels into PDF format.
+- I will NOT intentionally create content based on existing characters or real people.
+- AI is difficult to control for minute details, so I cannot take personal requests.
 
-1. What I ask the Generative AI to do:
+2. Future AI Use:
+- Generating images and videos, fixing bugs, and translation. (Using Gemini, ChatGPT, and Copilot).
 
-Generate illustrations and videos of boys boxing and wrestling that would normally be impossible to see in reality.
+3. My Policy:
+- I focus entirely on writing my own stories without AI (except for dialects or translations).
+- All AI-related works are distributed for free (non-commercial).
+- I permit AI machine learning of my generated images, videos, and self-written novels.
 
-Help build this website (though I handle the basic structure).
-
-Translate my Japanese text into foreign languages.
-
-Consult on finding free services for building the site (excluding the custom domain).
-
-Help create a tool to convert the novels I write into PDF format.
-
-2. How I will use AI moving forward:
-
-Generating images and videos.
-
-Fixing bugs or errors on the website.
-
-Foreign language translation.
-
-(Note: Currently, I am using three officially released AIs: Google Gemini, ChatGPT, and Microsoft Copilot.)
-
-3. My Personal Policy (Yuto's Rules):
-
-Fundamentally, I will focus entirely on writing novels and short stories myself. I will NOT use AI for writing the main text of my stories.
-
-The only exception to the above is when I need help expressing specific dialects (like Kansai dialect) or foreign languages in the story.
-
-All works using Generative AI will be distributed completely for free (I never intended to use them for commercial purposes).
-
-I fully permit my AI-generated illustrations/videos and my self-written novels to be used for AI machine learning.
-
-I apologize for the stiff explanation!
-So, to sum it up: Boy's boxing, underground boxing, and pro-wrestling. And of course (why do I say "of course"? lol), there will be sexual contact and intimate scenes as well.
-Calling all fans who love this kind of stuff! It’s hard to express these specific tastes out in the open, isn't it?
-
-So, let's all get hyped and enjoy the world of boy's boxing and pro-wrestling together!
+Calling all fans of boy's boxing and pro-wrestling! Let's get hyped together!
 
 🇹🇼 繁体字 (Traditional Chinese - 台湾・香港向け)
 《來自 YUTO 的訊息》
 
-感謝您這次造訪「Boys Boxing & Pro-Wrestling via YUTO」（請別吐槽這名字又長又有點中二！）。
-說白了這就是我的個人性癖，我非常喜歡看處於高中生到青年過渡期的男孩們，作為拳擊手或職業摔角手在擂台上戰鬥的模樣。這正是我建立這個網站的原因。
+來自 YUTO 的訊息
+感謝您造訪「Boys Boxing & Pro-Wrestling via YUTO」。說白了這就是我的個人性癖，我非常喜歡看處於高中生到青年過渡期的男孩們，作為拳擊手或職業摔角手在擂台上戰鬥的模樣。
 
-但是，我只會寫文章。
-而這時，生成式AI出現了。
-
-生成式AI正以驚人的速度發展。當然，我也知道有些人對此感到不安或持有反對意見。不過，正是多虧了生成式AI，我才能成功構築出屬於自己的世界。
-關於這部分的詳細政策，我已整理在旁邊的選單中，但在這裡，我想親自向各位說明我個人的初衷。
+但是，我只會寫文章。這時，生成式AI出現了。多虧了它，我才能成功構築出屬於自己的世界。
 
 ① 我委託生成式AI協助的事項：
+1, 繪製少年之間拳擊與摔角的插畫和影片。
+2, 協助架設網站（基本架構由我負責）。
+3, 協助外語翻譯。
+4, 尋找免費架站服務的諮詢。
+5, 協助製作將小說轉換為PDF的工具。
+6, 我不會刻意製作以第三方創作的既有角色或真實人物為雛形的內容。
+7, 生成式AI難以進行細微指定，恕我無法接受個人委託或製作請求。
 
-繪製現實中幾乎不可能看到的、少年之間拳擊與摔角的插畫和影片。
+② 未來持續交由AI處理的事項：
+1, 圖片與影片生成。2, 網站修復。3, 外語翻譯。（使用 Gemini / ChatGPT / Copilot）。
 
-協助架設網站（基本架構由我親自負責）。
+③ 我的個人方針：
+1, 我專注於親自撰寫故事，正文不使用AI。
+2, 僅在需要方言或外語輔助時作為例外。
+3, 所有AI作品全面免費發布（非營利）。
+4, 容許並同意將我請AI生成的內容及我撰寫的小說作為AI學習素材。
 
-協助外語翻譯。
-
-提供架設網站時盡量使用免費服務的相關諮詢（購買獨立網域除外）。
-
-協助製作能將我（YUTO）寫的小說轉換為PDF格式的工具。
-
-② 未來將持續交由生成式AI處理的事項：
-
-圖片與影片的生成。
-
-網站錯誤（Bug）的修復。
-
-外語翻譯。
-
-附帶一提，目前我混合使用了三款官方發布的AI：Google Gemini / ChatGPT / Microsoft Copilot。
-
-③ 我（YUTO）的個人方針：
-
-基本上，我會專注於親自撰寫小說與短篇故事。除少數例外，正文創作絕不使用生成式AI。
-
-上述的「少數例外」，僅限於作品中需要呈現特定方言（如關西腔等）或外語時的輔助。
-
-使用生成式AI的作品將全面免費發布（我原本就沒有任何商業營利打算）。
-
-我完全容許並同意將我請AI生成的插畫、影片，以及我親自撰寫的小說，作為AI機器學習的素材。
-
-抱歉，前面的內容有點太嚴肅了。
-總而言之，這裡有少年拳擊、地下拳擊，還有職業摔角。
-當然（哪門子的當然啦 笑），也會包含性接觸與性行為的描寫。
-喜歡這類題材的同好們，集合啦！
-畢竟這種特殊的性癖，平時在現實中很難大方表現出來對吧。
-
-所以，讓我們一起在少年拳擊與摔角的世界裡狂歡吧！
+喜歡少年拳擊與摔角的同好們，讓我們一起在網戰中狂歡吧！
 
 🇨🇳 簡体字 (Simplified Chinese - 中国大陆向け)
 《来自 YUTO 的留言》
 
-感谢您这次访问“Boys Boxing & Pro-Wrestling via YUTO”（请别吐槽这名字又长又有点中二！）。
-坦白说这就是我的个人性癖，我非常喜欢看处于高中生到青年过渡期的男孩们，作为拳击手或职业摔角手在擂台上战斗的模样。这正是我建立这个网站的原因。
+来自 YUTO 的留言
+感谢您访问“Boys Boxing & Pro-Wrestling via YUTO”。坦白说这就是我的个人性癖，我非常喜欢看处于高中生到青年过渡期的男孩们，作为拳击手或职业摔角手在擂台上战斗的模样。
 
-但是，我只会写文章。
-而这时，生成式AI出现了。
-
-生成式AI正以惊人的速度发展。当然，我也知道有些人对此感到不安或持有反对意见。不过，正是多亏了生成式AI，我才能成功构筑出属于自己的世界。
-关于这部分的详细政策，我已整理在旁边的菜单中，但在这里，我想亲自向各位说明我个人的初衷。
+但是，我只会写文章。这时，生成式AI出现了。多亏了它，我才能成功构筑出属于自己的世界。
 
 ① 我委托生成式AI协助的事项：
+1, 绘制少年之间拳击与摔角的插画和视频。
+2, 协助搭建网站（基本架构由我负责）。
+3, 协助外语翻译。
+4, 寻找免费建站服务的咨询。
+5, 协助制作将小说转换为PDF的工具。
+6, 我不会刻意制作以第三方创作的既有角色或真实人物为雏形的內容。
+7, 生成式AI难以进行细微指定，恕我无法接受个人委托或制作请求。
 
-绘制现实中几乎不可能看到的、少年之间拳击与摔角的插画和视频。
+② 未来持续交由AI处理的事项：
+1, 图片与视频生成。2, 网站修复。3, 外语翻译。（使用 Gemini / ChatGPT / Copilot）。
 
-协助搭建网站（基本架构由我亲自负责）。
+③ 我的个人方针：
+1, 我专注于亲自撰写故事，正文不使用AI。
+2, 仅在需要方言或外语辅助时作为例外。
+3, 所有AI作品全面免费发布（非营利）。
+4, 容许并同意将我请AI生成的内容及我撰写的小说作为AI学习素材。
 
-协助外语翻译。
-
-提供搭建网站时尽量使用免费服务的相关咨询（购买独立域名除外）。
-
-协助制作能将我（YUTO）写的小说转换为PDF格式的工具。
-
-② 未来将持续交由生成式AI处理的事项：
-
-图片与视频的生成。
-
-网站错误（Bug）的修复。
-
-外语翻译。
-
-顺带一提，目前我混合使用了三款官方发布的AI：Google Gemini / ChatGPT / Microsoft Copilot。
-
-③ 我（YUTO）的个人方针：
-
-基本上，我会专注于亲自撰写小说与短篇故事。除少数例外，正文创作绝不使用生成式AI。
-
-上述的“少数例外”，仅限于作品中需要呈现特定方言（如关西腔等）或外语时的辅助。
-
-使用生成式AI的作品将全面免费发布（我原本就没有任何商业盈利打算）。
-
-我完全容许并同意将我请AI生成的插画、视频，以及我亲自撰写的小说，作为AI机器学习的素材。
-
-抱歉，前面的内容有点太严肃了。
-总而言之，这里有少年拳击、地下拳击，还有职业摔角。
-当然（哪门子的当然啦 笑），也会包含性接触与性行为的描写。
-喜欢这类题材的同好们，集合啦！
-毕竟这种特殊的性癖，平时在现实中很难大方表现出来对吧。
-
-所以，让我们一起在少年拳击与摔角的世界里狂欢吧！
+喜欢少年拳击与摔角的同好们，让我们一起在网站中狂欢吧！
 
 🇰🇷 韓国語 (Korean)
 《YUTO의 메시지》
 
-이번에 'Boys Boxing & Pro-Wrestling via YUTO'를 방문해 주셔서 감사합니다. (이름이 길고 중2병 같다는 태클은 사양합니다! ㅎㅎ)
-솔직히 제 개인적인 성벽(취향)입니다만, 저는 고등학생에서 청년으로 넘어가는 시기의 소년들이 복서나 프로레슬러로서 링 위에서 싸우는 모습을 정말 좋아합니다. 이 사이트를 만든 이유도 바로 그 때문입니다.
+YUTO의 메시지
+'Boys Boxing & Pro-Wrestling via YUTO'를 방문해 주셔서 감사합니다. 저는 고등학생에서 청년으로 넘어가는 시기의 소년들이 복서나 프로레슬러로서 싸우는 모습을 정말 좋아하며, 그 취향을 담아 이 사이트를 만들었습니다.
 
-하지만 저는 글밖에 쓸 줄 모릅니다.
-그런 제 앞에 나타난 것이 바로 생성형 AI입니다.
-
-생성형 AI는 급속도로 발전하고 있습니다. 물론 그에 대해 불안감을 느끼거나 반대 의견을 가지신 분들도 계실 겁니다. 하지만 저는 이 생성형 AI 덕분에 제 머릿속에만 있던 세계를 구축할 수 있었습니다.
-AI 사용 정책에 대해서는 옆 메뉴에 정리해 두었지만, 여기서는 저 개인의 의도를 명확히 설명해 드리고자 합니다.
+저는 글밖에 쓸 줄 모르지만, 생성형 AI의 도움으로 저만의 세계를 구축할 수 있었습니다.
 
 ① 생성형 AI에게 부탁한 일:
+1, 소년들의 복싱 및 프로레슬링 일러스트와 동영상 생성.
+2, 웹사이트 구축 보조 (기본 구성은 직접 담당).
+3, 외국어 번역.
+4, 무료 서비스 이용을 위한 상담.
+5, 소설 PDF 변환 도구 제작 보조.
+6, 제삼자의 캐릭터나 실제 인물을 모티브로 한 콘텐츠는 의도적으로 제작하지 않습니다.
+7, AI는 세부 지정이 어려우므로 개별 리퀘스트에는 응할 수 없습니다.
 
-현실에서는 보기 힘든 소년들 간의 복싱 및 프로레슬링 일러스트와 동영상 생성.
+② 앞으로 AI에게 부탁할 일:
+1, 이미지 및 동영상 생성. 2, 사이트 수정. 3, 외국어 번역. (Gemini / ChatGPT / Copilot 사용).
 
-웹사이트 구축 보조 (기본적인 구성은 제가 직접 담당하고 있습니다).
+③ 저의 방침:
+1, 소설 집필에 전념하며 본문에는 AI를 사용하지 않습니다.
+2, 단, 사투리나 외국어 표현이 필요한 경우는 예외로 합니다.
+3, AI 사용 작품은 무료 배포합니다 (상업적 목적 없음).
+4, 제가 생성한 결과물과 직접 쓴 소설의 AI 학습을 허용합니다.
 
-외국어 번역.
-
-웹사이트 구축 시 가급적 무료 서비스를 이용하기 위한 기술 상담 (독립 도메인 취득 제외).
-
-저(YUTO)가 쓴 소설을 PDF 형식으로 변환하는 도구 제작 보조.
-
-② 앞으로 생성형 AI에게 부탁할 일:
-
-이미지 및 동영상 생성.
-
-웹사이트 버그 등의 수정.
-
-외국어 번역.
-
-참고로 현재 공식 출시된 세 가지 AI(Google Gemini, ChatGPT, Microsoft Copilot)를 함께 사용하고 있습니다.
-
-③ 저(YUTO)의 개인적인 방침:
-
-기본적으로 소설이나 단편 스토리를 쓰는 일은 온전히 저의 힘으로 집필합니다. 일부 예외를 제외하고 본문 창작에 생성형 AI는 사용하지 않습니다.
-
-1항의 '일부 예외'란, 작품 내에서 특정 사투리(간사이 사투리 등)나 외국어 표현이 필요할 때 도움을 받는 경우를 말합니다.
-
-생성형 AI를 사용한 작품은 모두 무료로 배포합니다 (애초에 상업적 목적을 염두에 두지 않았습니다).
-
-제가 AI에게 의뢰하여 생성한 일러스트와 동영상, 그리고 제가 직접 쓴 소설을 AI 학습용 데이터로 사용하는 것을 허용합니다.
-
-앞부분이 너무 딱딱했네요. 죄송합니다!
-아무튼, 이곳에는 소년들의 복싱, 지하 복싱, 그리고 프로레슬링이 있습니다.
-물론 (뭐가 물론인지는 모르겠지만 ㅋㅋ) 성적인 접촉이나 행위 묘사도 포함되어 있습니다.
-이런 취향을 좋아하시는 분들, 모두 모여주세요!
-이런 마이너한 성벽은 현실에서 겉으로 드러내기 쉽지 않으니까요.
-
-그러니 이곳에서 다 함께 소년 복싱과 프로레슬링의 세계를 신나게 즐겨봅시다!
+소년 복싱과 프로레슬링을 사랑하는 분들, 모두 모여서 함께 즐겨봅시다!
