@@ -3,99 +3,252 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>オリジナルメッセージ＆送信フォーム</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+  <title>YUTO BOXER - オリジナルボクシング＆プロレスアート</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
+    /* =========================================
+       サイト全体の基本デザイン（TOPページ用）
+       ========================================= */
     body {
       font-family: 'Noto Sans JP', sans-serif;
-      background-color: #f4f4f9;
-      text-align: center;
-      padding: 50px 20px;
       margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
     }
-    
-    /* メッセージウィンドウを開くボタン */
+    header {
+      background-color: #002244;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+      background-image: linear-gradient(135deg, #002244 0%, #0056b3 100%);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: 2px;
+    }
+    header p {
+      margin: 10px 0 0;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+    main {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    /* ギャラリーセクション（今後の作品展示用） */
+    .gallery-section {
+      margin-bottom: 60px;
+    }
+    .gallery-section h2 {
+      font-size: 28px;
+      color: #002244;
+      margin-bottom: 20px;
+    }
+    .gallery-grid {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .gallery-item {
+      background: white;
+      width: 300px;
+      height: 200px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      border: 2px dashed #ccc;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    /* メッセージ・Q&A アクションセクション */
+    .action-section {
+      background: white;
+      padding: 50px 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .action-section h2 {
+      margin-top: 0;
+      color: #ff4500;
+    }
     .btn-open {
       background-color: #ff4500;
       color: white;
       border: none;
-      padding: 15px 30px;
-      font-size: 18px;
+      padding: 20px 40px;
+      font-size: 20px;
       font-weight: bold;
-      border-radius: 8px;
+      border-radius: 50px;
       cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 6px 15px rgba(255, 69, 0, 0.3);
+      margin-top: 20px;
+    }
+    .btn-open:hover {
+      transform: translateY(-2px);
+      background-color: #e63e00;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #222;
+      color: #aaa;
+      margin-top: 50px;
+      font-size: 14px;
     }
 
-    /* ウィンドウ（モーダル）の背景 */
+    /* =========================================
+       モーダルウィンドウ（メッセージ＆Q&A機能）
+       ========================================= */
     #messageWindow {
-      display: none; /* 初期状態は非表示 */
+      display: none; /* 初期状態は絶対に非表示 */
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.75);
       z-index: 1000;
       justify-content: center;
       align-items: center;
+      backdrop-filter: blur(5px);
     }
-
-    /* ウィンドウの本体 */
     .window-content {
       background-color: white;
-      padding: 20px;
-      border-radius: 12px;
+      padding: 30px;
+      border-radius: 16px;
       width: 90%;
-      max-width: 700px;
+      max-width: 750px;
       max-height: 90vh;
       overflow-y: auto;
       position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-
-    /* 閉じるボタン */
     .btn-close {
       position: absolute;
-      top: 10px; right: 15px;
-      font-size: 24px;
+      top: 15px; right: 20px;
+      font-size: 32px;
       cursor: pointer;
-      color: #888;
+      color: #aaa;
       border: none;
       background: none;
+      transition: color 0.2s;
     }
-
-    /* キャンバスとフォームのスタイル */
-    .canvas-container { margin-bottom: 20px; }
-    canvas { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .btn-close:hover { color: #333; }
+    
+    .canvas-container {
+      margin-bottom: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+    canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
     
     textarea {
-      width: 100%; box-sizing: border-box; height: 80px; padding: 10px;
-      font-size: 16px; border: 2px solid #ccc; border-radius: 8px;
-      font-family: inherit; resize: none; margin-bottom: 10px;
+      width: 100%; box-sizing: border-box; height: 100px; padding: 15px;
+      font-size: 16px; border: 2px solid #ddd; border-radius: 8px;
+      font-family: inherit; resize: vertical; margin-bottom: 15px;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: #0056b3; outline: none; }
+    
+    .buttons {
+      display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap;
+    }
+    .buttons button {
+      background-color: #0056b3; color: white; border: none; padding: 12px 24px;
+      font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .buttons button:hover { background-color: #003d82; }
+    .buttons .btn-download { background-color: #ff8c00; }
+    .buttons .btn-download:hover { background-color: #e67e00; }
+    
+    .btn-submit {
+      background-color: #28a745; width: 100%; padding: 16px; font-size: 18px;
+      color: white; border: none; font-weight: bold; border-radius: 8px;
+      cursor: pointer; transition: background-color 0.2s;
+    }
+    .btn-submit:hover { background-color: #218838; }
+    
+    hr { margin: 30px 0; border: 0; border-top: 1px solid #eee; }
+
+    .reply-notice {
+      font-size: 13px;
+      color: #555;
+      margin-top: 15px;
+      text-align: left;
+      line-height: 1.6;
+      background-color: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+    .reply-notice a {
+      color: #1da1f2; /* X(Twitter)っぽい青色 */
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .reply-notice a:hover {
+      text-decoration: underline;
     }
 
-    .buttons { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-    button {
-      background-color: #0056b3; color: white; border: none; padding: 10px 20px;
-      font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer;
-    }
-    .btn-download { background-color: #ff8c00; }
-    .btn-submit { background-color: #28a745; width: 100%; padding: 15px; font-size: 18px; }
-    hr { margin: 20px 0; border: 0; border-top: 1px solid #eee; }
   </style>
 </head>
 <body>
 
-  <h1>応援メッセージを送ろう！</h1>
-  <button class="btn-open" onclick="openWindow()">メッセージウィンドウを開く📩</button>
+  <header>
+    <h1>YUTO BOXER</h1>
+    <p>オリジナルボクシング＆プロレス アートワークス</p>
+  </header>
 
-  <div id="messageWindow">
+  <main>
+    
+    <section class="gallery-section">
+      <h2>Gallery / Characters</h2>
+      <p>KaitoやChrisたちの熱い闘いや、B.B.PWの世界観をここでお届けします。</p>
+      <div class="gallery-grid">
+        <div class="gallery-item">作品画像 1</div>
+        <div class="gallery-item">作品画像 2</div>
+        <div class="gallery-item">B.B.PW ベルト</div>
+      </div>
+    </section>
+
+    <section class="action-section">
+      <h2>Fan Message & Q&A</h2>
+      <p>ファンからの応援メッセージや質問を受け付けています。<br>いただいた質問は、キャラクターたちが画像付きでお答えするかも！？</p>
+      
+      <button class="btn-open" onclick="openWindow()">メッセージ・質問を送る ✉️</button>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2026 yuto-boxer.com All Rights Reserved.
+  </footer>
+
+  <div id="messageWindow" style="display: none;">
     <div class="window-content">
       <button class="btn-close" onclick="closeWindow()">×</button>
-      <h2>メッセージカード作成</h2>
       
+      <h2>メッセージカード生成</h2>
       <div class="canvas-container">
         <canvas id="myCanvas" width="1280" height="720"></canvas>
       </div>
       
-      <textarea id="cardInput" placeholder="カードに書き込むメッセージ（自動で文字サイズが調整されます）">いつも応援ありがとう！
-これからもよろしくな！</textarea>
+      <textarea id="cardInput" placeholder="カードに書き込むテキストを入力（自動でサイズ調整されます）">いつも応援ありがとう！</textarea>
       <div class="buttons">
         <button onclick="changeRandomCard()">キャラを変える🎲</button>
         <button onclick="drawCard()">文字を反映する🖊️</button>
@@ -104,12 +257,19 @@
 
       <hr>
 
-      <h2>運営にメッセージを送る</h2>
+     <h2>メッセージ・質問を送る</h2>
       <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
-        <textarea name="message" required placeholder="ここに直接応援メッセージを書いて送信できます！"></textarea>
+        <textarea name="message" required placeholder="ここに直接応援メッセージや質問を書いて送信できます！"></textarea>
         <button type="submit" class="btn-submit">メッセージを送信する 🚀</button>
-      </form>
-      </div>
+
+        <div class="reply-notice">
+          ※お返事できるときはX（旧Twitter）の <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> からになります。<br>
+          * Replies, when possible, will be sent via X (formerly Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a>.<br>
+          * 如能回复，将通过 X（原 Twitter）<a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 进行回复。<br>
+          * 답장이 가능한 경우 X(구 Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 를 통해 답변해 드립니다.
+        </div>
+        </form>
+    </div>
   </div>
   <script>
     // --- ウィンドウ（モーダル）の開閉処理 ---
@@ -117,9 +277,18 @@
       document.getElementById('messageWindow').style.display = 'flex';
       changeRandomCard(); // 開いた時にランダムでカードをセット
     }
+    
     function closeWindow() {
       document.getElementById('messageWindow').style.display = 'none';
     }
+
+    // ウィンドウの外側（黒い背景部分）をクリックしても閉じるようにする便利機能
+    window.addEventListener('click', function(e) {
+      const modal = document.getElementById('messageWindow');
+      if (e.target === modal) {
+        closeWindow();
+      }
+    });
 
     // --- キャンバス（画像合成）の処理 ---
     const canvas = document.getElementById('myCanvas');
@@ -129,22 +298,26 @@
     let currentImage = new Image();
 
     function changeRandomCard() {
+      // 1〜20のランダムな数字を生成
       currentCardNumber = Math.floor(Math.random() * 20) + 1;
       const paddedNum = String(currentCardNumber).padStart(2, '0');
+      // ★画像URLの設定
       const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
       currentImage = new Image();
       currentImage.crossOrigin = "anonymous"; 
       currentImage.onload = () => drawCard();
-      currentImage.src = imageUrl + "?t=" + new Date().getTime();
+      currentImage.src = imageUrl + "?t=" + new Date().getTime(); // キャッシュ回避
     }
 
     function drawCard() {
+      // キャンバスをクリアして背景画像を描画
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
 
       const text = cardInput.value;
       if (text.trim() !== "") {
+        // テキストエリアの描画範囲（画像に合わせて微調整可能）
         const textArea = { x: 130, y: 160, width: 660, height: 420 };
         drawTextWithAutoScale(ctx, text, textArea);
       }
@@ -162,13 +335,14 @@
         ctx.font = `bold ${fontSize}px ${fontFamily}`;
         lines = wrapText(ctx, wrappedText, area.width);
         let totalHeight = lines.length * (fontSize * lineHeightRatio);
-        if (totalHeight <= area.height) break;
-        fontSize -= 2;
+        if (totalHeight <= area.height) break; // 枠に収まればループ終了
+        fontSize -= 2; // 収まらなければ縮小
       }
 
       ctx.fillStyle = "#333333";
       ctx.textBaseline = "top";
       const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
+      // 縦方向の中央に配置
       const startY = area.y + (area.height - totalTextHeight) / 2;
 
       lines.forEach((line, index) => {
@@ -200,7 +374,7 @@
     function downloadCard() {
       drawCard();
       const link = document.createElement('a');
-      link.download = `message_card.png`;
+      link.download = `QA_card_${new Date().getTime()}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
@@ -219,8 +393,8 @@
       .then(response => {
         if (response.ok) {
           alert("メッセージを送信しました！ありがとうございます！");
-          form.reset(); // フォームを空にする
-          closeWindow(); // 【ここでウィンドウを閉じる！】
+          form.reset(); // フォームの中身を空にする
+          closeWindow(); // 送信成功後にウィンドウを閉じる
         } else {
           response.json().then(data => {
             if (Object.hasOwn(data, 'errors')) {
