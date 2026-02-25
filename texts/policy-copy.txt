@@ -1,6 +1,6 @@
-《ゆーとのサイトの著作権》
+《著作権について》
 
-当サイト（Boys Boxing & Pro-Wrestling via YUTO）を構成するすべてのコンテンツに関する取り扱いは以下の通りです。
+🇯🇵当サイト（Boys Boxing & Pro-Wrestling via YUTO）を構成するすべてのコンテンツに関する取り扱いは以下の通りです。
 
 当サイトに掲載されているAI生成画像、キャラクターの各種設定、ストーリーテキスト（小説等）、サイトのHTML/CSSレイアウトおよびデザイン等、これらすべてをまとめた「編集著作物」としての権利は、当サイト管理者に帰属します。
 
@@ -14,3 +14,80 @@
 当サイトは、生成AIという新しいツールを用いて構築した独自のエンターテインメント空間です。個人的に閲覧して楽しんでいただく以外の用途でのご利用はご遠慮くださいますよう、ご理解とご協力をお願い申し上げます。
 
 ※なお、上記の内容に反する事態が発覚した場合は、真っ先にその状況を解消した上で、こちらが算定した利用金額を遅滞なく支払うものとします。また、当サイトが請求を行った日を含めた七日以降はその時点での法定金利上限を含めた金額をお支払いいただきます。また、あわせて当局への被害届も提出しますことを、あらかじめご了承ください。
+
+🇺🇸 英語 (English)
+《Copyright Notice for "Boys Boxing & Pro-Wrestling via YUTO"》
+
+All content constituting this website ("Boys Boxing & Pro-Wrestling via YUTO") is protected under the following terms:
+
+The administrator of this site retains the rights to the website as a "compiled work" (compilation copyright). This includes all AI-generated images, character lore, story texts, HTML/CSS layouts, and overall design featured on this site.
+
+The following actions regarding any content on this site are strictly prohibited:
+
+Unauthorized reproduction or use
+
+Secondary distribution (whether modified or not)
+
+Claiming the work as your own original creation
+
+Commercial use or use for any profit-making purposes
+
+Direct use as input material for AI image generation tools (e.g., i2i, LoRA)
+
+This site is a unique entertainment space built using the new tool of generative AI. We kindly ask that you enjoy the content solely for your personal viewing and refrain from using it for any other purposes. Thank you for your understanding and cooperation.
+
+Note: If any violation of the above terms is discovered, the violator must immediately cease the infringing activity and pay a usage fee calculated by us without delay. Furthermore, if payment is not made within 7 days (including the billing date), the maximum legal interest rate will be applied to the total amount. Please be aware that we will also file a damage report with the relevant authorities.
+
+🇹🇼 繁体字 (Traditional Chinese - 台湾・香港向け)
+《關於「Boys Boxing & Pro-Wrestling via YUTO」的版權聲明》
+
+本網站（Boys Boxing & Pro-Wrestling via YUTO）所有內容之處理規範如下：
+
+站長擁有本網站作為「編輯著作」的全部版權，涵蓋本站所發布之AI生成圖像、角色設定、故事文本（如小說等）、網站HTML/CSS排版及整體設計等所有內容。
+
+嚴禁對本網站內任何內容進行以下行為：
+・未經授權的轉載及使用
+・二次發布（無論是否經過修改）
+・冒充為個人原創作品（自作發言）
+・商業用途或任何營利目的之使用
+・直接作為AI圖像生成工具（如i2i、LoRA等）的素材讀取使用
+
+本網站是運用生成式AI這一全新工具所打造的獨特娛樂空間。懇請各位僅限於個人瀏覽欣賞，請勿作其他用途。感謝您的理解與配合。
+
+※注意：若發現違反上述規定之行為，侵權者必須立即停止侵權狀態，並無條件遲延支付由我方算定之使用費。自開立請款單之日起算（含當日）超過七日未付款者，將追加最高法定利率之利息。同時，我們也將向相關執法機關報案，敬請留意。
+
+🇨🇳 簡体字 (Simplified Chinese - 中国大陸向け)
+《关于“Boys Boxing & Pro-Wrestling via YUTO”的版权声明》
+
+本网站（Boys Boxing & Pro-Wrestling via YUTO）所有内容之处理规范如下：
+
+站长拥有本网站作为“汇编作品”的全部版权，涵盖本站所发布之AI生成图像、角色设定、故事文本（如小说等）、网站HTML/CSS排版及整体设计等所有内容。
+
+严禁对本网站内任何内容进行以下行为：
+・未经授权的转载及使用
+・二次发布（无论是否经过修改）
+・冒充为个人原创作品（自作发言）
+・商业用途或任何营利目的之使用
+・直接作为AI图像生成工具（如i2i、LoRA等）的素材读取使用
+
+本网站是运用生成式AI这一全新工具所打造的独特娱乐空间。恳请各位仅限于个人浏览欣赏，请勿作其他用途。感谢您的理解与配合。
+
+※注意：若发现违反上述规定之行为，侵权者必须立即停止侵权状态，并无条件迟延支付由我方算定之使用费。自开立请款单之日起算（含当日）超过七日未付款者，将追加最高法定利率之利息。同时，我们也将向相关执法机关报案，敬请留意。
+
+🇰🇷 韓国語 (Korean)
+《'Boys Boxing & Pro-Wrestling via YUTO' 저작권 안내》
+
+본 웹사이트('Boys Boxing & Pro-Wrestling via YUTO')를 구성하는 모든 콘텐츠에 대한 취급 방침은 다음과 같습니다.
+
+본 사이트에 게재된 AI 생성 이미지, 각종 캐릭터 설정, 스토리 텍스트(소설 등), 사이트의 HTML/CSS 레이아웃 및 디자인 등을 모두 취합한 '편집 저작물'로서의 권리는 본 사이트 관리자에게 있습니다.
+
+본 사이트의 모든 콘텐츠에 대해 다음 행위를 엄격히 금지합니다.
+・무단 전재 및 무단 사용
+・2차 배포 (가공 여부 불문)
+・자신의 창작물이라고 주장하는 행위 (자작 발언)
+・상업적 이용 및 이에 준하는 영리 목적의 사용
+・AI 이미지 생성 도구(i2i, LoRA 등)의 입력 소재로 직접 사용하는 행위
+
+본 사이트는 생성형 AI라는 새로운 도구를 활용하여 구축한 독자적인 엔터테인먼트 공간입니다. 개인적인 관람과 즐거움을 위한 용도 외의 사용은 삼가 주시기를 바라며, 여러분의 이해와 협조를 부탁드립니다.
+
+※참고: 위 내용을 위반하는 사례가 적발될 경우, 즉시 해당 침해 상황을 해소해야 하며 당사가 산정한 이용 금액을 지체 없이 지불해야 합니다. 또한 당사가 청구를 진행한 날을 포함하여 7일이 경과한 후에는 그 시점의 법정 최고 이자율이 가산된 금액을 지불해야 합니다. 아울러 수사 기관에 피해 신고도 함께 접수할 예정이오니 이 점 미리 양지하시기 바랍니다.
