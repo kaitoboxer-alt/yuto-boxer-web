@@ -1,36 +1,24 @@
-主人公たちのライバル編
-①双子のボクサー：二人とも同じ容姿 / 20歳だけど笑顔がが少し若く見える/淡い茶色の薪が耳を隠すくらいのショートヘア・黒い瞳・やや白目の肌・細身・筋肉は少なめ
-②一人はラメの入った緑色のとランクスとシュシューズに、緑色のグローブ
-③もう一人はラメの入った黄色の派手なトランクスにシューズ、黄色のグローブ
-④二人はグローブを合わせてから、カメラに向かって拳を向けてくる。
-⑤眩しいくらいの白い照明に晒されたリングの上
-⑥画風は日本のアニメの画風、京都アニメーションの、Free!のような爽やかさでお願いします。
-⑦小さな星マークが散らばるエフェクトを最後にばらまいてくれると嬉しいです。
-※まだ動画作成しないでね♪
+🥊 動画生成用・最終プロンプト集（京アニ風・高画質設定）
+全てのプロンプトの冒頭に、ゆーとさんのこだわりである**「日本のアニメ（京都アニメーション / Free!風）の爽やかで美しいスタイル」**を明文化して組み込んでいます。
 
-①日焼けサーファーボクサー：背中までピンク色に染めた髪、ちょっと茶色っぽい瞳、笑顔は浮かべているが、目が笑っていない。日焼けをしたほどほどの筋肉がついた青年。
-②ラメの入った派手な虹色のトランクスに白のグローブ、コーナーかロープにもたれかかってグローブをつけたまま髪を掻き上げる。
-③眩しいくらいの照明に照らされたリングの上。
-④画風は日本のアニメの画風、京都アニメーションの、Free!のような爽やかさでお願いします。
-⑤リング上に光沢のある紙吹雪が舞っている。
-※まだ動画生成はしないでね♥
+【1人目：ボサボサ黒髪くん（顔面被弾）】
+Japanese anime style inspired by Kyoto Animation "Free!", high-quality 2D animation. Extreme close-up shot, cinematic slow motion. A slender young male boxer with unkempt, shaggy black hair initially obscuring his eyes. He has lean muscles and wears black boxing gloves. A powerful opponent's boxing glove (arm only visible) strikes his right cheek forcefully. The impact causes his shaggy black bangs to violently lift up, revealing his intense black eyes underneath. A brightly colored mouthpiece is ejected from his mouth, flying through the air along with glittering droplets of sweat catching the stadium spotlights. Dark background, dramatic athletic moment.
 
-①ナンパ系のチャラ男ボクサー
-②ショートウルフの髪型で金色に染めている。大きめの黒の瞳。身体はやや茶色が濃いが、筋肉はそこそこついている。
-③観客に応えるように左右に両手を挙げて笑いかける。
-④全体的にホストの雰囲気
-⑤光沢のある紙吹雪は舞っている。
-⑥画風は日本のアニメの画風、京都アニメーションの、Free!のような爽やかさでお願いします。
-※まだ動画生成はしないでね★
+【2人目：茶髪ショートくん（ボディ被弾）】
+Japanese anime style inspired by Kyoto Animation "Free!", high-quality 2D animation. First-person POV shot, cinematic slow motion. An unseen opponent's blue boxing glove forcefully strikes the bare abdomen of a young male boxer with short brown hair. His initially cocky, cheeky expression instantly contorts into intense pain. A brightly colored mouthpiece is violently ejected from his mouth, flying through the air along with glittering droplets of sweat catching the stadium spotlights. The boy slowly crouches down and collapses onto the boxing ring canvas. Dark background, dramatic lighting.
 
-TOPページ改修案
-①前回使っていたロゴを戻して、yuto-boxer.comを今のEnter the Ring...と同じくらいの大きさに
-②そして入口になるであろう。Enter the Ring... を今のyuto-boxer.comよりひとまわり小さくして、ゆるやかに点滅させることはできますか？
-③TOPページの背景に30%の黒を全体にかけてください。
-④一枚の絵が消えるときに、急にブラックアウトする時があるのですが、これは、まだ画像が全部アップされてないから？ フェードで切り替わるのは最高です。
+【3人目：金髪碧眼の美白くん（アッパー被弾）】
+Japanese anime style inspired by Kyoto Animation "Free!", high-quality 2D animation. Low angle shot, cinematic slow motion. A slender young male boxer with beautiful translucent white skin, blonde semi-long hair, and blue eyes. An unseen opponent's black boxing glove strikes his chin from below with a powerful uppercut. His head snaps back, and a brightly colored mouthpiece is violently ejected from his mouth, flying through the air along with glittering droplets of sweat catching the stadium spotlights. He falls backward, collapsing onto the boxing ring canvas spread-eagle. Dark background, highly detailed.
 
-clubroomのページ
-①背景画像を左端をブラウザの左端にくっつけることはできますか？
-②あとはボタンのデザインなど考えていきましょう。
+【4人目：無造作ヘアの黒髪くん（フック被弾）】
+Japanese anime style inspired by Kyoto Animation "Free!", high-quality 2D animation. Cinematic slow motion. A young Japanese male boxer with messy, dark brown/black hair reaching his cheeks, average build. A red boxing glove hooks his head, snapping it to the side. He has a dazed "What just happened?" expression as he is blown away by the impact. A brightly colored mouthpiece is ejected, flying through the air with sweat droplets. He collapses sideways onto the canvas in slow motion. Dark background, dramatic lighting, capturing the raw shock of the moment.
 
-器が確実にできているのに、中身のコンテンツの制作が追いつかないｗ
+💡 生成時のコツ
+18歳（成年）の表現について：
+プロンプト内の「young male boxer」を「young adult male boxer」や「18-year-old male boxer」に書き換えると、より安全に、かつ狙い通りの年齢感が出やすくなります。
+
+マウスピースの色：
+もし特定の色（例：蛍光イエローや赤）にしたい場合は、プロンプト内の「brightly colored mouthpiece」を「neon yellow mouthpiece」などの具体的な色に書き換えてみてください。
+
+さあ、解禁まであとわずか！最高の動画が生まれることを、私もセコンドとして祈っています。
+生成が完了したら、次はサイトへの埋め込みですね。準備ができたらまた声をかけてください！🥊✨

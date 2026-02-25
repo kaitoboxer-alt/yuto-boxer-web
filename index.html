@@ -1,341 +1,149 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boys Boxing & Professional wrestling prod. YUTO</title>
-<style>
-    /* ＝＝＝ 全体のベース設定 ＝＝＝ */
-    body {
-        margin: 0;
-        background-color: #000;
-        overflow: hidden;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message - yuto-boxer.com</title>
+    <style>
+        /* 全体の設定 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            color: #fff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            
+            /* ▼ ここに背景にしたい画像（舞台袖や土手など）のURLを入れます ▼ */
+            background-image: url('https://media.yuto-boxer.com/backgrounds/your-cool-image.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
 
-    /* ＝＝＝ 背景スライドショーの設定 ＝＝＝ */
-    .bg-grid {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        z-index: -2;
-    }
+        /* 画像を少し暗くしてフォームを目立たせるオーバーレイ */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
 
-    .panel {
-        background-size: cover;
-        background-position: center;
-        opacity: 1;
-        transition: opacity 2s ease-in-out; 
-    }
+        /* フォームの枠 */
+        .form-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(20, 20, 20, 0.85);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid #333;
+        }
 
-    .panel.fade-out {
-        opacity: 0; 
-    }
+        h2 {
+            margin-top: 0;
+            letter-spacing: 0.1em;
+            font-weight: 400;
+        }
 
-    /* 背景の黒フィルター（25%） */
-    .black-filter {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.25);
-        z-index: -1; 
-        pointer-events: none; 
-    }
+        p.note {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
 
-    /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
-    .content {
-        position: relative;
-        z-index: 1; 
-        color: white;
-        text-align: center;
-        padding-top: 35vh;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
-    }
+        /* メッセージ入力欄 */
+        textarea {
+            width: 100%;
+            height: 160px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #222;
+            color: #fff;
+            font-size: 1rem;
+            resize: none;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
 
-    .content h1 {
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-        letter-spacing: 2px;
-        font-weight: normal;
-    }
+        textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
 
-    .content .enter-link {
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-        color: white;
-        text-decoration: none; 
-        display: inline-block;
-        animation: slowBlink 3s infinite ease-in-out;
-        cursor: pointer;
-    }
+        /* 送信ボタン */
+        button {
+            background: linear-gradient(45deg, #b71c1c, #d32f2f);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+        }
 
-    @keyframes slowBlink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.3; }
-    }
-
-    /* ＝＝＝ サブメニュー（右下のボタン群） ＝＝＝ */
-    .sub-menu {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        display: flex;
-        gap: 15px;
-        z-index: 10;
-    }
-    
-    .sub-menu a {
-        background: rgba(20, 20, 20, 0.6);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 10px 15px;
-        border-radius: 6px;
-        color: rgba(255, 255, 255, 0.8);
-        text-decoration: none;
-        font-size: 0.85rem;
-        letter-spacing: 1px;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .sub-menu a:hover {
-        background: rgba(50, 50, 50, 0.8);
-        color: #fff;
-        border-color: rgba(255, 255, 255, 0.6);
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
-    }
-
-    /* ＝＝＝ コピーライト ＝＝＝ */
-    .copyright {
-        position: fixed;
-        bottom: 15px;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.4);
-        font-size: 0.75rem;
-        letter-spacing: 1px;
-        z-index: 1;
-        pointer-events: none;
-    }
-
-    /* ＝＝＝ モーダル設定 ＝＝＝ */
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.4s ease;
-        z-index: 100;
-        backdrop-filter: blur(5px);
-    }
-
-    .modal.active {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .modal-content {
-        width: 80%;
-        max-width: 600px;
-        border-radius: 8px;
-        overflow: hidden;
-        text-align: left;
-        position: relative;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    }
-
-    .modal-header {
-        background-color: #111111; 
-        color: #ffffff;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .modal-title {
-        margin: 0;
-        font-size: 1.2rem;
-        letter-spacing: 2px;
-        font-weight: bold;
-    }
-
-    .text-content {
-        padding: 30px 40px;
-        line-height: 1.8;
-        font-size: 0.95rem;
-    }
-
-    .close-btn {
-        font-size: 1.8rem;
-        cursor: pointer;
-        opacity: 0.7;
-        transition: opacity 0.3s;
-        line-height: 1;
-    }
-    .close-btn:hover { opacity: 1; }
-
-    /* 各モーダルの色設定 */
-    #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; }
-    #modal-msg .text-content { background-color: rgba(255, 255, 255, 0.9); color: #333; }
-    #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }
-    #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }
-
-    /* 年齢確認用スタイル */
-    #modal-age-check .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; text-align: center; }
-    .age-btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
-    .age-btn { padding: 10px 30px; border: 2px solid #333; background: transparent; cursor: pointer; font-weight: bold; transition: all 0.3s; }
-    .age-btn.yes { background: #000; color: #fff; }
-    .age-btn.yes:hover { background: #333; }
-    .age-btn.no:hover { background: #eee; }
-
-</style>
+        button:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="bg-grid">
-        <div class="panel"></div>
-        <div class="panel"></div>
-        <div class="panel"></div>
-        <div class="panel"></div>
-        <div class="panel"></div>
-        <div class="panel"></div>
+    <div class="overlay"></div>
+
+    <div class="form-container">
+        <h2>MESSAGE</h2>
+        <p class="note">
+            感想や質問など、お気軽にどうぞ！<br>
+            ※いただいたメッセージにはX(Twitter)でお返事する場合があります。
+        </p>
+        
+        <form id="messageForm" action="https://formspree.io/f/xeelvqye" method="POST">
+            
+            <textarea name="message" placeholder="ここへメッセージを入力してください..." required></textarea>
+            
+            <input type="hidden" name="_subject" id="formSubject" value="ゆーとのポストにメッセージが届きました！">
+            <input type="hidden" name="card_image_url" id="cardImageUrl" value="">
+            <input type="hidden" name="_replyto" value="info@yuto-boxer.com">
+
+            <button type="submit">送信する</button>
+        </form>
     </div>
 
-    <div class="black-filter"></div>
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', function() {
+            
+            // ① ランダムな4桁の数字を生成して件名にセット
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('formSubject').value = `[yuto-form:${randomNum}] ゆーとのポストにメッセージが届きました！`;
 
-    <div class="content">
-        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
-        <h1>Boys Boxing & Professional wrestling</h1>
-        <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
-    </div>
+            // ② Cloudflareに置くカード画像のURLリスト
+            // ※ 実際にアップロードした画像のURLに書き換えてください！
+            const cardImages = [
+                "https://media.yuto-boxer.com/cards/card01.jpg",
+                "https://media.yuto-boxer.com/cards/card02.jpg",
+                "https://media.yuto-boxer.com/cards/card03.jpg"
+            ];
 
-    <div class="sub-menu">
-        <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
-        <a onclick="openModal('modal-msg', 'texts/message-to.txt')">Message</a>
-        <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
-        <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
-    </div>
+            // ③ ランダムに1枚選んで裏側の入力欄にセット
+            const randomCard = cardImages[Math.floor(Math.random() * cardImages.length)];
+            document.getElementById('cardImageUrl').value = randomCard;
+            
+        });
+    </script>
 
-    <div class="copyright">
-        &copy; 2026 yuto-boxer.com All Rights Reserved.
-    </div>
-
-    <div id="modal-age-check" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Age Verification</h2>
-            </div>
-            <div class="text-content">
-                大変申し訳ありませんが、当サイトは表現の都合上、18歳以下の方の閲覧はお断りしております。<br>
-                18歳の誕生日を迎えてから、あらためてお越しいただけると嬉しいです。<br><br>
-                あなたは18歳以上ですか？
-                <div class="age-btn-container">
-                    <button class="age-btn yes" onclick="verifyAge(true)">はい（Enter）</button>
-                    <button class="age-btn no" onclick="verifyAge(false)">いいえ（Exit）</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-from" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-from')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-msg" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-msg')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-ai" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-ai')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-copy" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-copy')">×</span></div><div class="text-content"></div></div></div>
-
-<script>
-    /* ＝＝＝ 背景スライドショー ＝＝＝ */
-    const totalImages = 93;
-    const imageUrls = [];
-    for (let i = 1; i <= totalImages; i++) {
-        const num = String(i).padStart(3, '0');
-        imageUrls.push(`https://media.yuto-boxer.com/top/${num}.webp`);
-    }
-
-    const panels = document.querySelectorAll('.panel');
-    panels.forEach(panel => {
-        const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-        panel.style.backgroundImage = `url('${randomImg}')`;
-    });
-
-    setInterval(() => {
-        const randomPanelIndex = Math.floor(Math.random() * panels.length);
-        const targetPanel = panels[randomPanelIndex];
-        if (targetPanel.classList.contains('fade-out')) return;
-        targetPanel.classList.add('fade-out');
-        setTimeout(() => {
-            const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-            targetPanel.style.backgroundImage = `url('${nextImg}')`;
-            targetPanel.classList.remove('fade-out');
-        }, 2000); 
-    }, 3000); 
-
-    /* ＝＝＝ 年齢確認 ＝＝＝ */
-    function checkAge() {
-        document.getElementById('modal-age-check').classList.add('active');
-    }
-
-    function verifyAge(isAdult) {
-        if (isAdult) {
-            window.location.href = "clubroom/";
-        } else {
-            alert("また18歳になった時にお会いしましょう！");
-            window.location.href = "https://www.google.com";
-        }
-    }
-
-    /* ＝＝＝ テキスト読み込み ＝＝＝ */
-    function openModal(modalId, textFilePath) {
-        const modal = document.getElementById(modalId);
-        const titleArea = modal.querySelector('.modal-title');
-        const contentArea = modal.querySelector('.text-content');
-        modal.classList.add('active');
-
-        fetch(textFilePath)
-            .then(response => {
-                if (!response.ok) throw new Error('Failed to load');
-                return response.text();
-            })
-            .then(text => {
-                const lines = text.split('\n');
-                const firstLine = lines.shift(); 
-                const bodyText = lines.join('<br>');
-                titleArea.innerText = firstLine;
-                contentArea.innerHTML = bodyText;
-            })
-            .catch(error => {
-                titleArea.innerText = 'Error';
-                contentArea.innerHTML = '読み込みに失敗しました。';
-                console.error(error);
-            });
-    }
-
-    function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove('active');
-    }
-
-    window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.classList.remove('active');
-        }
-    };
-</script>
 </body>
 </html>
