@@ -3,182 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>オリジナルメッセージカード作成</title>
+  <title>オリジナルメッセージ＆送信フォーム</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Noto Sans JP', sans-serif;
       background-color: #f4f4f9;
-      color: #333;
       text-align: center;
-      padding: 20px;
+      padding: 50px 20px;
       margin: 0;
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .controls {
-      max-width: 600px;
-      margin: 0 auto 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    textarea {
-      width: 100%;
-      height: 100px;
-      padding: 10px;
-      font-size: 16px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      font-family: 'Noto Sans JP', sans-serif;
-      resize: none;
-    }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-    button {
-      background-color: #0056b3;
+    
+    /* メッセージウィンドウを開くボタン */
+    .btn-open {
+      background-color: #ff4500;
       color: white;
       border: none;
-      padding: 12px 24px;
-      font-size: 16px;
+      padding: 15px 30px;
+      font-size: 18px;
       font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
-    button:hover {
-      background-color: #003d82;
+
+    /* ウィンドウ（モーダル）の背景 */
+    #messageWindow {
+      display: none; /* 初期状態は非表示 */
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
     }
-    .btn-download {
-      background-color: #ff8c00;
-    }
-    .btn-download:hover {
-      background-color: #cc7000;
-    }
-    .canvas-container {
-      max-width: 100%;
-      overflow: hidden;
-    }
-    /* スマホなどでもはみ出さないようにレスポンシブ対応 */
-    canvas {
-      width: 100%;
-      max-width: 800px; /* 画面上での最大表示サイズ（実際の出力は1280x720） */
-      height: auto;
+
+    /* ウィンドウの本体 */
+    .window-content {
+      background-color: white;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 700px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
     }
+
+    /* 閉じるボタン */
+    .btn-close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #888;
+      border: none;
+      background: none;
+    }
+
+    /* キャンバスとフォームのスタイル */
+    .canvas-container { margin-bottom: 20px; }
+    canvas { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    
+    textarea {
+      width: 100%; box-sizing: border-box; height: 80px; padding: 10px;
+      font-size: 16px; border: 2px solid #ccc; border-radius: 8px;
+      font-family: inherit; resize: none; margin-bottom: 10px;
+    }
+
+    .buttons { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    button {
+      background-color: #0056b3; color: white; border: none; padding: 10px 20px;
+      font-size: 14px; font-weight: bold; border-radius: 8px; cursor: pointer;
+    }
+    .btn-download { background-color: #ff8c00; }
+    .btn-submit { background-color: #28a745; width: 100%; padding: 15px; font-size: 18px; }
+    hr { margin: 20px 0; border: 0; border-top: 1px solid #eee; }
   </style>
 </head>
 <body>
 
-  <h1>メッセージカード作成</h1>
+  <h1>応援メッセージを送ろう！</h1>
+  <button class="btn-open" onclick="openWindow()">メッセージウィンドウを開く📩</button>
 
-  <div class="controls">
-    <textarea id="messageInput" placeholder="ここにメッセージを入力してください（自動で文字サイズが調整されます！）">いつも応援ありがとう！
+  <div id="messageWindow">
+    <div class="window-content">
+      <button class="btn-close" onclick="closeWindow()">×</button>
+      <h2>メッセージカード作成</h2>
+      
+      <div class="canvas-container">
+        <canvas id="myCanvas" width="1280" height="720"></canvas>
+      </div>
+      
+      <textarea id="cardInput" placeholder="カードに書き込むメッセージ（自動で文字サイズが調整されます）">いつも応援ありがとう！
 これからもよろしくな！</textarea>
-    <div class="buttons">
-      <button onclick="changeRandomCard()">キャラを変える🎲</button>
-      <button onclick="drawCard()">文字を反映する🖊️</button>
-      <button class="btn-download" onclick="downloadCard()">画像を保存する💾</button>
-    </div>
-  </div>
+      <div class="buttons">
+        <button onclick="changeRandomCard()">キャラを変える🎲</button>
+        <button onclick="drawCard()">文字を反映する🖊️</button>
+        <button class="btn-download" onclick="downloadCard()">画像を保存する💾</button>
+      </div>
 
-  <div class="canvas-container">
-    <canvas id="myCanvas" width="1280" height="720"></canvas>
-  </div>
+      <hr>
 
+      <h2>運営にメッセージを送る</h2>
+      <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
+        <textarea name="message" required placeholder="ここに直接応援メッセージを書いて送信できます！"></textarea>
+        <button type="submit" class="btn-submit">メッセージを送信する 🚀</button>
+      </form>
+      </div>
+  </div>
   <script>
+    // --- ウィンドウ（モーダル）の開閉処理 ---
+    function openWindow() {
+      document.getElementById('messageWindow').style.display = 'flex';
+      changeRandomCard(); // 開いた時にランダムでカードをセット
+    }
+    function closeWindow() {
+      document.getElementById('messageWindow').style.display = 'none';
+    }
+
+    // --- キャンバス（画像合成）の処理 ---
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-    const messageInput = document.getElementById('messageInput');
-    
-    // 現在のカード番号（1〜20）
+    const cardInput = document.getElementById('cardInput');
     let currentCardNumber = 1;
     let currentImage = new Image();
 
-    // 最初にランダムなカードを読み込む
-    window.onload = () => {
-      changeRandomCard();
-    };
-
-    // ランダムなキャラに変更する
     function changeRandomCard() {
-      // 1〜20のランダムな数字を生成
       currentCardNumber = Math.floor(Math.random() * 20) + 1;
-      loadAndDrawImage();
-    }
-
-    // 画像を読み込んでキャンバスに描画する
-    function loadAndDrawImage() {
-      // 01, 02 のようにゼロ埋めする
       const paddedNum = String(currentCardNumber).padStart(2, '0');
-      // ゆーとさんの指定URL（cards ではなく card フォルダ）
       const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
       currentImage = new Image();
-      // ★重要★ これがないとCanvasから画像をダウンロードする際にエラー（CORS制限）になります
       currentImage.crossOrigin = "anonymous"; 
-      
-      currentImage.onload = () => {
-        drawCard();
-      };
-      // キャッシュ対策でクエリパラメータをつける（画像が更新された時用）
+      currentImage.onload = () => drawCard();
       currentImage.src = imageUrl + "?t=" + new Date().getTime();
     }
 
-    // キャンバス全体を描画（画像＋テキスト）
     function drawCard() {
-      // 1. まずベースとなるキャラクター画像を描画
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
 
-      // 2. テキストを描画
-      const text = messageInput.value;
+      const text = cardInput.value;
       if (text.trim() !== "") {
-        const textArea = {
-          x: 130,       // 左からのスタート位置
-          y: 160,       // 上からのスタート位置
-          width: 660,   // テキストエリアの最大幅（右のキャラに被らないように調整）
-          height: 420   // テキストエリアの最大高さ
-        };
+        const textArea = { x: 130, y: 160, width: 660, height: 420 };
         drawTextWithAutoScale(ctx, text, textArea);
       }
     }
 
-    // ★自動サイズ調整＆描画の実行関数★
     function drawTextWithAutoScale(ctx, text, area) {
-      let fontSize = 54; // 最大フォントサイズ
-      const minFontSize = 24; // 最小フォントサイズ
+      let fontSize = 54;
+      const minFontSize = 24;
       const fontFamily = "'Noto Sans JP', sans-serif";
-      const lineHeightRatio = 1.4; // 行間
-      
+      const lineHeightRatio = 1.4;
       let lines = [];
-      let wrappedText = text.replace(/\r\n/g, '\n'); // 改行コードを統一
+      let wrappedText = text.replace(/\r\n/g, '\n');
       
       while (fontSize >= minFontSize) {
         ctx.font = `bold ${fontSize}px ${fontFamily}`;
         lines = wrapText(ctx, wrappedText, area.width);
-        
         let totalHeight = lines.length * (fontSize * lineHeightRatio);
-        
-        if (totalHeight <= area.height) {
-          break; // 枠の高さに収まったらループを抜ける
-        }
-        fontSize -= 2; // 収まらなければ2px小さくして再計算
+        if (totalHeight <= area.height) break;
+        fontSize -= 2;
       }
 
-      // 実際にテキストを描画
-      ctx.fillStyle = "#333333"; // 馴染みやすい濃いグレー
+      ctx.fillStyle = "#333333";
       ctx.textBaseline = "top";
-      
-      // 全体の高さから中央寄せにするための計算（上揃えでよければY座標固定でもOK）
       const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
-      const startY = area.y + (area.height - totalTextHeight) / 2; // 縦方向の中央に配置
+      const startY = area.y + (area.height - totalTextHeight) / 2;
 
       lines.forEach((line, index) => {
         const textY = startY + index * (fontSize * lineHeightRatio);
@@ -186,26 +177,18 @@
       });
     }
 
-    // 自動改行（分割）補助関数
     function wrapText(ctx, text, maxWidth) {
       const chars = text.split('');
       let lines = [];
       let currentLine = '';
-
       for (let i = 0; i < chars.length; i++) {
         const char = chars[i];
         if (char === '\n') {
-          lines.push(currentLine);
-          currentLine = '';
-          continue;
+          lines.push(currentLine); currentLine = ''; continue;
         }
-
         const testLine = currentLine + char;
-        const metrics = ctx.measureText(testLine);
-        
-        if (metrics.width > maxWidth && currentLine !== '') {
-          lines.push(currentLine);
-          currentLine = char;
+        if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
+          lines.push(currentLine); currentLine = char;
         } else {
           currentLine = testLine;
         }
@@ -214,20 +197,42 @@
       return lines;
     }
 
-    // 完成した画像をスマホ・PCにダウンロードさせる機能
     function downloadCard() {
-      // 一度最新の状態で再描画しておく
       drawCard();
-      
-      // 画像のURL化（PNG形式）
-      const dataUrl = canvas.toDataURL("image/png");
-      
-      // ダウンロード用のリンクを隠し作成してクリックさせる
       const link = document.createElement('a');
       link.download = `message_card.png`;
-      link.href = dataUrl;
+      link.href = canvas.toDataURL("image/png");
       link.click();
     }
+
+    // --- Formspree 非同期送信（画面遷移なし）の処理 ---
+    const form = document.getElementById('myForm');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // デフォルトの画面遷移をブロック
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("メッセージを送信しました！ありがとうございます！");
+          form.reset(); // フォームを空にする
+          closeWindow(); // 【ここでウィンドウを閉じる！】
+        } else {
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              alert(data["errors"].map(error => error["message"]).join(", "));
+            } else {
+              alert("送信に失敗しました。もう一度お試しください。");
+            }
+          });
+        }
+      })
+      .catch(error => alert("通信エラーが発生しました。"));
+    });
   </script>
 </body>
 </html>
