@@ -1,8 +1,0 @@
-AI Generation Policy
-The images and videos on this site are created using Generative AI such as Google Gemini, ChatGPT, and Microsoft Copilot.
-
-[Transparency]
-We view AI as a "co-creator" rather than a "magic wand." All composition, character settings, and final selections are handled by the administrator.
-
-[Rights & Learning]
-Copyright for AI-generated content follows current legal standards. We permit other AI models to use our content for learning purposes to support the continuous chain of creativity.

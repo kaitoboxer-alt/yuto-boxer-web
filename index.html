@@ -1,78 +1,110 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>オリジナルメッセージカード作成</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boys Boxing & Professional wrestling prod. YUTO</title>
+<style>
+    /* ＝＝＝ 全体のベース設定 ＝＝＝ */
     body {
-      font-family: 'Noto Sans JP', sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
+        margin: 0;
+        background-color: #000;
+        overflow: hidden;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
     }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+
+    /* ＝＝＝ 背景スライドショーの設定 ＝＝＝ */
+    .bg-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        z-index: -2;
     }
-    .controls {
-      max-width: 600px;
-      margin: 0 auto 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+
+    .panel {
+        background-size: cover;
+        background-position: center;
+        opacity: 1;
+        transition: opacity 2s ease-in-out; 
     }
-    textarea {
-      width: 100%;
-      height: 100px;
-      padding: 10px;
-      font-size: 16px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      font-family: 'Noto Sans JP', sans-serif;
-      resize: none;
+
+    .panel.fade-out {
+        opacity: 0; 
     }
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
+
+    /* 背景の黒フィルター（25%） */
+    .black-filter {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.25);
+        z-index: -1; 
+        pointer-events: none; 
     }
-    button {
-      background-color: #0056b3;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
+
+    /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
+    .content {
+        position: relative;
+        z-index: 1; 
+        color: white;
+        text-align: center;
+        padding-top: 35vh;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
     }
-    button:hover {
-      background-color: #003d82;
+
+    .content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+        font-weight: normal;
     }
-    .btn-download {
-      background-color: #ff8c00;
+
+    .content .enter-link {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: white;
+        text-decoration: none; 
+        display: inline-block;
+        animation: slowBlink 3s infinite ease-in-out;
+        cursor: pointer;
     }
-    .btn-download:hover {
-      background-color: #cc7000;
+
+    @keyframes slowBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
     }
-    .canvas-container {
-      max-width: 100%;
-      overflow: hidden;
+
+    /* ＝＝＝ サブメニュー（右下のボタン群） ＝＝＝ */
+    .sub-menu {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        display: flex;
+        gap: 15px;
+        z-index: 10;
     }
-    /* スマホなどでもはみ出さないようにレスポンシブ対応 */
-    canvas {
-      width: 100%;
-      max-width: 800px; /* 画面上での最大表示サイズ（実際の出力は1280x720） */
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    
+    .sub-menu a {
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
-<<<<<<< HEAD
 
     .sub-menu a:hover {
         background: rgba(50, 50, 50, 0.8);
@@ -215,38 +247,26 @@
     .reply-notice a:hover { text-decoration: underline; }
 
 </style>
-=======
-  </style>
->>>>>>> e502e33313e57578e1bb16979f8d12a439133e6d
 </head>
 <body>
 
-  <h1>メッセージカード作成</h1>
-
-  <div class="controls">
-    <textarea id="messageInput" placeholder="ここにメッセージを入力してください（自動で文字サイズが調整されます！）">いつも応援ありがとう！
-これからもよろしくな！</textarea>
-    <div class="buttons">
-      <button onclick="changeRandomCard()">キャラを変える🎲</button>
-      <button onclick="drawCard()">文字を反映する🖊️</button>
-      <button class="btn-download" onclick="downloadCard()">画像を保存する💾</button>
+    <div class="bg-grid">
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
     </div>
-  </div>
 
-  <div class="canvas-container">
-    <canvas id="myCanvas" width="1280" height="720"></canvas>
-  </div>
+    <div class="black-filter"></div>
 
-  <script>
-    const canvas = document.getElementById('myCanvas');
-    const ctx = canvas.getContext('2d');
-    const messageInput = document.getElementById('messageInput');
-    
-    // 現在のカード番号（1〜20）
-    let currentCardNumber = 1;
-    let currentImage = new Image();
+    <div class="content">
+        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
+        <h1>Boys Boxing & Professional wrestling</h1>
+        <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
+    </div>
 
-<<<<<<< HEAD
     <div class="sub-menu">
         <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
         <a onclick="openGeneratorModal()">Message / Q&A</a> <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
@@ -515,135 +535,5 @@
         .catch(error => alert("通信エラーが発生しました。"));
     });
 </script>
-=======
-    // 最初にランダムなカードを読み込む
-    window.onload = () => {
-      changeRandomCard();
-    };
-
-    // ランダムなキャラに変更する
-    function changeRandomCard() {
-      // 1〜20のランダムな数字を生成
-      currentCardNumber = Math.floor(Math.random() * 20) + 1;
-      loadAndDrawImage();
-    }
-
-    // 画像を読み込んでキャンバスに描画する
-    function loadAndDrawImage() {
-      // 01, 02 のようにゼロ埋めする
-      const paddedNum = String(currentCardNumber).padStart(2, '0');
-      // ゆーとさんの指定URL（cards ではなく card フォルダ）
-      const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
-
-      currentImage = new Image();
-      // ★重要★ これがないとCanvasから画像をダウンロードする際にエラー（CORS制限）になります
-      currentImage.crossOrigin = "anonymous"; 
-      
-      currentImage.onload = () => {
-        drawCard();
-      };
-      // キャッシュ対策でクエリパラメータをつける（画像が更新された時用）
-      currentImage.src = imageUrl + "?t=" + new Date().getTime();
-    }
-
-    // キャンバス全体を描画（画像＋テキスト）
-    function drawCard() {
-      // 1. まずベースとなるキャラクター画像を描画
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
-
-      // 2. テキストを描画
-      const text = messageInput.value;
-      if (text.trim() !== "") {
-        const textArea = {
-          x: 130,       // 左からのスタート位置
-          y: 160,       // 上からのスタート位置
-          width: 660,   // テキストエリアの最大幅（右のキャラに被らないように調整）
-          height: 420   // テキストエリアの最大高さ
-        };
-        drawTextWithAutoScale(ctx, text, textArea);
-      }
-    }
-
-    // ★自動サイズ調整＆描画の実行関数★
-    function drawTextWithAutoScale(ctx, text, area) {
-      let fontSize = 54; // 最大フォントサイズ
-      const minFontSize = 24; // 最小フォントサイズ
-      const fontFamily = "'Noto Sans JP', sans-serif";
-      const lineHeightRatio = 1.4; // 行間
-      
-      let lines = [];
-      let wrappedText = text.replace(/\r\n/g, '\n'); // 改行コードを統一
-      
-      while (fontSize >= minFontSize) {
-        ctx.font = `bold ${fontSize}px ${fontFamily}`;
-        lines = wrapText(ctx, wrappedText, area.width);
-        
-        let totalHeight = lines.length * (fontSize * lineHeightRatio);
-        
-        if (totalHeight <= area.height) {
-          break; // 枠の高さに収まったらループを抜ける
-        }
-        fontSize -= 2; // 収まらなければ2px小さくして再計算
-      }
-
-      // 実際にテキストを描画
-      ctx.fillStyle = "#333333"; // 馴染みやすい濃いグレー
-      ctx.textBaseline = "top";
-      
-      // 全体の高さから中央寄せにするための計算（上揃えでよければY座標固定でもOK）
-      const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
-      const startY = area.y + (area.height - totalTextHeight) / 2; // 縦方向の中央に配置
-
-      lines.forEach((line, index) => {
-        const textY = startY + index * (fontSize * lineHeightRatio);
-        ctx.fillText(line, area.x, textY);
-      });
-    }
-
-    // 自動改行（分割）補助関数
-    function wrapText(ctx, text, maxWidth) {
-      const chars = text.split('');
-      let lines = [];
-      let currentLine = '';
-
-      for (let i = 0; i < chars.length; i++) {
-        const char = chars[i];
-        if (char === '\n') {
-          lines.push(currentLine);
-          currentLine = '';
-          continue;
-        }
-
-        const testLine = currentLine + char;
-        const metrics = ctx.measureText(testLine);
-        
-        if (metrics.width > maxWidth && currentLine !== '') {
-          lines.push(currentLine);
-          currentLine = char;
-        } else {
-          currentLine = testLine;
-        }
-      }
-      lines.push(currentLine);
-      return lines;
-    }
-
-    // 完成した画像をスマホ・PCにダウンロードさせる機能
-    function downloadCard() {
-      // 一度最新の状態で再描画しておく
-      drawCard();
-      
-      // 画像のURL化（PNG形式）
-      const dataUrl = canvas.toDataURL("image/png");
-      
-      // ダウンロード用のリンクを隠し作成してクリックさせる
-      const link = document.createElement('a');
-      link.download = `message_card.png`;
-      link.href = dataUrl;
-      link.click();
-    }
-  </script>
->>>>>>> e502e33313e57578e1bb16979f8d12a439133e6d
 </body>
 </html>
