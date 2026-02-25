@@ -1,0 +1,24 @@
+《AI Policy / About the Use of Generative AI》
+The illustrations and videos featured on this website (Boys Boxing & Pro-Wrestling via YUTO) are created using generative AI.
+
+Regarding the use of image-generating AI, this site strictly adheres to Japanese domestic laws and government guidelines. We operate with extreme care based on the following legal foundations and principles.
+
+[Legal Basis and Reference Guidelines]
+Japanese Copyright Act, Article 30-4 (Reproduction for Information Analysis)
+Agency for Cultural Affairs, Copyright Subdivision Report: "Views on AI and Copyright" (Published March 15, 2024)
+
+Under current Japanese law, using copyrighted works during the AI "development and training phase" is generally considered lawful, provided it does not unreasonably prejudice the interests of the copyright holders. However, in the "generation and utilization phase"—where AI is used to create and publish images, as is done on this site—standard copyright laws apply exactly as they would if a human had created the work without AI.
+
+The administrator of this site takes the legal responsibilities of this "generation and utilization phase" very seriously.
+When generating content, we strictly prohibit the use of prompts designed to mimic the art style of specific existing creators (such as i2i or LoRA), nor do we instruct the AI to output existing copyrighted characters or real, living people. Everything is generated purely from text prompts based entirely on the administrator's original ideas.
+
+Furthermore, before publishing any generated content, we visually inspect it to ensure there is no "similarity" or "reliance" on existing copyrighted works. We promise to deliver only clean, original content that does not infringe upon the copyrights or portrait rights of any third parties.
+
+※ Notes:
+Regarding use as AI training material: We permit the use of all generated content (images, texts, etc.) featured on this site strictly for the purpose of pure AI machine learning/training.
+Regarding AI-generated works: All works are published and distributed entirely for free. They will never be used for commercial purposes.
+
+※ A Final Word:
+I am fully aware that generative AI, particularly image-generating AI, is a highly debated topic, and people hold many different opinions.
+I deeply respect your views and have no intention of denying them. Conversely, I simply ask for your understanding that I, too, have my own perspective and stance.
+With mutual understanding, I truly hope you can enjoy the entertainment space we have built here.

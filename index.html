@@ -30,11 +30,11 @@
         background-size: cover;
         background-position: center;
         opacity: 1;
-        transition: opacity 2s ease-in-out;
+        transition: opacity 2s ease-in-out; 
     }
 
     .panel.fade-out {
-        opacity: 0;
+        opacity: 0; 
     }
 
     /* 背景の黒フィルター（25%） */
@@ -45,18 +45,18 @@
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.25);
-        z-index: -1;
-        pointer-events: none;
+        z-index: -1; 
+        pointer-events: none; 
     }
 
     /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
     .content {
         position: relative;
-        z-index: 1;
+        z-index: 1; 
         color: white;
         text-align: center;
         padding-top: 35vh;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
     }
 
     .content h1 {
@@ -70,7 +70,7 @@
         font-size: 1.2rem;
         letter-spacing: 2px;
         color: white;
-        text-decoration: none;
+        text-decoration: none; 
         display: inline-block;
         animation: slowBlink 3s infinite ease-in-out;
         cursor: pointer;
@@ -161,7 +161,7 @@
     }
 
     .modal-header {
-        background-color: #111111;
+        background-color: #111111; 
         color: #ffffff;
         padding: 15px 20px;
         display: flex;
@@ -252,27 +252,28 @@
     .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
     
     .gen-textarea {
-        width: 100%; box-sizing: border-box; height: 80px; padding: 10px;
-        font-size: 15px; border: 2px solid #ccc; border-radius: 6px;
-        font-family: inherit; resize: vertical; margin-bottom: 10px;
+        width: 100%; box-sizing: border-box; height: 120px; padding: 15px;
+        font-size: 16px; border: 2px solid #ccc; border-radius: 6px;
+        font-family: inherit; resize: vertical; margin-bottom: 15px;
     }
     .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-    .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+    .gen-btn { background-color: #333; color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
     .gen-btn:hover { background-color: #000; }
     .gen-btn-dl { background-color: #ff4500; }
     .gen-btn-dl:hover { background-color: #cc3700; }
     
     .gen-btn-submit {
-        background-color: #28a745; width: 100%; padding: 12px; font-size: 16px;
+        background-color: #28a745; width: 100%; padding: 15px; font-size: 18px;
         color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;
     }
     .gen-btn-submit:hover { background-color: #218838; }
     
     .gen-hr { margin: 25px 0; border: 0; border-top: 1px dashed #ccc; }
     
+    /* 注意書きのフォントを少し大きく、行間を広げて見やすくしました！ */
     .reply-notice {
-        font-size: 12px; color: #555; margin-top: 15px; text-align: left;
-        line-height: 1.6; background-color: #f8f9fa; padding: 12px;
+        font-size: 14px; color: #444; margin-top: 20px; text-align: left;
+        line-height: 1.8; background-color: #f8f9fa; padding: 15px;
         border-radius: 8px; border: 1px solid #ddd;
     }
     .reply-notice a { color: #1da1f2; text-decoration: none; font-weight: bold; }
@@ -383,22 +384,25 @@
             </div>
             <div class="text-content">
                 
-                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ メッセージカード生成（管理者用）</h3>
+                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ メッセージカード生成</h3>
                 <div class="gen-canvas-container">
                     <canvas id="myCanvas" width="1280" height="720"></canvas>
                 </div>
-                <textarea id="cardInput" class="gen-textarea" placeholder="フォロワーさんへのメッセージを入力">いつも応援ありがとう！</textarea>
+                
                 <div class="gen-buttons">
-                    <button class="gen-btn" onclick="changeRandomCard()">キャラを変える🎲</button>
-                    <button class="gen-btn" onclick="drawCard()">文字を反映🖊️</button>
-                    <button class="gen-btn gen-btn-dl" onclick="downloadCard()">画像を保存💾</button>
+                    <button class="gen-btn" type="button" onclick="changeRandomCard()">キャラを変える🎲</button>
+                    <button class="gen-btn gen-btn-dl" type="button" onclick="downloadCard()">この画像を保存💾</button>
                 </div>
 
                 <hr class="gen-hr">
 
-                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ 運営にメッセージを送る</h3>
+                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ ゆーとにメッセージを送る</h3>
                 <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
-                    <textarea name="message" class="gen-textarea" style="height:100px;" required placeholder="ここに直接応援メッセージや質問を書いて送信できます！"></textarea>
+                    
+                    <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
+
+                    <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="ここに応援メッセージや質問を入力すると、上のカードにリアルタイムで書き込まれます！"></textarea>
+                    
                     <button type="submit" class="gen-btn-submit">メッセージを送信する 🚀</button>
                     
                     <div class="reply-notice">
@@ -436,8 +440,8 @@
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
             targetPanel.classList.remove('fade-out');
-        }, 2000); 
-    }, 3000); 
+        }, 2000);
+    }, 3000);
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
     function checkAge() {
@@ -457,8 +461,6 @@
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.classList.add('active');
-        
-        // モーダルを開いた時に、自動で一番左のタブ（日本語）をクリックして読み込む
         const firstTab = modal.querySelector('.modal-tab');
         if (firstTab) {
             firstTab.click();
@@ -470,12 +472,10 @@
         const titleArea = modal.querySelector('.modal-title');
         const contentArea = modal.querySelector('.text-content');
         
-        // タブのアクティブ状態を切り替え
         const tabs = modal.querySelectorAll('.modal-tab');
         tabs.forEach(t => t.classList.remove('active'));
         tabElement.classList.add('active');
 
-        // テキストファイルの読み込み
         fetch(textFilePath)
             .then(response => {
                 if (!response.ok) throw new Error('Failed to load text file: ' + textFilePath);
@@ -483,7 +483,7 @@
             })
             .then(text => {
                 const lines = text.split('\n');
-                const firstLine = lines.shift();
+                const firstLine = lines.shift(); 
                 const bodyText = lines.join('<br>');
                 titleArea.innerText = firstLine;
                 contentArea.innerHTML = bodyText;
@@ -521,13 +521,20 @@
     let currentCardNumber = 1;
     let currentImage = new Image();
 
+    // ★ テキスト入力時にリアルタイムでキャンバスを更新 ★
+    cardInput.addEventListener('input', drawCard);
+
     function changeRandomCard() {
         currentCardNumber = Math.floor(Math.random() * 20) + 1;
         const paddedNum = String(currentCardNumber).padStart(2, '0');
+        // ★ Cloudflareの正しい画像パス（boxeryuto/card/）に対応
         const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
+        // フォームの隠し項目に画像URLをセット（メールに添付される用）
+        document.getElementById('selectedCardUrl').value = imageUrl;
+
         currentImage = new Image();
-        currentImage.crossOrigin = "anonymous"; 
+        currentImage.crossOrigin = "anonymous";
         currentImage.onload = () => drawCard();
         currentImage.src = imageUrl + "?t=" + new Date().getTime();
     }
@@ -555,8 +562,32 @@
             ctx.font = `bold ${fontSize}px ${fontFamily}`;
             lines = wrapText(ctx, wrappedText, area.width);
             let totalHeight = lines.length * (fontSize * lineHeightRatio);
-            if (totalHeight <= area.height) break;
-            fontSize -= 2;
+            
+            if (totalHeight <= area.height) {
+                break; // 枠に収まればループ終了
+            }
+            
+            fontSize -= 2; // 収まらなければ縮小
+            
+            // ★ もし最小サイズでも溢れる場合の省略（...）処理 ★
+            if (fontSize < minFontSize) {
+                fontSize = minFontSize;
+                ctx.font = `bold ${fontSize}px ${fontFamily}`;
+                lines = wrapText(ctx, wrappedText, area.width);
+                const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
+                lines = lines.slice(0, maxLines); // 収まる行数でカット
+                
+                if (lines.length > 0) {
+                    let lastLine = lines[lines.length - 1];
+                    // 最後の行の末尾を「…」に変更
+                    if (lastLine.length > 2) {
+                        lines[lines.length - 1] = lastLine.slice(0, -2) + "…";
+                    } else {
+                        lines[lines.length - 1] = lastLine + "…";
+                    }
+                }
+                break;
+            }
         }
 
         ctx.fillStyle = "#333333";
@@ -601,7 +632,7 @@
     /* ＝＝＝ Formspree 非同期送信処理 ＝＝＝ */
     const form = document.getElementById('myForm');
     form.addEventListener('submit', function(event) {
-        event.preventDefault(); 
+        event.preventDefault();
         const formData = new FormData(form);
 
         fetch(form.action, {
@@ -613,6 +644,7 @@
             if (response.ok) {
                 alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えします！");
                 form.reset(); 
+                drawCard(); // キャンバスもクリア
                 closeGeneratorModal(); 
             } else {
                 response.json().then(data => {
