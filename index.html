@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Boys Boxing & Professional wrestling prod. YUTO</title>
+
+<link rel="stylesheet" href="https://use.typekit.net/iji1sdm.css">
+
 <style>
     /* ＝＝＝ 全体のベース設定 ＝＝＝ */
     body {
@@ -60,6 +63,8 @@
     }
 
     .content h1 {
+        /* ⚠️ ゆーとさんへ：以下の "フォント名" をAdobe Fontsの指定名に書き換えてください！ */
+        font-family: "Adobe Fontsの指定名", 'Helvetica Neue', Arial, sans-serif;
         font-size: 1.5rem;
         margin-bottom: 20px;
         letter-spacing: 2px;
@@ -128,7 +133,7 @@
         pointer-events: none;
     }
 
-    /* ＝＝＝ モーダル設定 ＝＝＝ */
+    /* ＝＝＝ モーダル（ウィンドウ）の共通設定 ＝＝＝ */
     .modal {
         position: fixed;
         top: 0;
@@ -158,6 +163,13 @@
         text-align: left;
         position: relative;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-direction: column;
+        max-height: 90vh; /* 画面からはみ出さないように制限 */
+    }
+
+    .modal-header, .modal-tabs {
+        flex-shrink: 0; /* タイトルとタブは上に固定して潰さない */
     }
 
     .modal-header {
@@ -177,7 +189,7 @@
         font-weight: bold;
     }
 
-    /* ＝＝＝ 4カ国語切り替え用タブのスタイル ＝＝＝ */
+    /* ＝＝＝ 5カ国語切り替え用タブのスタイル ＝＝＝ */
     .modal-tabs {
         display: flex;
         background-color: #222;
@@ -209,10 +221,12 @@
         font-weight: bold;
     }
 
+    /* テキスト本文（ここだけがスクロールする） */
     .text-content {
         padding: 30px 40px;
         line-height: 1.8;
         font-size: 0.95rem;
+        overflow-y: auto; 
     }
 
     .close-btn {
@@ -237,43 +251,60 @@
     .age-btn.yes:hover { background: #333; }
     .age-btn.no:hover { background: #eee; }
 
-    /* ＝＝＝ ジェネレーター＆フォーム用の特別スタイル ＝＝＝ */
+    /* ＝＝＝ ジェネレーター＆フォーム用の特別スタイル（限界まで圧縮版） ＝＝＝ */
     #modal-generator .modal-content {
-        max-width: 750px;
-        max-height: 90vh;
-        overflow-y: auto;
+        max-width: 700px; 
     }
     #modal-generator .text-content {
         background-color: rgba(255, 255, 255, 0.95);
         color: #333;
-        padding: 20px 30px;
+        padding: 15px 25px; 
     }
-    .gen-canvas-container { margin-bottom: 15px; border-radius: 8px; overflow: hidden; background: #eee; }
+    #modal-generator h3 {
+        font-size: 1rem;
+        margin-top: 0;
+        margin-bottom: 8px; 
+        border-bottom: 2px solid #333;
+        padding-bottom: 3px;
+    }
+    .gen-canvas-container { 
+        margin-bottom: 10px; 
+        border-radius: 8px; 
+        overflow: hidden; 
+        background: #eee; 
+    }
     .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
     
     .gen-textarea {
-        width: 100%; box-sizing: border-box; height: 120px; padding: 15px;
-        font-size: 16px; border: 2px solid #ccc; border-radius: 6px;
-        font-family: inherit; resize: vertical; margin-bottom: 15px;
+        width: 100%; box-sizing: border-box; 
+        height: 70px; 
+        padding: 8px;
+        font-size: 14px; border: 2px solid #ccc; border-radius: 6px;
+        font-family: inherit; resize: vertical; 
+        margin-bottom: 10px; 
     }
-    .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-    .gen-btn { background-color: #333; color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+    .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
+    .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
     .gen-btn:hover { background-color: #000; }
     .gen-btn-dl { background-color: #ff4500; }
     .gen-btn-dl:hover { background-color: #cc3700; }
     
     .gen-btn-submit {
-        background-color: #28a745; width: 100%; padding: 15px; font-size: 18px;
+        background-color: #28a745; width: 100%; 
+        padding: 12px; font-size: 16px;
         color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;
     }
     .gen-btn-submit:hover { background-color: #218838; }
     
-    .gen-hr { margin: 25px 0; border: 0; border-top: 1px dashed #ccc; }
+    .gen-hr { margin: 12px 0; border: 0; border-top: 1px dashed #ccc; } 
     
-    /* 注意書きのフォントを少し大きく、行間を広げて見やすくしました！ */
     .reply-notice {
-        font-size: 14px; color: #444; margin-top: 20px; text-align: left;
-        line-height: 1.8; background-color: #f8f9fa; padding: 15px;
+        font-size: 12px; color: #444; 
+        margin-top: 10px; 
+        text-align: left;
+        line-height: 1.4; 
+        background-color: #f8f9fa; 
+        padding: 10px;
         border-radius: 8px; border: 1px solid #ddd;
     }
     .reply-notice a { color: #1da1f2; text-decoration: none; font-weight: bold; }
@@ -295,7 +326,7 @@
     <div class="black-filter"></div>
 
     <div class="content">
-        <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
+        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
         <h1>Boys Boxing & Professional wrestling</h1>
         <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
     </div>
@@ -337,6 +368,7 @@
             <div class="modal-tabs">
                 <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from.txt', this)">日本語</button>
                 <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-en.txt', this)">English</button>
+                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-zh-tw.txt', this)">繁體中文</button>
                 <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-zh.txt', this)">简体中文</button>
                 <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-ko.txt', this)">한국어</button>
             </div>
@@ -353,6 +385,7 @@
             <div class="modal-tabs">
                 <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai.txt', this)">日本語</button>
                 <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-en.txt', this)">English</button>
+                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-zh-tw.txt', this)">繁體中文</button>
                 <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-zh.txt', this)">简体中文</button>
                 <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-ko.txt', this)">한국어</button>
             </div>
@@ -369,6 +402,7 @@
             <div class="modal-tabs">
                 <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy.txt', this)">日本語</button>
                 <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-en.txt', this)">English</button>
+                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-zh-tw.txt', this)">繁體中文</button>
                 <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-zh.txt', this)">简体中文</button>
                 <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-ko.txt', this)">한국어</button>
             </div>
@@ -384,7 +418,7 @@
             </div>
             <div class="text-content">
                 
-                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ メッセージカード生成</h3>
+                <h3 style="margin-top:0;">◆ メッセージカード生成</h3>
                 <div class="gen-canvas-container">
                     <canvas id="myCanvas" width="1280" height="720"></canvas>
                 </div>
@@ -396,8 +430,8 @@
 
                 <hr class="gen-hr">
 
-                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ ゆーとにメッセージを送る</h3>
-                <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
+                <h3 style="margin-top:0;">◆ ゆーとにメッセージを送る</h3>
+                <form id="myForm" action="https://formspree.io/f/あなたのフォームID" method="POST">
                     
                     <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
 
@@ -440,8 +474,8 @@
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
             targetPanel.classList.remove('fade-out');
-        }, 2000);
-    }, 3000);
+        }, 2000); 
+    }, 3000); 
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
     function checkAge() {
@@ -490,7 +524,7 @@
             })
             .catch(error => {
                 titleArea.innerText = 'Error';
-                contentArea.innerHTML = '翻訳ファイルの読み込みに失敗しました。ファイルが存在するか確認してください。';
+                contentArea.innerHTML = '読み込みに失敗しました。';
                 console.error(error);
             });
     }
@@ -521,20 +555,17 @@
     let currentCardNumber = 1;
     let currentImage = new Image();
 
-    // ★ テキスト入力時にリアルタイムでキャンバスを更新 ★
     cardInput.addEventListener('input', drawCard);
 
     function changeRandomCard() {
         currentCardNumber = Math.floor(Math.random() * 20) + 1;
         const paddedNum = String(currentCardNumber).padStart(2, '0');
-        // ★ Cloudflareの正しい画像パス（boxeryuto/card/）に対応
         const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
-        // フォームの隠し項目に画像URLをセット（メールに添付される用）
         document.getElementById('selectedCardUrl').value = imageUrl;
 
         currentImage = new Image();
-        currentImage.crossOrigin = "anonymous";
+        currentImage.crossOrigin = "anonymous"; 
         currentImage.onload = () => drawCard();
         currentImage.src = imageUrl + "?t=" + new Date().getTime();
     }
@@ -564,22 +595,20 @@
             let totalHeight = lines.length * (fontSize * lineHeightRatio);
             
             if (totalHeight <= area.height) {
-                break; // 枠に収まればループ終了
+                break; 
             }
             
-            fontSize -= 2; // 収まらなければ縮小
+            fontSize -= 2; 
             
-            // ★ もし最小サイズでも溢れる場合の省略（...）処理 ★
             if (fontSize < minFontSize) {
                 fontSize = minFontSize;
                 ctx.font = `bold ${fontSize}px ${fontFamily}`;
                 lines = wrapText(ctx, wrappedText, area.width);
                 const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
-                lines = lines.slice(0, maxLines); // 収まる行数でカット
+                lines = lines.slice(0, maxLines); 
                 
                 if (lines.length > 0) {
                     let lastLine = lines[lines.length - 1];
-                    // 最後の行の末尾を「…」に変更
                     if (lastLine.length > 2) {
                         lines[lines.length - 1] = lastLine.slice(0, -2) + "…";
                     } else {
@@ -632,7 +661,7 @@
     /* ＝＝＝ Formspree 非同期送信処理 ＝＝＝ */
     const form = document.getElementById('myForm');
     form.addEventListener('submit', function(event) {
-        event.preventDefault();
+        event.preventDefault(); 
         const formData = new FormData(form);
 
         fetch(form.action, {
@@ -644,7 +673,7 @@
             if (response.ok) {
                 alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えします！");
                 form.reset(); 
-                drawCard(); // キャンバスもクリア
+                drawCard(); 
                 closeGeneratorModal(); 
             } else {
                 response.json().then(data => {
