@@ -1,149 +1,233 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message - yuto-boxer.com</title>
-    <style>
-        /* 全体の設定 */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #111;
-            color: #fff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            
-            /* ▼ ここに背景にしたい画像（舞台袖や土手など）のURLを入れます ▼ */
-            background-image: url('https://media.yuto-boxer.com/backgrounds/your-cool-image.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
-        /* 画像を少し暗くしてフォームを目立たせるオーバーレイ */
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
-        }
-
-        /* フォームの枠 */
-        .form-container {
-            position: relative;
-            z-index: 2;
-            background: rgba(20, 20, 20, 0.85);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            border: 1px solid #333;
-        }
-
-        h2 {
-            margin-top: 0;
-            letter-spacing: 0.1em;
-            font-weight: 400;
-        }
-
-        p.note {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        /* メッセージ入力欄 */
-        textarea {
-            width: 100%;
-            height: 160px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #444;
-            border-radius: 8px;
-            background: #222;
-            color: #fff;
-            font-size: 1rem;
-            resize: none;
-            box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: #007bff;
-        }
-
-        /* 送信ボタン */
-        button {
-            background: linear-gradient(45deg, #b71c1c, #d32f2f);
-            color: #fff;
-            border: none;
-            padding: 14px 40px;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: transform 0.2s, filter 0.2s;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オリジナルメッセージカード作成</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .controls {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-family: 'Noto Sans JP', sans-serif;
+      resize: none;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+    button {
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #003d82;
+    }
+    .btn-download {
+      background-color: #ff8c00;
+    }
+    .btn-download:hover {
+      background-color: #cc7000;
+    }
+    .canvas-container {
+      max-width: 100%;
+      overflow: hidden;
+    }
+    /* スマホなどでもはみ出さないようにレスポンシブ対応 */
+    canvas {
+      width: 100%;
+      max-width: 800px; /* 画面上での最大表示サイズ（実際の出力は1280x720） */
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
 
-    <div class="overlay"></div>
+  <h1>メッセージカード作成</h1>
 
-    <div class="form-container">
-        <h2>MESSAGE</h2>
-        <p class="note">
-            感想や質問など、お気軽にどうぞ！<br>
-            ※いただいたメッセージにはX(Twitter)でお返事する場合があります。
-        </p>
-        
-        <form id="messageForm" action="https://formspree.io/f/xeelvqye" method="POST">
-            
-            <textarea name="message" placeholder="ここへメッセージを入力してください..." required></textarea>
-            
-            <input type="hidden" name="_subject" id="formSubject" value="ゆーとのポストにメッセージが届きました！">
-            <input type="hidden" name="card_image_url" id="cardImageUrl" value="">
-            <input type="hidden" name="_replyto" value="info@yuto-boxer.com">
-
-            <button type="submit">送信する</button>
-        </form>
+  <div class="controls">
+    <textarea id="messageInput" placeholder="ここにメッセージを入力してください（自動で文字サイズが調整されます！）">いつも応援ありがとう！
+これからもよろしくな！</textarea>
+    <div class="buttons">
+      <button onclick="changeRandomCard()">キャラを変える🎲</button>
+      <button onclick="drawCard()">文字を反映する🖊️</button>
+      <button class="btn-download" onclick="downloadCard()">画像を保存する💾</button>
     </div>
+  </div>
 
-    <script>
-        document.getElementById('messageForm').addEventListener('submit', function() {
-            
-            // ① ランダムな4桁の数字を生成して件名にセット
-            const randomNum = Math.floor(1000 + Math.random() * 9000);
-            document.getElementById('formSubject').value = `[yuto-form:${randomNum}] ゆーとのポストにメッセージが届きました！`;
+  <div class="canvas-container">
+    <canvas id="myCanvas" width="1280" height="720"></canvas>
+  </div>
 
-            // ② Cloudflareに置くカード画像のURLリスト
-            // ※ 実際にアップロードした画像のURLに書き換えてください！
-            const cardImages = [
-                "https://media.yuto-boxer.com/cards/card01.jpg",
-                "https://media.yuto-boxer.com/cards/card02.jpg",
-                "https://media.yuto-boxer.com/cards/card03.jpg"
-            ];
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    const messageInput = document.getElementById('messageInput');
+    
+    // 現在のカード番号（1〜20）
+    let currentCardNumber = 1;
+    let currentImage = new Image();
 
-            // ③ ランダムに1枚選んで裏側の入力欄にセット
-            const randomCard = cardImages[Math.floor(Math.random() * cardImages.length)];
-            document.getElementById('cardImageUrl').value = randomCard;
-            
-        });
-    </script>
+    // 最初にランダムなカードを読み込む
+    window.onload = () => {
+      changeRandomCard();
+    };
 
+    // ランダムなキャラに変更する
+    function changeRandomCard() {
+      // 1〜20のランダムな数字を生成
+      currentCardNumber = Math.floor(Math.random() * 20) + 1;
+      loadAndDrawImage();
+    }
+
+    // 画像を読み込んでキャンバスに描画する
+    function loadAndDrawImage() {
+      // 01, 02 のようにゼロ埋めする
+      const paddedNum = String(currentCardNumber).padStart(2, '0');
+      // ゆーとさんの指定URL（cards ではなく card フォルダ）
+      const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
+
+      currentImage = new Image();
+      // ★重要★ これがないとCanvasから画像をダウンロードする際にエラー（CORS制限）になります
+      currentImage.crossOrigin = "anonymous"; 
+      
+      currentImage.onload = () => {
+        drawCard();
+      };
+      // キャッシュ対策でクエリパラメータをつける（画像が更新された時用）
+      currentImage.src = imageUrl + "?t=" + new Date().getTime();
+    }
+
+    // キャンバス全体を描画（画像＋テキスト）
+    function drawCard() {
+      // 1. まずベースとなるキャラクター画像を描画
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+
+      // 2. テキストを描画
+      const text = messageInput.value;
+      if (text.trim() !== "") {
+        const textArea = {
+          x: 130,       // 左からのスタート位置
+          y: 160,       // 上からのスタート位置
+          width: 660,   // テキストエリアの最大幅（右のキャラに被らないように調整）
+          height: 420   // テキストエリアの最大高さ
+        };
+        drawTextWithAutoScale(ctx, text, textArea);
+      }
+    }
+
+    // ★自動サイズ調整＆描画の実行関数★
+    function drawTextWithAutoScale(ctx, text, area) {
+      let fontSize = 54; // 最大フォントサイズ
+      const minFontSize = 24; // 最小フォントサイズ
+      const fontFamily = "'Noto Sans JP', sans-serif";
+      const lineHeightRatio = 1.4; // 行間
+      
+      let lines = [];
+      let wrappedText = text.replace(/\r\n/g, '\n'); // 改行コードを統一
+      
+      while (fontSize >= minFontSize) {
+        ctx.font = `bold ${fontSize}px ${fontFamily}`;
+        lines = wrapText(ctx, wrappedText, area.width);
+        
+        let totalHeight = lines.length * (fontSize * lineHeightRatio);
+        
+        if (totalHeight <= area.height) {
+          break; // 枠の高さに収まったらループを抜ける
+        }
+        fontSize -= 2; // 収まらなければ2px小さくして再計算
+      }
+
+      // 実際にテキストを描画
+      ctx.fillStyle = "#333333"; // 馴染みやすい濃いグレー
+      ctx.textBaseline = "top";
+      
+      // 全体の高さから中央寄せにするための計算（上揃えでよければY座標固定でもOK）
+      const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
+      const startY = area.y + (area.height - totalTextHeight) / 2; // 縦方向の中央に配置
+
+      lines.forEach((line, index) => {
+        const textY = startY + index * (fontSize * lineHeightRatio);
+        ctx.fillText(line, area.x, textY);
+      });
+    }
+
+    // 自動改行（分割）補助関数
+    function wrapText(ctx, text, maxWidth) {
+      const chars = text.split('');
+      let lines = [];
+      let currentLine = '';
+
+      for (let i = 0; i < chars.length; i++) {
+        const char = chars[i];
+        if (char === '\n') {
+          lines.push(currentLine);
+          currentLine = '';
+          continue;
+        }
+
+        const testLine = currentLine + char;
+        const metrics = ctx.measureText(testLine);
+        
+        if (metrics.width > maxWidth && currentLine !== '') {
+          lines.push(currentLine);
+          currentLine = char;
+        } else {
+          currentLine = testLine;
+        }
+      }
+      lines.push(currentLine);
+      return lines;
+    }
+
+    // 完成した画像をスマホ・PCにダウンロードさせる機能
+    function downloadCard() {
+      // 一度最新の状態で再描画しておく
+      drawCard();
+      
+      // 画像のURL化（PNG形式）
+      const dataUrl = canvas.toDataURL("image/png");
+      
+      // ダウンロード用のリンクを隠し作成してクリックさせる
+      const link = document.createElement('a');
+      link.download = `message_card.png`;
+      link.href = dataUrl;
+      link.click();
+    }
+  </script>
 </body>
 </html>
