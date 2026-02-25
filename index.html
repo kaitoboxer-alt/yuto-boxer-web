@@ -207,7 +207,7 @@
 
     /* ＝＝＝ 今回追加したジェネレーター＆フォーム用の特別スタイル ＝＝＝ */
     #modal-generator .modal-content {
-        max-width: 750px; /* ジェネレーターが見やすいように少し幅広に */
+        max-width: 750px;
         max-height: 90vh;
         overflow-y: auto;
     }
@@ -269,7 +269,8 @@
 
     <div class="sub-menu">
         <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
-        <a onclick="openGeneratorModal()">Message / Q&A</a> <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
+        <a onclick="openGeneratorModal()">Message / Q&A</a>
+        <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
         <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
     </div>
 
@@ -406,7 +407,6 @@
         document.getElementById(modalId).classList.remove('active');
     }
 
-    // ウィンドウ外クリックで閉じる（ジェネレーターも一緒に閉じます）
     window.onclick = function(event) {
         if (event.target.classList.contains('modal')) {
             event.target.classList.remove('active');
@@ -416,7 +416,7 @@
     /* ＝＝＝ 新規追加：ジェネレーター用スクリプト ＝＝＝ */
     function openGeneratorModal() {
         document.getElementById('modal-generator').classList.add('active');
-        changeRandomCard(); // 開いた時に画像をセット
+        changeRandomCard(); 
     }
     
     function closeGeneratorModal() {
