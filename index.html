@@ -33,11 +33,10 @@
         background-size: cover;
         background-position: center;
         opacity: 1;
-        transition: opacity 2s ease-in-out; 
-    }
+        transition: opacity 2s ease-in-out;     }
 
     .panel.fade-out {
-        opacity: 0; 
+        opacity: 0;
     }
 
     /* 背景の黒フィルター（25%） */
@@ -48,23 +47,23 @@
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.25);
-        z-index: -1; 
-        pointer-events: none; 
+        z-index: -1;
+        pointer-events: none;
     }
 
     /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
     .content {
         position: relative;
-        z-index: 1; 
+        z-index: 1;
         color: white;
         text-align: center;
         padding-top: 35vh;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
     }
 
     .content h1 {
         /* ⚠️ ゆーとさんへ：以下の "フォント名" をAdobe Fontsの指定名に書き換えてください！ */
-        font-family: "Adobe Fontsの指定名", 'Helvetica Neue', Arial, sans-serif;
+        font-family: "El Paso", 'Helvetica Neue', Arial, sans-serif;
         font-size: 1.5rem;
         margin-bottom: 20px;
         letter-spacing: 2px;
@@ -75,7 +74,7 @@
         font-size: 1.2rem;
         letter-spacing: 2px;
         color: white;
-        text-decoration: none; 
+        text-decoration: none;
         display: inline-block;
         animation: slowBlink 3s infinite ease-in-out;
         cursor: pointer;
@@ -173,7 +172,7 @@
     }
 
     .modal-header {
-        background-color: #111111; 
+        background-color: #111111;
         color: #ffffff;
         padding: 15px 20px;
         display: flex;
@@ -226,7 +225,7 @@
         padding: 30px 40px;
         line-height: 1.8;
         font-size: 0.95rem;
-        overflow-y: auto; 
+        overflow-y: auto;
     }
 
     .close-btn {
@@ -253,35 +252,35 @@
 
     /* ＝＝＝ ジェネレーター＆フォーム用の特別スタイル（限界まで圧縮版） ＝＝＝ */
     #modal-generator .modal-content {
-        max-width: 700px; 
+        max-width: 700px;
     }
     #modal-generator .text-content {
         background-color: rgba(255, 255, 255, 0.95);
         color: #333;
-        padding: 15px 25px; 
+        padding: 15px 25px;
     }
     #modal-generator h3 {
         font-size: 1rem;
         margin-top: 0;
-        margin-bottom: 8px; 
+        margin-bottom: 8px;
         border-bottom: 2px solid #333;
         padding-bottom: 3px;
     }
-    .gen-canvas-container { 
-        margin-bottom: 10px; 
-        border-radius: 8px; 
-        overflow: hidden; 
-        background: #eee; 
+    .gen-canvas-container {
+        margin-bottom: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #eee;
     }
     .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
     
     .gen-textarea {
-        width: 100%; box-sizing: border-box; 
-        height: 70px; 
+        width: 100%; box-sizing: border-box;
+        height: 70px;
         padding: 8px;
         font-size: 14px; border: 2px solid #ccc; border-radius: 6px;
-        font-family: inherit; resize: vertical; 
-        margin-bottom: 10px; 
+        font-family: inherit; resize: vertical;
+        margin-bottom: 10px;
     }
     .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
     .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
@@ -290,7 +289,7 @@
     .gen-btn-dl:hover { background-color: #cc3700; }
     
     .gen-btn-submit {
-        background-color: #28a745; width: 100%; 
+        background-color: #28a745; width: 100%;
         padding: 12px; font-size: 16px;
         color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;
     }
@@ -299,11 +298,11 @@
     .gen-hr { margin: 12px 0; border: 0; border-top: 1px dashed #ccc; } 
     
     .reply-notice {
-        font-size: 12px; color: #444; 
-        margin-top: 10px; 
+        font-size: 12px; color: #444;
+        margin-top: 10px;
         text-align: left;
-        line-height: 1.4; 
-        background-color: #f8f9fa; 
+        line-height: 1.4;
+        background-color: #f8f9fa;
         padding: 10px;
         border-radius: 8px; border: 1px solid #ddd;
     }
@@ -326,7 +325,7 @@
     <div class="black-filter"></div>
 
     <div class="content">
-        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
+        <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
         <h1>Boys Boxing & Professional wrestling</h1>
         <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
     </div>
@@ -431,7 +430,7 @@
                 <hr class="gen-hr">
 
                 <h3 style="margin-top:0;">◆ ゆーとにメッセージを送る</h3>
-                <form id="myForm" action="https://formspree.io/f/あなたのフォームID" method="POST">
+                <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
                     
                     <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
 
@@ -474,8 +473,8 @@
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
             targetPanel.classList.remove('fade-out');
-        }, 2000); 
-    }, 3000); 
+        }, 2000);
+    }, 3000);
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
     function checkAge() {
@@ -542,7 +541,7 @@
     /* ＝＝＝ ジェネレーター用スクリプト ＝＝＝ */
     function openGeneratorModal() {
         document.getElementById('modal-generator').classList.add('active');
-        changeRandomCard(); 
+        changeRandomCard();
     }
     
     function closeGeneratorModal() {
@@ -565,7 +564,7 @@
         document.getElementById('selectedCardUrl').value = imageUrl;
 
         currentImage = new Image();
-        currentImage.crossOrigin = "anonymous"; 
+        currentImage.crossOrigin = "anonymous";
         currentImage.onload = () => drawCard();
         currentImage.src = imageUrl + "?t=" + new Date().getTime();
     }
@@ -595,17 +594,17 @@
             let totalHeight = lines.length * (fontSize * lineHeightRatio);
             
             if (totalHeight <= area.height) {
-                break; 
+                break;
             }
             
-            fontSize -= 2; 
+            fontSize -= 2;
             
             if (fontSize < minFontSize) {
                 fontSize = minFontSize;
                 ctx.font = `bold ${fontSize}px ${fontFamily}`;
                 lines = wrapText(ctx, wrappedText, area.width);
                 const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
-                lines = lines.slice(0, maxLines); 
+                lines = lines.slice(0, maxLines);
                 
                 if (lines.length > 0) {
                     let lastLine = lines[lines.length - 1];
