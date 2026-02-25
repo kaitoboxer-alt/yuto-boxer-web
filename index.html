@@ -30,11 +30,11 @@
         background-size: cover;
         background-position: center;
         opacity: 1;
-        transition: opacity 2s ease-in-out; 
+        transition: opacity 2s ease-in-out;
     }
 
     .panel.fade-out {
-        opacity: 0; 
+        opacity: 0;
     }
 
     /* 背景の黒フィルター（25%） */
@@ -45,18 +45,18 @@
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.25);
-        z-index: -1; 
-        pointer-events: none; 
+        z-index: -1;
+        pointer-events: none;
     }
 
     /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
     .content {
         position: relative;
-        z-index: 1; 
+        z-index: 1;
         color: white;
         text-align: center;
         padding-top: 35vh;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
     }
 
     .content h1 {
@@ -70,7 +70,7 @@
         font-size: 1.2rem;
         letter-spacing: 2px;
         color: white;
-        text-decoration: none; 
+        text-decoration: none;
         display: inline-block;
         animation: slowBlink 3s infinite ease-in-out;
         cursor: pointer;
@@ -161,7 +161,7 @@
     }
 
     .modal-header {
-        background-color: #111111; 
+        background-color: #111111;
         color: #ffffff;
         padding: 15px 20px;
         display: flex;
@@ -205,7 +205,7 @@
     .age-btn.yes:hover { background: #333; }
     .age-btn.no:hover { background: #eee; }
 
-    /* ＝＝＝ 今回追加したジェネレーター＆フォーム用の特別スタイル ＝＝＝ */
+    /* ＝＝＝ ジェネレーター＆フォーム用の特別スタイル ＝＝＝ */
     #modal-generator .modal-content {
         max-width: 750px;
         max-height: 90vh;
@@ -262,14 +262,14 @@
     <div class="black-filter"></div>
 
     <div class="content">
-        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
+        <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
         <h1>Boys Boxing & Professional wrestling</h1>
         <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
     </div>
 
     <div class="sub-menu">
         <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
-        <a onclick="openGeneratorModal()">Message / Q&A</a>
+        <a onclick="openGeneratorModal()">Send Message</a>
         <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
         <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
     </div>
@@ -302,16 +302,16 @@
     <div id="modal-generator" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Message & Q&A</h2>
+                <h2 class="modal-title">Send Message</h2>
                 <span class="close-btn" onclick="closeGeneratorModal()">×</span>
             </div>
             <div class="text-content">
                 
-                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ Q&Aカード生成（管理者用）</h3>
+                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ メッセージカード生成（管理者用）</h3>
                 <div class="gen-canvas-container">
                     <canvas id="myCanvas" width="1280" height="720"></canvas>
                 </div>
-                <textarea id="cardInput" class="gen-textarea" placeholder="フォロワーさんからの質問をここにコピペします">いつも応援ありがとう！</textarea>
+                <textarea id="cardInput" class="gen-textarea" placeholder="フォロワーさんへのメッセージを入力">いつも応援ありがとう！</textarea>
                 <div class="gen-buttons">
                     <button class="gen-btn" onclick="changeRandomCard()">キャラを変える🎲</button>
                     <button class="gen-btn" onclick="drawCard()">文字を反映🖊️</button>
@@ -320,8 +320,8 @@
 
                 <hr class="gen-hr">
 
-                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ メッセージを送る</h3>
-                <form id="myForm" action="https://formspree.io/f/あなたのフォームID" method="POST">
+                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ 運営にメッセージを送る</h3>
+                <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
                     <textarea name="message" class="gen-textarea" style="height:100px;" required placeholder="ここに直接応援メッセージや質問を書いて送信できます！"></textarea>
                     <button type="submit" class="gen-btn-submit">メッセージを送信する 🚀</button>
                     
@@ -360,8 +360,8 @@
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
             targetPanel.classList.remove('fade-out');
-        }, 2000); 
-    }, 3000); 
+        }, 2000);
+    }, 3000);
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
     function checkAge() {
@@ -391,7 +391,7 @@
             })
             .then(text => {
                 const lines = text.split('\n');
-                const firstLine = lines.shift(); 
+                const firstLine = lines.shift();
                 const bodyText = lines.join('<br>');
                 titleArea.innerText = firstLine;
                 contentArea.innerHTML = bodyText;
@@ -413,7 +413,7 @@
         }
     };
 
-    /* ＝＝＝ 新規追加：ジェネレーター用スクリプト ＝＝＝ */
+    /* ＝＝＝ ジェネレーター用スクリプト ＝＝＝ */
     function openGeneratorModal() {
         document.getElementById('modal-generator').classList.add('active');
         changeRandomCard(); 
@@ -501,7 +501,7 @@
     function downloadCard() {
         drawCard();
         const link = document.createElement('a');
-        link.download = `QA_card_${new Date().getTime()}.png`;
+        link.download = `Message_card_${new Date().getTime()}.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
     }
