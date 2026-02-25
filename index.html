@@ -1,296 +1,428 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YUTO BOXER - オリジナルボクシング＆プロレスアート</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-  
-  <style>
-    /* =========================================
-       サイト全体の基本デザイン（TOPページ用）
-       ========================================= */
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boys Boxing & Professional wrestling prod. YUTO</title>
+<style>
+    /* ＝＝＝ 全体のベース設定 ＝＝＝ */
     body {
-      font-family: 'Noto Sans JP', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f9fa;
-      color: #333;
-    }
-    header {
-      background-color: #002244;
-      color: white;
-      padding: 50px 20px;
-      text-align: center;
-      background-image: linear-gradient(135deg, #002244 0%, #0056b3 100%);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 36px;
-      letter-spacing: 2px;
-    }
-    header p {
-      margin: 10px 0 0;
-      font-size: 16px;
-      opacity: 0.9;
-    }
-    main {
-      max-width: 1000px;
-      margin: 50px auto;
-      padding: 0 20px;
-      text-align: center;
+        margin: 0;
+        background-color: #000;
+        overflow: hidden;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
     }
 
-    /* ギャラリーセクション（今後の作品展示用） */
-    .gallery-section {
-      margin-bottom: 60px;
-    }
-    .gallery-section h2 {
-      font-size: 28px;
-      color: #002244;
-      margin-bottom: 20px;
-    }
-    .gallery-grid {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .gallery-item {
-      background: white;
-      width: 300px;
-      height: 200px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #888;
-      border: 2px dashed #ccc;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    /* ＝＝＝ 背景スライドショーの設定 ＝＝＝ */
+    .bg-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        z-index: -2;
     }
 
-    /* メッセージ・Q&A アクションセクション */
-    .action-section {
-      background: white;
-      padding: 50px 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    }
-    .action-section h2 {
-      margin-top: 0;
-      color: #ff4500;
-    }
-    .btn-open {
-      background-color: #ff4500;
-      color: white;
-      border: none;
-      padding: 20px 40px;
-      font-size: 20px;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: transform 0.2s, background-color 0.2s;
-      box-shadow: 0 6px 15px rgba(255, 69, 0, 0.3);
-      margin-top: 20px;
-    }
-    .btn-open:hover {
-      transform: translateY(-2px);
-      background-color: #e63e00;
-    }
-    
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #222;
-      color: #aaa;
-      margin-top: 50px;
-      font-size: 14px;
+    .panel {
+        background-size: cover;
+        background-position: center;
+        opacity: 1;
+        transition: opacity 2s ease-in-out; 
     }
 
-    /* =========================================
-       モーダルウィンドウ（メッセージ＆Q&A機能）
-       ========================================= */
-    #messageWindow {
-      display: none; /* 初期状態は絶対に非表示 */
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.75);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(5px);
+    .panel.fade-out {
+        opacity: 0; 
     }
-    .window-content {
-      background-color: white;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 750px;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    .btn-close {
-      position: absolute;
-      top: 15px; right: 20px;
-      font-size: 32px;
-      cursor: pointer;
-      color: #aaa;
-      border: none;
-      background: none;
-      transition: color 0.2s;
-    }
-    .btn-close:hover { color: #333; }
-    
-    .canvas-container {
-      margin-bottom: 20px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f0f0f0;
-    }
-    canvas {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    textarea {
-      width: 100%; box-sizing: border-box; height: 100px; padding: 15px;
-      font-size: 16px; border: 2px solid #ddd; border-radius: 8px;
-      font-family: inherit; resize: vertical; margin-bottom: 15px;
-      transition: border-color 0.2s;
-    }
-    textarea:focus { border-color: #0056b3; outline: none; }
-    
-    .buttons {
-      display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap;
-    }
-    .buttons button {
-      background-color: #0056b3; color: white; border: none; padding: 12px 24px;
-      font-size: 15px; font-weight: bold; border-radius: 8px; cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .buttons button:hover { background-color: #003d82; }
-    .buttons .btn-download { background-color: #ff8c00; }
-    .buttons .btn-download:hover { background-color: #e67e00; }
-    
-    .btn-submit {
-      background-color: #28a745; width: 100%; padding: 16px; font-size: 18px;
-      color: white; border: none; font-weight: bold; border-radius: 8px;
-      cursor: pointer; transition: background-color 0.2s;
-    }
-    .btn-submit:hover { background-color: #218838; }
-    
-    hr { margin: 30px 0; border: 0; border-top: 1px solid #eee; }
 
+    /* 背景の黒フィルター（25%） */
+    .black-filter {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.25);
+        z-index: -1; 
+        pointer-events: none; 
+    }
+
+    /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
+    .content {
+        position: relative;
+        z-index: 1; 
+        color: white;
+        text-align: center;
+        padding-top: 35vh;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); 
+    }
+
+    .content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+        font-weight: normal;
+    }
+
+    .content .enter-link {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        color: white;
+        text-decoration: none; 
+        display: inline-block;
+        animation: slowBlink 3s infinite ease-in-out;
+        cursor: pointer;
+    }
+
+    @keyframes slowBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+
+    /* ＝＝＝ サブメニュー（右下のボタン群） ＝＝＝ */
+    .sub-menu {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        display: flex;
+        gap: 15px;
+        z-index: 10;
+    }
+    
+    .sub-menu a {
+        background: rgba(20, 20, 20, 0.6);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 10px 15px;
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .sub-menu a:hover {
+        background: rgba(50, 50, 50, 0.8);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+    }
+
+    /* ＝＝＝ コピーライト ＝＝＝ */
+    .copyright {
+        position: fixed;
+        bottom: 15px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    /* ＝＝＝ モーダル設定 ＝＝＝ */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        z-index: 100;
+        backdrop-filter: blur(5px);
+    }
+
+    .modal.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        width: 80%;
+        max-width: 600px;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: left;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-header {
+        background-color: #111111; 
+        color: #ffffff;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-title {
+        margin: 0;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+    .text-content {
+        padding: 30px 40px;
+        line-height: 1.8;
+        font-size: 0.95rem;
+    }
+
+    .close-btn {
+        font-size: 1.8rem;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+        line-height: 1;
+    }
+    .close-btn:hover { opacity: 1; }
+
+    /* 各モーダルの色設定 */
+    #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; }
+    #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }
+    #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }
+
+    /* 年齢確認用スタイル */
+    #modal-age-check .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; text-align: center; }
+    .age-btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
+    .age-btn { padding: 10px 30px; border: 2px solid #333; background: transparent; cursor: pointer; font-weight: bold; transition: all 0.3s; }
+    .age-btn.yes { background: #000; color: #fff; }
+    .age-btn.yes:hover { background: #333; }
+    .age-btn.no:hover { background: #eee; }
+
+    /* ＝＝＝ 今回追加したジェネレーター＆フォーム用の特別スタイル ＝＝＝ */
+    #modal-generator .modal-content {
+        max-width: 750px; /* ジェネレーターが見やすいように少し幅広に */
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    #modal-generator .text-content {
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #333;
+        padding: 20px 30px;
+    }
+    .gen-canvas-container { margin-bottom: 15px; border-radius: 8px; overflow: hidden; background: #eee; }
+    .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
+    
+    .gen-textarea {
+        width: 100%; box-sizing: border-box; height: 80px; padding: 10px;
+        font-size: 15px; border: 2px solid #ccc; border-radius: 6px;
+        font-family: inherit; resize: vertical; margin-bottom: 10px;
+    }
+    .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+    .gen-btn:hover { background-color: #000; }
+    .gen-btn-dl { background-color: #ff4500; }
+    .gen-btn-dl:hover { background-color: #cc3700; }
+    
+    .gen-btn-submit {
+        background-color: #28a745; width: 100%; padding: 12px; font-size: 16px;
+        color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;
+    }
+    .gen-btn-submit:hover { background-color: #218838; }
+    
+    .gen-hr { margin: 25px 0; border: 0; border-top: 1px dashed #ccc; }
+    
     .reply-notice {
-      font-size: 13px;
-      color: #555;
-      margin-top: 15px;
-      text-align: left;
-      line-height: 1.6;
-      background-color: #f8f9fa;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #eee;
+        font-size: 12px; color: #555; margin-top: 15px; text-align: left;
+        line-height: 1.6; background-color: #f8f9fa; padding: 12px;
+        border-radius: 8px; border: 1px solid #ddd;
     }
-    .reply-notice a {
-      color: #1da1f2; /* X(Twitter)っぽい青色 */
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .reply-notice a:hover {
-      text-decoration: underline;
-    }
+    .reply-notice a { color: #1da1f2; text-decoration: none; font-weight: bold; }
+    .reply-notice a:hover { text-decoration: underline; }
 
-  </style>
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>YUTO BOXER</h1>
-    <p>オリジナルボクシング＆プロレス アートワークス</p>
-  </header>
-
-  <main>
-    
-    <section class="gallery-section">
-      <h2>Gallery / Characters</h2>
-      <p>KaitoやChrisたちの熱い闘いや、B.B.PWの世界観をここでお届けします。</p>
-      <div class="gallery-grid">
-        <div class="gallery-item">作品画像 1</div>
-        <div class="gallery-item">作品画像 2</div>
-        <div class="gallery-item">B.B.PW ベルト</div>
-      </div>
-    </section>
-
-    <section class="action-section">
-      <h2>Fan Message & Q&A</h2>
-      <p>ファンからの応援メッセージや質問を受け付けています。<br>いただいた質問は、キャラクターたちが画像付きでお答えするかも！？</p>
-      
-      <button class="btn-open" onclick="openWindow()">メッセージ・質問を送る ✉️</button>
-    </section>
-
-  </main>
-
-  <footer>
-    &copy; 2026 yuto-boxer.com All Rights Reserved.
-  </footer>
-
-  <div id="messageWindow" style="display: none;">
-    <div class="window-content">
-      <button class="btn-close" onclick="closeWindow()">×</button>
-      
-      <h2>メッセージカード生成</h2>
-      <div class="canvas-container">
-        <canvas id="myCanvas" width="1280" height="720"></canvas>
-      </div>
-      
-      <textarea id="cardInput" placeholder="カードに書き込むテキストを入力（自動でサイズ調整されます）">いつも応援ありがとう！</textarea>
-      <div class="buttons">
-        <button onclick="changeRandomCard()">キャラを変える🎲</button>
-        <button onclick="drawCard()">文字を反映する🖊️</button>
-        <button class="btn-download" onclick="downloadCard()">画像を保存する💾</button>
-      </div>
-
-      <hr>
-
-     <h2>メッセージ・質問を送る</h2>
-      <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
-        <textarea name="message" required placeholder="ここに直接応援メッセージや質問を書いて送信できます！"></textarea>
-        <button type="submit" class="btn-submit">メッセージを送信する 🚀</button>
-
-        <div class="reply-notice">
-          ※お返事できるときはX（旧Twitter）の <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> からになります。<br>
-          * Replies, when possible, will be sent via X (formerly Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a>.<br>
-          * 如能回复，将通过 X（原 Twitter）<a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 进行回复。<br>
-          * 답장이 가능한 경우 X(구 Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 를 통해 답변해 드립니다.
-        </div>
-        </form>
+    <div class="bg-grid">
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
+        <div class="panel"></div>
     </div>
-  </div>
-  <script>
-    // --- ウィンドウ（モーダル）の開閉処理 ---
-    function openWindow() {
-      document.getElementById('messageWindow').style.display = 'flex';
-      changeRandomCard(); // 開いた時にランダムでカードをセット
-    }
-    
-    function closeWindow() {
-      document.getElementById('messageWindow').style.display = 'none';
+
+    <div class="black-filter"></div>
+
+    <div class="content">
+        <img src="https://media.yuto-boxer.com/logo.png" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
+        <h1>Boys Boxing & Professional wrestling</h1>
+        <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
+    </div>
+
+    <div class="sub-menu">
+        <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
+        <a onclick="openGeneratorModal()">Message / Q&A</a> <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
+        <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
+    </div>
+
+    <div class="copyright">
+        &copy; 2026 yuto-boxer.com All Rights Reserved.
+    </div>
+
+    <div id="modal-age-check" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Age Verification</h2>
+            </div>
+            <div class="text-content">
+                大変申し訳ありませんが、当サイトは表現の都合上、18歳以下の方の閲覧はお断りしております。<br>
+                18歳の誕生日を迎えてから、あらためてお越しいただけると嬉しいです。<br><br>
+                あなたは18歳以上ですか？
+                <div class="age-btn-container">
+                    <button class="age-btn yes" onclick="verifyAge(true)">はい（Enter）</button>
+                    <button class="age-btn no" onclick="verifyAge(false)">いいえ（Exit）</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-from" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-from')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-ai" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-ai')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-copy" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-copy')">×</span></div><div class="text-content"></div></div></div>
+
+    <div id="modal-generator" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Message & Q&A</h2>
+                <span class="close-btn" onclick="closeGeneratorModal()">×</span>
+            </div>
+            <div class="text-content">
+                
+                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ Q&Aカード生成（管理者用）</h3>
+                <div class="gen-canvas-container">
+                    <canvas id="myCanvas" width="1280" height="720"></canvas>
+                </div>
+                <textarea id="cardInput" class="gen-textarea" placeholder="フォロワーさんからの質問をここにコピペします">いつも応援ありがとう！</textarea>
+                <div class="gen-buttons">
+                    <button class="gen-btn" onclick="changeRandomCard()">キャラを変える🎲</button>
+                    <button class="gen-btn" onclick="drawCard()">文字を反映🖊️</button>
+                    <button class="gen-btn gen-btn-dl" onclick="downloadCard()">画像を保存💾</button>
+                </div>
+
+                <hr class="gen-hr">
+
+                <h3 style="margin-top:0; font-size:1.1rem; border-bottom:2px solid #333; padding-bottom:5px;">◆ メッセージを送る</h3>
+                <form id="myForm" action="https://formspree.io/f/あなたのフォームID" method="POST">
+                    <textarea name="message" class="gen-textarea" style="height:100px;" required placeholder="ここに直接応援メッセージや質問を書いて送信できます！"></textarea>
+                    <button type="submit" class="gen-btn-submit">メッセージを送信する 🚀</button>
+                    
+                    <div class="reply-notice">
+                        ※お返事できるときはX（旧Twitter）の <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> からになります。<br>
+                        * Replies, when possible, will be sent via X (formerly Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a>.<br>
+                        * 如能回复，将通过 X（原 Twitter）<a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 进行回复。<br>
+                        * 답장이 가능한 경우 X(구 Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 를 통해 답변해 드립니다.
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script>
+    /* ＝＝＝ 背景スライドショー ＝＝＝ */
+    const totalImages = 93;
+    const imageUrls = [];
+    for (let i = 1; i <= totalImages; i++) {
+        const num = String(i).padStart(3, '0');
+        imageUrls.push(`https://media.yuto-boxer.com/top/${num}.webp`);
     }
 
-    // ウィンドウの外側（黒い背景部分）をクリックしても閉じるようにする便利機能
-    window.addEventListener('click', function(e) {
-      const modal = document.getElementById('messageWindow');
-      if (e.target === modal) {
-        closeWindow();
-      }
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach(panel => {
+        const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        panel.style.backgroundImage = `url('${randomImg}')`;
     });
 
-    // --- キャンバス（画像合成）の処理 ---
+    setInterval(() => {
+        const randomPanelIndex = Math.floor(Math.random() * panels.length);
+        const targetPanel = panels[randomPanelIndex];
+        if (targetPanel.classList.contains('fade-out')) return;
+        targetPanel.classList.add('fade-out');
+        setTimeout(() => {
+            const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+            targetPanel.style.backgroundImage = `url('${nextImg}')`;
+            targetPanel.classList.remove('fade-out');
+        }, 2000); 
+    }, 3000); 
+
+    /* ＝＝＝ 年齢確認 ＝＝＝ */
+    function checkAge() {
+        document.getElementById('modal-age-check').classList.add('active');
+    }
+
+    function verifyAge(isAdult) {
+        if (isAdult) {
+            window.location.href = "clubroom/";
+        } else {
+            alert("また18歳になった時にお会いしましょう！");
+            window.location.href = "https://www.google.com";
+        }
+    }
+
+    /* ＝＝＝ テキスト読み込み（既存） ＝＝＝ */
+    function openModal(modalId, textFilePath) {
+        const modal = document.getElementById(modalId);
+        const titleArea = modal.querySelector('.modal-title');
+        const contentArea = modal.querySelector('.text-content');
+        modal.classList.add('active');
+
+        fetch(textFilePath)
+            .then(response => {
+                if (!response.ok) throw new Error('Failed to load');
+                return response.text();
+            })
+            .then(text => {
+                const lines = text.split('\n');
+                const firstLine = lines.shift(); 
+                const bodyText = lines.join('<br>');
+                titleArea.innerText = firstLine;
+                contentArea.innerHTML = bodyText;
+            })
+            .catch(error => {
+                titleArea.innerText = 'Error';
+                contentArea.innerHTML = '読み込みに失敗しました。';
+                console.error(error);
+            });
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+
+    // ウィンドウ外クリックで閉じる（ジェネレーターも一緒に閉じます）
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.remove('active');
+        }
+    };
+
+    /* ＝＝＝ 新規追加：ジェネレーター用スクリプト ＝＝＝ */
+    function openGeneratorModal() {
+        document.getElementById('modal-generator').classList.add('active');
+        changeRandomCard(); // 開いた時に画像をセット
+    }
+    
+    function closeGeneratorModal() {
+        document.getElementById('modal-generator').classList.remove('active');
+    }
+
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
     const cardInput = document.getElementById('cardInput');
@@ -298,115 +430,110 @@
     let currentImage = new Image();
 
     function changeRandomCard() {
-      // 1〜20のランダムな数字を生成
-      currentCardNumber = Math.floor(Math.random() * 20) + 1;
-      const paddedNum = String(currentCardNumber).padStart(2, '0');
-      // ★画像URLの設定
-      const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
+        currentCardNumber = Math.floor(Math.random() * 20) + 1;
+        const paddedNum = String(currentCardNumber).padStart(2, '0');
+        const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
-      currentImage = new Image();
-      currentImage.crossOrigin = "anonymous"; 
-      currentImage.onload = () => drawCard();
-      currentImage.src = imageUrl + "?t=" + new Date().getTime(); // キャッシュ回避
+        currentImage = new Image();
+        currentImage.crossOrigin = "anonymous"; 
+        currentImage.onload = () => drawCard();
+        currentImage.src = imageUrl + "?t=" + new Date().getTime();
     }
 
     function drawCard() {
-      // キャンバスをクリアして背景画像を描画
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
 
-      const text = cardInput.value;
-      if (text.trim() !== "") {
-        // テキストエリアの描画範囲（画像に合わせて微調整可能）
-        const textArea = { x: 130, y: 160, width: 660, height: 420 };
-        drawTextWithAutoScale(ctx, text, textArea);
-      }
+        const text = cardInput.value;
+        if (text.trim() !== "") {
+            const textArea = { x: 130, y: 160, width: 660, height: 420 };
+            drawTextWithAutoScale(ctx, text, textArea);
+        }
     }
 
     function drawTextWithAutoScale(ctx, text, area) {
-      let fontSize = 54;
-      const minFontSize = 24;
-      const fontFamily = "'Noto Sans JP', sans-serif";
-      const lineHeightRatio = 1.4;
-      let lines = [];
-      let wrappedText = text.replace(/\r\n/g, '\n');
-      
-      while (fontSize >= minFontSize) {
-        ctx.font = `bold ${fontSize}px ${fontFamily}`;
-        lines = wrapText(ctx, wrappedText, area.width);
-        let totalHeight = lines.length * (fontSize * lineHeightRatio);
-        if (totalHeight <= area.height) break; // 枠に収まればループ終了
-        fontSize -= 2; // 収まらなければ縮小
-      }
+        let fontSize = 54;
+        const minFontSize = 24;
+        const fontFamily = "'Helvetica Neue', Arial, sans-serif";
+        const lineHeightRatio = 1.4;
+        let lines = [];
+        let wrappedText = text.replace(/\r\n/g, '\n');
+        
+        while (fontSize >= minFontSize) {
+            ctx.font = `bold ${fontSize}px ${fontFamily}`;
+            lines = wrapText(ctx, wrappedText, area.width);
+            let totalHeight = lines.length * (fontSize * lineHeightRatio);
+            if (totalHeight <= area.height) break;
+            fontSize -= 2;
+        }
 
-      ctx.fillStyle = "#333333";
-      ctx.textBaseline = "top";
-      const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
-      // 縦方向の中央に配置
-      const startY = area.y + (area.height - totalTextHeight) / 2;
+        ctx.fillStyle = "#333333";
+        ctx.textBaseline = "top";
+        const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
+        const startY = area.y + (area.height - totalTextHeight) / 2;
 
-      lines.forEach((line, index) => {
-        const textY = startY + index * (fontSize * lineHeightRatio);
-        ctx.fillText(line, area.x, textY);
-      });
+        lines.forEach((line, index) => {
+            const textY = startY + index * (fontSize * lineHeightRatio);
+            ctx.fillText(line, area.x, textY);
+        });
     }
 
     function wrapText(ctx, text, maxWidth) {
-      const chars = text.split('');
-      let lines = [];
-      let currentLine = '';
-      for (let i = 0; i < chars.length; i++) {
-        const char = chars[i];
-        if (char === '\n') {
-          lines.push(currentLine); currentLine = ''; continue;
+        const chars = text.split('');
+        let lines = [];
+        let currentLine = '';
+        for (let i = 0; i < chars.length; i++) {
+            const char = chars[i];
+            if (char === '\n') {
+                lines.push(currentLine); currentLine = ''; continue;
+            }
+            const testLine = currentLine + char;
+            if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
+                lines.push(currentLine); currentLine = char;
+            } else {
+                currentLine = testLine;
+            }
         }
-        const testLine = currentLine + char;
-        if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
-          lines.push(currentLine); currentLine = char;
-        } else {
-          currentLine = testLine;
-        }
-      }
-      lines.push(currentLine);
-      return lines;
+        lines.push(currentLine);
+        return lines;
     }
 
     function downloadCard() {
-      drawCard();
-      const link = document.createElement('a');
-      link.download = `QA_card_${new Date().getTime()}.png`;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
+        drawCard();
+        const link = document.createElement('a');
+        link.download = `QA_card_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
     }
 
-    // --- Formspree 非同期送信（画面遷移なし）の処理 ---
+    /* ＝＝＝ Formspree 非同期送信処理 ＝＝＝ */
     const form = document.getElementById('myForm');
     form.addEventListener('submit', function(event) {
-      event.preventDefault(); // デフォルトの画面遷移をブロック
-      const formData = new FormData(form);
+        event.preventDefault(); 
+        const formData = new FormData(form);
 
-      fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(response => {
-        if (response.ok) {
-          alert("メッセージを送信しました！ありがとうございます！");
-          form.reset(); // フォームの中身を空にする
-          closeWindow(); // 送信成功後にウィンドウを閉じる
-        } else {
-          response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              alert(data["errors"].map(error => error["message"]).join(", "));
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えします！");
+                form.reset(); 
+                closeGeneratorModal(); 
             } else {
-              alert("送信に失敗しました。もう一度お試しください。");
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        alert(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        alert("送信に失敗しました。もう一度お試しください。");
+                    }
+                });
             }
-          });
-        }
-      })
-      .catch(error => alert("通信エラーが発生しました。"));
+        })
+        .catch(error => alert("通信エラーが発生しました。"));
     });
-  </script>
+</script>
 </body>
 </html>
