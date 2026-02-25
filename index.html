@@ -30,8 +30,7 @@
         background-size: cover;
         background-position: center;
         opacity: 1;
-        transition: opacity 2s ease-in-out;
-    }
+        transition: opacity 2s ease-in-out;     }
 
     .panel.fade-out {
         opacity: 0;
@@ -161,7 +160,7 @@
     }
 
     .modal-header {
-        background-color: #111111;
+        background-color: #111111; 
         color: #ffffff;
         padding: 15px 20px;
         display: flex;
@@ -360,8 +359,8 @@
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
             targetPanel.style.backgroundImage = `url('${nextImg}')`;
             targetPanel.classList.remove('fade-out');
-        }, 2000);
-    }, 3000);
+        }, 2000); 
+    }, 3000); 
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
     function checkAge() {
@@ -391,7 +390,7 @@
             })
             .then(text => {
                 const lines = text.split('\n');
-                const firstLine = lines.shift();
+                const firstLine = lines.shift(); 
                 const bodyText = lines.join('<br>');
                 titleArea.innerText = firstLine;
                 contentArea.innerHTML = bodyText;
@@ -519,7 +518,7 @@
         })
         .then(response => {
             if (response.ok) {
-                alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えします！");
+                alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えすることがあります。");
                 form.reset(); 
                 closeGeneratorModal(); 
             } else {
