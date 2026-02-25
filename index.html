@@ -30,7 +30,8 @@
         background-size: cover;
         background-position: center;
         opacity: 1;
-        transition: opacity 2s ease-in-out;     }
+        transition: opacity 2s ease-in-out;
+    }
 
     .panel.fade-out {
         opacity: 0;
@@ -160,7 +161,7 @@
     }
 
     .modal-header {
-        background-color: #111111; 
+        background-color: #111111;
         color: #ffffff;
         padding: 15px 20px;
         display: flex;
@@ -173,6 +174,38 @@
         margin: 0;
         font-size: 1.2rem;
         letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+    /* ＝＝＝ 4カ国語切り替え用タブのスタイル ＝＝＝ */
+    .modal-tabs {
+        display: flex;
+        background-color: #222;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .modal-tab {
+        flex: 1;
+        padding: 12px 0;
+        background: none;
+        border: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: background-color 0.3s, color 0.3s;
+        text-align: center;
+        font-family: inherit;
+    }
+    .modal-tab:last-child {
+        border-right: none;
+    }
+    .modal-tab:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+    .modal-tab.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
         font-weight: bold;
     }
 
@@ -267,10 +300,10 @@
     </div>
 
     <div class="sub-menu">
-        <a onclick="openModal('modal-from', 'texts/message-from.txt')">From Yuto</a>
+        <a onclick="openModal('modal-from')">From Yuto</a>
         <a onclick="openGeneratorModal()">Send Message</a>
-        <a onclick="openModal('modal-ai', 'texts/policy-ai.txt')">AI Policy</a>
-        <a onclick="openModal('modal-copy', 'texts/policy-copy.txt')">Copyright</a>
+        <a onclick="openModal('modal-ai')">AI Policy</a>
+        <a onclick="openModal('modal-copy')">Copyright</a>
     </div>
 
     <div class="copyright">
@@ -294,9 +327,53 @@
         </div>
     </div>
 
-    <div id="modal-from" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-from')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-ai" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-ai')">×</span></div><div class="text-content"></div></div></div>
-    <div id="modal-copy" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-copy')">×</span></div><div class="text-content"></div></div></div>
+    <div id="modal-from" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-from')">×</span>
+            </div>
+            <div class="modal-tabs">
+                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from.txt', this)">日本語</button>
+                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-en.txt', this)">English</button>
+                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-zh.txt', this)">简体中文</button>
+                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-ko.txt', this)">한국어</button>
+            </div>
+            <div class="text-content"></div>
+        </div>
+    </div>
+
+    <div id="modal-ai" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-ai')">×</span>
+            </div>
+            <div class="modal-tabs">
+                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai.txt', this)">日本語</button>
+                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-en.txt', this)">English</button>
+                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-zh.txt', this)">简体中文</button>
+                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-ko.txt', this)">한국어</button>
+            </div>
+            <div class="text-content"></div>
+        </div>
+    </div>
+
+    <div id="modal-copy" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Loading...</h2>
+                <span class="close-btn" onclick="closeModal('modal-copy')">×</span>
+            </div>
+            <div class="modal-tabs">
+                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy.txt', this)">日本語</button>
+                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-en.txt', this)">English</button>
+                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-zh.txt', this)">简体中文</button>
+                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-ko.txt', this)">한국어</button>
+            </div>
+            <div class="text-content"></div>
+        </div>
+    </div>
 
     <div id="modal-generator" class="modal">
         <div class="modal-content">
@@ -376,28 +453,44 @@
         }
     }
 
-    /* ＝＝＝ テキスト読み込み（既存） ＝＝＝ */
-    function openModal(modalId, textFilePath) {
+    /* ＝＝＝ テキスト読み込み（タブ切り替え対応版） ＝＝＝ */
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.classList.add('active');
+        
+        // モーダルを開いた時に、自動で一番左のタブ（日本語）をクリックして読み込む
+        const firstTab = modal.querySelector('.modal-tab');
+        if (firstTab) {
+            firstTab.click();
+        }
+    }
+
+    function loadTabText(modalId, textFilePath, tabElement) {
         const modal = document.getElementById(modalId);
         const titleArea = modal.querySelector('.modal-title');
         const contentArea = modal.querySelector('.text-content');
-        modal.classList.add('active');
+        
+        // タブのアクティブ状態を切り替え
+        const tabs = modal.querySelectorAll('.modal-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        tabElement.classList.add('active');
 
+        // テキストファイルの読み込み
         fetch(textFilePath)
             .then(response => {
-                if (!response.ok) throw new Error('Failed to load');
+                if (!response.ok) throw new Error('Failed to load text file: ' + textFilePath);
                 return response.text();
             })
             .then(text => {
                 const lines = text.split('\n');
-                const firstLine = lines.shift(); 
+                const firstLine = lines.shift();
                 const bodyText = lines.join('<br>');
                 titleArea.innerText = firstLine;
                 contentArea.innerHTML = bodyText;
             })
             .catch(error => {
                 titleArea.innerText = 'Error';
-                contentArea.innerHTML = '読み込みに失敗しました。';
+                contentArea.innerHTML = '翻訳ファイルの読み込みに失敗しました。ファイルが存在するか確認してください。';
                 console.error(error);
             });
     }
@@ -518,7 +611,7 @@
         })
         .then(response => {
             if (response.ok) {
-                alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えすることがあります。");
+                alert("メッセージを送信しました！ありがとうございます！\n※お返事可能な場合はX（@boxer_yuto）にてお答えします！");
                 form.reset(); 
                 closeGeneratorModal(); 
             } else {
