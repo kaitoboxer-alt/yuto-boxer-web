@@ -488,7 +488,7 @@
         }, 5000);
     });
 
-    /* ＝＝＝ 背景スライドショー ＝＝＝ */
+    /* ＝＝＝ 背景スライドショー（完全プリロード＆フリーズ防止版） ＝＝＝ */
     const totalImages = 93;
     const imageUrls = [];
     for (let i = 1; i <= totalImages; i++) {
@@ -497,6 +497,8 @@
     }
 
     const panels = document.querySelectorAll('.panel');
+
+    // 初期表示
     panels.forEach(panel => {
         const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
         panel.style.backgroundImage = `url('${randomImg}')`;
@@ -506,34 +508,38 @@
         const randomPanelIndex = Math.floor(Math.random() * panels.length);
         const targetPanel = panels[randomPanelIndex];
         
-        // すでに処理中のパネルはスキップ
-        if (targetPanel.classList.contains('fade-out')) return;
+        // すでにアニメーション中（準備中・フェード中）なら他のパネルへ譲る
+        if (targetPanel.classList.contains('animating')) return;
+        targetPanel.classList.add('animating'); // 二重動作を防ぐロック
         
-        // 1. まずフェードアウトさせる
-        targetPanel.classList.add('fade-out');
+        const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        const tempImg = new Image();
         
-        setTimeout(() => {
-            // 2. 次の画像をランダムに選ぶ
-            const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        // 【重要】画像のダウンロードが完全に終わってからフェードアウトを開始する
+        tempImg.onload = () => {
+            // 1. ゆっくり黒へ消える
+            targetPanel.classList.add('fade-out');
             
-            // 3. 裏側で画像を読み込む（プリロード）
-            const tempImg = new Image();
-            
-            // 読み込みが完了したら背景にセットしてフェードイン
-            tempImg.onload = () => {
+            // 2. 完全に消えきったタイミング（2秒後）で画像を差し替え
+            setTimeout(() => {
                 targetPanel.style.backgroundImage = `url('${nextImg}')`;
-                targetPanel.classList.remove('fade-out');
-            };
-            
-            // もし欠番などでエラーになったら、画像を変えずにフェードインして戻す（黒画面防止）
-            tempImg.onerror = () => {
-                targetPanel.classList.remove('fade-out');
-            };
-            
-            // 読み込み開始
-            tempImg.src = nextImg;
-            
-        }, 2000); // 2秒のフェードアウト完了後に読み込み処理へ
+                targetPanel.classList.remove('fade-out'); // 再び浮かび上がる
+                
+                // 3. 浮かび上がり完了（さらに2秒後）でロック解除
+                setTimeout(() => {
+                    targetPanel.classList.remove('animating');
+                }, 2000);
+            }, 2000); 
+        };
+        
+        // 万が一欠番（404）を引いた場合は、黒くせずにそのままロック解除（やり直し）
+        tempImg.onerror = () => {
+            targetPanel.classList.remove('animating');
+        };
+        
+        // 裏側でダウンロード開始
+        tempImg.src = nextImg;
+        
     }, 3000);
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
@@ -631,14 +637,20 @@
 
     function drawCard() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
-
         const text = cardInput.value;
-        if (text.trim() !== "") {
-            const textArea = { x: 130, y: 160, width: 660, height: 420 };
-            drawTextWithAutoScale(ctx, text, textArea);
-        }
+    if (text.trim() !== "") {
+        // ▼▼▼ ここを修正 ▼▼▼
+        // x座標を増やして右にずらす。widthはそのままか、必要に応じて調整。
+        // 例: xを130から250に変更してみる（値は調整してください）
+        const textArea = { x: 250, y: 160, width: 660, height: 420 }; 
+        
+        // もし「幅はそのままで、全体を右にずらす」なら、xを増やした分、widthを減らす必要はないですが
+        // キャラの体と重なりすぎる場合は width を少し減らす調整もアリです。
+        // 例: const textArea = { x: 250, y: 160, width: 540, height: 420 };
+
+        drawTextWithAutoScale(ctx, text, textArea);
     }
+}
 
     function drawTextWithAutoScale(ctx, text, area) {
         let fontSize = 54;
