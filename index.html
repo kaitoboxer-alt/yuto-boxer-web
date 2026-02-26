@@ -320,7 +320,7 @@
     function changeRandomCard() {
         const currentCardNumber = Math.floor(Math.random() * 20) + 1;
         // ▼ カード画像は2桁（01〜20）に修正 ▼
-        const paddedNum = String(currentCardNumber).padStart(2, '0');
+        const paddedNum = String(currentCardNumber).padStart(1, '0');
         const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
         document.getElementById('selectedCardUrl').value = imageUrl;
