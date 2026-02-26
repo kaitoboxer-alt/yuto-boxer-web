@@ -622,7 +622,7 @@
 
     function changeRandomCard() {
         currentCardNumber = Math.floor(Math.random() * 20) + 1;
-        const paddedNum = String(currentCardNumber).padStart(2, '0');
+        const paddedNum = String(currentCardNumber).padStart(1, '0');
         const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
 
         document.getElementById('selectedCardUrl').value = imageUrl;
