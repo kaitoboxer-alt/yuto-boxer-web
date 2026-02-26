@@ -345,7 +345,8 @@
         const currentUrl = document.getElementById('selectedCardUrl').value;
         const magicLinkInput = document.getElementById('adminMagicLink');
         if (magicLinkInput) {
-            const magicUrl = `https://yuto-boxer.com/fan-mail-yuto-boxer/admin_maker.html?img=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(text)}`;
+            // ▼ admin_maker.html を削りました ▼
+            const magicUrl = `https://yuto-boxer.com/fan-mail-yuto-boxer/?img=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(text)}`;
             magicLinkInput.value = magicUrl;
         }
     }
