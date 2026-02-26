@@ -7,6 +7,8 @@
 
 <link rel="stylesheet" href="https://use.typekit.net/iji1sdm.css">
 
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+
 <style>
     /* ＝＝＝ 全体のベース設定 ＝＝＝ */
     body {
@@ -640,7 +642,7 @@
         const text = cardInput.value;
         if (text.trim() !== "") {
             // 右に少しずらした描画エリア設定
-            const textArea = { x: 250, y: 160, width: 540, height: 420 };
+            const textArea = { x: 300, y: 160, width: 600, height: 460 };
             drawTextWithAutoScale(ctx, text, textArea);
         }
 
@@ -658,7 +660,7 @@
     function drawTextWithAutoScale(ctx, text, area) {
         let fontSize = 54;
         const minFontSize = 24;
-        const fontFamily = "'Helvetica Neue', Arial, sans-serif";
+        const fontFamily = "'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif";
         const lineHeightRatio = 1.4;
         let lines = [];
         let wrappedText = text.replace(/\r\n/g, '\n');
