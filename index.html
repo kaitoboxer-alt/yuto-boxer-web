@@ -505,13 +505,35 @@
     setInterval(() => {
         const randomPanelIndex = Math.floor(Math.random() * panels.length);
         const targetPanel = panels[randomPanelIndex];
+        
+        // すでに処理中のパネルはスキップ
         if (targetPanel.classList.contains('fade-out')) return;
+        
+        // 1. まずフェードアウトさせる
         targetPanel.classList.add('fade-out');
+        
         setTimeout(() => {
+            // 2. 次の画像をランダムに選ぶ
             const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-            targetPanel.style.backgroundImage = `url('${nextImg}')`;
-            targetPanel.classList.remove('fade-out');
-        }, 2000);
+            
+            // 3. 裏側で画像を読み込む（プリロード）
+            const tempImg = new Image();
+            
+            // 読み込みが完了したら背景にセットしてフェードイン
+            tempImg.onload = () => {
+                targetPanel.style.backgroundImage = `url('${nextImg}')`;
+                targetPanel.classList.remove('fade-out');
+            };
+            
+            // もし欠番などでエラーになったら、画像を変えずにフェードインして戻す（黒画面防止）
+            tempImg.onerror = () => {
+                targetPanel.classList.remove('fade-out');
+            };
+            
+            // 読み込み開始
+            tempImg.src = nextImg;
+            
+        }, 2000); // 2秒のフェードアウト完了後に読み込み処理へ
     }, 3000);
 
     /* ＝＝＝ 年齢確認 ＝＝＝ */
