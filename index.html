@@ -16,6 +16,42 @@
         font-family: 'Helvetica Neue', Arial, sans-serif;
     }
 
+    /* ＝＝＝ ① 黒のスプラッシュ画面（導入演出） ＝＝＝ */
+    #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 1.5s ease;
+    }
+
+    #splash-logo {
+        max-width: 200px; /* メイン画面より少し小さめに */
+        opacity: 0;
+        transition: opacity 2s ease;
+        margin-bottom: 30px;
+    }
+
+    #splash-text {
+        color: #ffffff;
+        font-family: el-paso, sans-serif; /* カッコいいフォントを適用 */
+        font-weight: 400;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 2s ease;
+        line-height: 1.6;
+        padding: 0 20px;
+    }
+
     /* ＝＝＝ 背景スライドショーの設定 ＝＝＝ */
     .bg-grid {
         position: fixed;
@@ -33,7 +69,8 @@
         background-size: cover;
         background-position: center;
         opacity: 1;
-        transition: opacity 2s ease-in-out;     }
+        transition: opacity 2s ease-in-out;     
+    }
 
     .panel.fade-out {
         opacity: 0;
@@ -60,14 +97,11 @@
         padding-top: 35vh;
         text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
     }
-    /* ＝＝＝ メインコンテンツ（中央） ＝＝＝ */
+    
     .content h1 {
-        /* ▼▼ ゆーとさんが発掘した「el-paso」を完全適用！ ▼▼ */
         font-family: el-paso, sans-serif;
         font-weight: 400;
         font-style: normal;
-        
-        /* 以下は元の設定を維持 */
         font-size: 1.5rem;
         margin-bottom: 20px;
         letter-spacing: 2px;
@@ -167,11 +201,11 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         display: flex;
         flex-direction: column;
-        max-height: 90vh; /* 画面からはみ出さないように制限 */
+        max-height: 90vh;
     }
 
     .modal-header, .modal-tabs {
-        flex-shrink: 0; /* タイトルとタブは上に固定して潰さない */
+        flex-shrink: 0; 
     }
 
     .modal-header {
@@ -191,7 +225,6 @@
         font-weight: bold;
     }
 
-    /* ＝＝＝ 5カ国語切り替え用タブのスタイル ＝＝＝ */
     .modal-tabs {
         display: flex;
         background-color: #222;
@@ -223,7 +256,6 @@
         font-weight: bold;
     }
 
-    /* テキスト本文（ここだけがスクロールする） */
     .text-content {
         padding: 30px 40px;
         line-height: 1.8;
@@ -240,12 +272,10 @@
     }
     .close-btn:hover { opacity: 1; }
 
-    /* 各モーダルの色設定 */
     #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; }
     #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }
     #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }
 
-    /* 年齢確認用スタイル */
     #modal-age-check .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; text-align: center; }
     .age-btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
     .age-btn { padding: 10px 30px; border: 2px solid #333; background: transparent; cursor: pointer; font-weight: bold; transition: all 0.3s; }
@@ -253,37 +283,16 @@
     .age-btn.yes:hover { background: #333; }
     .age-btn.no:hover { background: #eee; }
 
-    /* ＝＝＝ ジェネレーター＆フォーム用の特別スタイル（限界まで圧縮版） ＝＝＝ */
-    #modal-generator .modal-content {
-        max-width: 700px;
-    }
-    #modal-generator .text-content {
-        background-color: rgba(255, 255, 255, 0.95);
-        color: #333;
-        padding: 15px 25px;
-    }
-    #modal-generator h3 {
-        font-size: 1rem;
-        margin-top: 0;
-        margin-bottom: 8px;
-        border-bottom: 2px solid #333;
-        padding-bottom: 3px;
-    }
-    .gen-canvas-container {
-        margin-bottom: 10px;
-        border-radius: 8px;
-        overflow: hidden;
-        background: #eee;
-    }
+    #modal-generator .modal-content { max-width: 700px; }
+    #modal-generator .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; padding: 15px 25px; }
+    #modal-generator h3 { font-size: 1rem; margin-top: 0; margin-bottom: 8px; border-bottom: 2px solid #333; padding-bottom: 3px; }
+    .gen-canvas-container { margin-bottom: 10px; border-radius: 8px; overflow: hidden; background: #eee; }
     .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
     
     .gen-textarea {
-        width: 100%; box-sizing: border-box;
-        height: 70px;
-        padding: 8px;
+        width: 100%; box-sizing: border-box; height: 70px; padding: 8px;
         font-size: 14px; border: 2px solid #ccc; border-radius: 6px;
-        font-family: inherit; resize: vertical;
-        margin-bottom: 10px;
+        font-family: inherit; resize: vertical; margin-bottom: 10px;
     }
     .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
     .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
@@ -292,8 +301,7 @@
     .gen-btn-dl:hover { background-color: #cc3700; }
     
     .gen-btn-submit {
-        background-color: #28a745; width: 100%;
-        padding: 12px; font-size: 16px;
+        background-color: #28a745; width: 100%; padding: 12px; font-size: 16px;
         color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer;
     }
     .gen-btn-submit:hover { background-color: #218838; }
@@ -301,20 +309,23 @@
     .gen-hr { margin: 12px 0; border: 0; border-top: 1px dashed #ccc; } 
     
     .reply-notice {
-        font-size: 12px; color: #444;
-        margin-top: 10px;
-        text-align: left;
-        line-height: 1.4;
-        background-color: #f8f9fa;
-        padding: 10px;
+        font-size: 12px; color: #444; margin-top: 10px; text-align: left;
+        line-height: 1.4; background-color: #f8f9fa; padding: 10px;
         border-radius: 8px; border: 1px solid #ddd;
     }
     .reply-notice a { color: #1da1f2; text-decoration: none; font-weight: bold; }
     .reply-notice a:hover { text-decoration: underline; }
-
 </style>
 </head>
 <body>
+
+    <div id="splash-screen">
+        <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" id="splash-logo" alt="logo">
+        <div id="splash-text">
+            Where boys scatter their blood and sweat<br>
+            in boxing and professional wrestling.
+        </div>
+    </div>
 
     <div class="bg-grid">
         <div class="panel"></div>
@@ -329,9 +340,7 @@
 
     <div class="content">
         <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
-        <link rel="stylesheet" href="https://use.typekit.net/iji1sdm.css">
         <h1>Boys Boxing & Professional wrestling</h1>
-        </link>
         <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
     </div>
 
@@ -454,7 +463,31 @@
             </div>
         </div>
     </div>
-    <script>
+
+<script>
+    /* ＝＝＝ スプラッシュ画面の制御 ＝＝＝ */
+    window.addEventListener('DOMContentLoaded', () => {
+        const splashScreen = document.getElementById('splash-screen');
+        const splashLogo = document.getElementById('splash-logo');
+        const splashText = document.getElementById('splash-text');
+
+        // 0.5秒後にロゴとテキストをじわっと表示
+        setTimeout(() => {
+            if (splashLogo) splashLogo.style.opacity = "1";
+            if (splashText) splashText.style.opacity = "1";
+        }, 500);
+
+        // さらに4.5秒後（計5秒後）に画面全体をフェードアウト
+        setTimeout(() => {
+            if (splashScreen) {
+                splashScreen.style.opacity = "0";
+                setTimeout(() => {
+                    splashScreen.style.display = "none";
+                }, 1500); // フェードアウトにかかる時間
+            }
+        }, 5000);
+    });
+
     /* ＝＝＝ 背景スライドショー ＝＝＝ */
     const totalImages = 93;
     const imageUrls = [];
