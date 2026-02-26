@@ -4,43 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>【管理者専用】メッセージカード合成ツール</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 800px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #1a1a1a; color: #fff; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .container { background-color: #333; padding: 20px; border-radius: 8px; width: 100%; max-width: 800px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         h1 { font-size: 1.5rem; text-align: center; margin-top: 0; border-bottom: 1px solid #555; padding-bottom: 10px; }
         .input-group { margin-bottom: 15px; }
         label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: #ccc; }
-        input[type="text"], textarea {
-            width: 100%; box-sizing: border-box; padding: 10px;
-            border-radius: 4px; border: none; font-size: 14px; font-family: inherit;
-        }
+        input[type="text"], textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 4px; border: none; font-size: 14px; font-family: 'Zen Maru Gothic', inherit; }
         textarea { height: 100px; resize: vertical; }
         .btn-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        button {
-            padding: 10px 20px; font-size: 16px; font-weight: bold;
-            border: none; border-radius: 4px; cursor: pointer; transition: 0.2s;
-        }
+        button { padding: 10px 20px; font-size: 16px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: 0.2s; }
         .btn-preview { background-color: #28a745; color: white; }
         .btn-preview:hover { background-color: #218838; }
         .btn-download { background-color: #ff4500; color: white; }
         .btn-download:hover { background-color: #cc3700; }
-        
-        /* キャンバスを画面サイズに合わせて縮小表示（保存時は本来の高画質1280x720） */
         .canvas-wrapper { width: 100%; border: 2px dashed #555; border-radius: 4px; overflow: hidden; }
         canvas { width: 100%; height: auto; display: block; background-color: #000; }
     </style>
@@ -49,22 +27,18 @@
 
 <div class="container">
     <h1>📩 メッセージカード合成ツール</h1>
-    
     <div class="input-group">
-        <label>① メールに届いた「画像URL」をペースト</label>
+        <label>① メールに届いた「画像URL」</label>
         <input type="text" id="bgUrl" placeholder="例: https://media.yuto-boxer.com/card/card_05.png">
     </div>
-    
     <div class="input-group">
-        <label>② メールに届いた「メッセージ本文」をペースト</label>
+        <label>② メールに届いた「メッセージ本文」</label>
         <textarea id="msgText" placeholder="熱いメッセージをここにペースト"></textarea>
     </div>
-
     <div class="btn-group">
         <button class="btn-preview" onclick="previewCard()">1. プレビューを生成 👁️</button>
         <button class="btn-download" onclick="downloadCard()">2. PCに保存 💾</button>
     </div>
-
     <div class="canvas-wrapper">
         <canvas id="adminCanvas" width="1280" height="720"></canvas>
     </div>
@@ -75,114 +49,96 @@
     const ctx = canvas.getContext('2d');
     let currentImage = new Image();
 
-    // プレビュー生成
+    // 魔法のリンクでの自動起動処理
+    window.onload = () => {
+        const params = new URLSearchParams(window.location.search);
+        let hasData = false;
+        if (params.has('img')) { document.getElementById('bgUrl').value = params.get('img'); hasData = true; }
+        if (params.has('text')) { document.getElementById('msgText').value = params.get('text'); hasData = true; }
+        if (hasData) { previewCard(); }
+    };
+
     function previewCard() {
         const url = document.getElementById('bgUrl').value.trim();
         const text = document.getElementById('msgText').value.trim();
-
-        if (!url) {
-            alert("画像URLが入力されていません！");
-            return;
-        }
+        if (!url) { alert("画像URLが入力されていません！"); return; }
 
         currentImage = new Image();
         currentImage.crossOrigin = "anonymous";
         currentImage.onload = () => {
-            // 背景リセット＆画像描画
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
-            
-            // テキストがあれば合成
             if (text !== "") {
-                // 先ほど調整した「少し右にずらした」設定値
-                const textArea = { x: 250, y: 160, width: 540, height: 420 };
+                // ▼ テキストエリア拡張 (index.htmlと同じ値に) ▼
+                const textArea = { x: 220, y: 120, width: 600, height: 500 };
                 drawTextWithAutoScale(ctx, text, textArea);
             }
         };
-        currentImage.onerror = () => {
-            alert("画像の読み込みに失敗しました。URLが間違っているか、R2に存在しません。");
-        };
+        currentImage.onerror = () => alert("画像の読み込みに失敗しました。");
         currentImage.src = url + "?t=" + new Date().getTime();
     }
 
-    // 文字の自動リサイズ＆描画
     function drawTextWithAutoScale(ctx, text, area) {
         let fontSize = 54;
         const minFontSize = 24;
-        const fontFamily = "'Helvetica Neue', Arial, sans-serif";
+        // ▼ 丸ゴシックを適用 ▼
+        const fontFamily = "'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif";
         const lineHeightRatio = 1.4;
         let lines = [];
         let wrappedText = text.replace(/\r\n/g, '\n');
         
-        while (fontSize >= minFontSize) {
-            ctx.font = `bold ${fontSize}px ${fontFamily}`;
-            lines = wrapText(ctx, wrappedText, area.width);
-            let totalHeight = lines.length * (fontSize * lineHeightRatio);
-            
-            if (totalHeight <= area.height) { break; }
-            fontSize -= 2;
-            
-            if (fontSize < minFontSize) {
-                fontSize = minFontSize;
+        document.fonts.ready.then(() => {
+            while (fontSize >= minFontSize) {
                 ctx.font = `bold ${fontSize}px ${fontFamily}`;
                 lines = wrapText(ctx, wrappedText, area.width);
-                const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
-                lines = lines.slice(0, maxLines);
-                if (lines.length > 0) {
-                    let lastLine = lines[lines.length - 1];
-                    lines[lines.length - 1] = lastLine.length > 2 ? lastLine.slice(0, -2) + "…" : lastLine + "…";
+                if (lines.length * (fontSize * lineHeightRatio) <= area.height) break;
+                fontSize -= 2;
+                
+                if (fontSize < minFontSize) {
+                    fontSize = minFontSize;
+                    ctx.font = `bold ${fontSize}px ${fontFamily}`;
+                    lines = wrapText(ctx, wrappedText, area.width);
+                    const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
+                    lines = lines.slice(0, maxLines);
+                    if (lines.length > 0) {
+                        let lastLine = lines[lines.length - 1];
+                        lines[lines.length - 1] = lastLine.length > 2 ? lastLine.slice(0, -2) + "…" : lastLine + "…";
+                    }
+                    break;
                 }
-                break;
             }
-        }
 
-        ctx.fillStyle = "#333333";
-        ctx.textBaseline = "top";
-        const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
-        const startY = area.y + (area.height - totalTextHeight) / 2;
+            ctx.fillStyle = "#333333";
+            ctx.textBaseline = "top";
+            const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
+            const startY = area.y + (area.height - totalTextHeight) / 2;
 
-        lines.forEach((line, index) => {
-            const textY = startY + index * (fontSize * lineHeightRatio);
-            ctx.fillText(line, area.x, textY);
+            lines.forEach((line, index) => {
+                ctx.fillText(line, area.x, startY + index * (fontSize * lineHeightRatio));
+            });
         });
     }
 
-    // 禁則処理付きの折り返し
     function wrapText(ctx, text, maxWidth) {
         const kinsokuStart = "、。，．・：；？！゛゜´｀¨＾―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】";
         const chars = text.split('');
-        let lines = [];
-        let currentLine = '';
+        let lines = [], currentLine = '';
 
         for (let i = 0; i < chars.length; i++) {
             const char = chars[i];
-            if (char === '\n') {
-                lines.push(currentLine); currentLine = ''; continue;
-            }
+            if (char === '\n') { lines.push(currentLine); currentLine = ''; continue; }
             const testLine = currentLine + char;
-            const testWidth = ctx.measureText(testLine).width;
-
-            if (testWidth > maxWidth && currentLine !== '') {
-                if (kinsokuStart.includes(char)) {
-                    currentLine = testLine; // 禁則文字なら追い出し
-                } else {
-                    lines.push(currentLine);
-                    currentLine = char;
-                }
-            } else {
-                currentLine = testLine;
-            }
+            if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
+                if (kinsokuStart.includes(char)) { currentLine = testLine; }
+                else { lines.push(currentLine); currentLine = char; }
+            } else { currentLine = testLine; }
         }
         lines.push(currentLine);
         return lines;
     }
 
-    // 画像保存
     function downloadCard() {
-        if (!currentImage.src) {
-            alert("先にプレビューを生成してください！");
-            return;
-        }
+        if (!currentImage.src) { alert("先にプレビューを生成してください！"); return; }
         const link = document.createElement('a');
         link.download = `From_Fan_Message_${new Date().getTime()}.png`;
         link.href = canvas.toDataURL("image/png");
