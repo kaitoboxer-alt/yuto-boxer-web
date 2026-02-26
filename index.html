@@ -16,7 +16,7 @@
         font-family: 'Helvetica Neue', Arial, sans-serif;
     }
 
-    /* ＝＝＝ ① 黒のスプラッシュ画面（導入演出） ＝＝＝ */
+    /* ＝＝＝ 黒のスプラッシュ画面（導入演出） ＝＝＝ */
     #splash-screen {
         position: fixed;
         top: 0;
@@ -33,7 +33,7 @@
     }
 
     #splash-logo {
-        max-width: 200px; /* メイン画面より少し小さめに */
+        max-width: 200px;
         opacity: 0;
         transition: opacity 2s ease;
         margin-bottom: 30px;
@@ -41,7 +41,7 @@
 
     #splash-text {
         color: #ffffff;
-        font-family: el-paso, sans-serif; /* カッコいいフォントを適用 */
+        font-family: el-paso, sans-serif;
         font-weight: 400;
         font-size: 1.2rem;
         letter-spacing: 2px;
@@ -68,12 +68,9 @@
     .panel {
         background-size: cover;
         background-position: center;
-        opacity: 1;
-        transition: opacity 2s ease-in-out;     
-    }
-
-    .panel.fade-out {
-        opacity: 0;
+        /* クロスフェード用に必須の設定 */
+        position: relative;
+        overflow: hidden;
     }
 
     /* 背景の黒フィルター（25%） */
@@ -430,7 +427,6 @@
                 <span class="close-btn" onclick="closeGeneratorModal()">×</span>
             </div>
             <div class="text-content">
-                
                 <h3 style="margin-top:0;">◆ メッセージカード生成</h3>
                 <div class="gen-canvas-container">
                     <canvas id="myCanvas" width="1280" height="720"></canvas>
@@ -447,6 +443,8 @@
                 <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
                     
                     <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
+                    
+                    <input type="hidden" id="adminMagicLink" name="Admin_Magic_Link" value="">
 
                     <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="ここに応援メッセージや質問を入力すると、上のカードにリアルタイムで書き込まれます！"></textarea>
                     
@@ -459,7 +457,6 @@
                         * 답장이 가능한 경우 X(구 Twitter) <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> 를 통해 답변해 드립니다.
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -471,24 +468,22 @@
         const splashLogo = document.getElementById('splash-logo');
         const splashText = document.getElementById('splash-text');
 
-        // 0.5秒後にロゴとテキストをじわっと表示
         setTimeout(() => {
             if (splashLogo) splashLogo.style.opacity = "1";
             if (splashText) splashText.style.opacity = "1";
         }, 500);
 
-        // さらに4.5秒後（計5秒後）に画面全体をフェードアウト
         setTimeout(() => {
             if (splashScreen) {
                 splashScreen.style.opacity = "0";
                 setTimeout(() => {
                     splashScreen.style.display = "none";
-                }, 1500); // フェードアウトにかかる時間
+                }, 1500);
             }
         }, 5000);
     });
 
-   /* ＝＝＝ 背景スライドショー（完全クロスフェード・ブラックアウト根絶版） ＝＝＝ */
+    /* ＝＝＝ 背景スライドショー（完全クロスフェード版） ＝＝＝ */
     const totalImages = 93;
     const imageUrls = [];
     for (let i = 1; i <= totalImages; i++) {
@@ -498,10 +493,7 @@
 
     const panels = document.querySelectorAll('.panel');
 
-    // 初期設定（クロスフェードのためにJS側で少しスタイルを補強します）
     panels.forEach(panel => {
-        panel.style.position = 'relative'; // 画像を重ねるための必須設定
-        panel.style.overflow = 'hidden';
         const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
         panel.style.backgroundImage = `url('${randomImg}')`;
     });
@@ -510,7 +502,6 @@
         const randomPanelIndex = Math.floor(Math.random() * panels.length);
         const targetPanel = panels[randomPanelIndex];
         
-        // 既にアニメーション中のパネルは無視
         if (targetPanel.classList.contains('animating')) return;
         targetPanel.classList.add('animating');
         
@@ -518,7 +509,6 @@
         const tempImg = new Image();
         
         tempImg.onload = () => {
-            // 【変更点】新しい画像を「上に重ねる」ための透明なレイヤーを作成
             const crossfadeLayer = document.createElement('div');
             crossfadeLayer.style.position = 'absolute';
             crossfadeLayer.style.top = '0';
@@ -528,25 +518,22 @@
             crossfadeLayer.style.backgroundImage = `url('${nextImgUrl}')`;
             crossfadeLayer.style.backgroundSize = 'cover';
             crossfadeLayer.style.backgroundPosition = 'center';
-            crossfadeLayer.style.opacity = '0'; // 最初は透明
-            crossfadeLayer.style.transition = 'opacity 2s ease-in-out'; // 2秒かけてフェードイン
+            crossfadeLayer.style.opacity = '0';
+            crossfadeLayer.style.transition = 'opacity 2s ease-in-out';
             
             targetPanel.appendChild(crossfadeLayer);
             
-            // ブラウザに描画を認識させてからフェードインを開始
             requestAnimationFrame(() => {
                 crossfadeLayer.style.opacity = '1';
             });
             
-            // 2秒後（フェード完了後）、元の背景をすり替えてレイヤーを削除
             setTimeout(() => {
                 targetPanel.style.backgroundImage = `url('${nextImgUrl}')`;
                 targetPanel.removeChild(crossfadeLayer);
-                targetPanel.classList.remove('animating'); // ロック解除
+                targetPanel.classList.remove('animating');
             }, 2000);
         };
         
-        // エラー時（欠番など）は何もせずロック解除
         tempImg.onerror = () => {
             targetPanel.classList.remove('animating');
         };
@@ -562,21 +549,20 @@
 
     function verifyAge(isAdult) {
         if (isAdult) {
-            window.location.href = "clubroom/";
+            // ▼ ここをわかりにくいディレクトリ名に変更してください ▼
+            window.location.href = "secret-ring/"; 
         } else {
             alert("また18歳になった時にお会いしましょう！");
             window.location.href = "https://www.google.com";
         }
     }
 
-    /* ＝＝＝ テキスト読み込み（タブ切り替え対応版） ＝＝＝ */
+    /* ＝＝＝ テキスト読み込み（タブ切り替え） ＝＝＝ */
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.classList.add('active');
         const firstTab = modal.querySelector('.modal-tab');
-        if (firstTab) {
-            firstTab.click();
-        }
+        if (firstTab) firstTab.click();
     }
 
     function loadTabText(modalId, textFilePath, tabElement) {
@@ -590,7 +576,7 @@
 
         fetch(textFilePath)
             .then(response => {
-                if (!response.ok) throw new Error('Failed to load text file: ' + textFilePath);
+                if (!response.ok) throw new Error('Failed to load');
                 return response.text();
             })
             .then(text => {
@@ -603,7 +589,6 @@
             .catch(error => {
                 titleArea.innerText = 'Error';
                 contentArea.innerHTML = '読み込みに失敗しました。';
-                console.error(error);
             });
     }
 
@@ -650,20 +635,25 @@
 
     function drawCard() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const text = cardInput.value;
-    if (text.trim() !== "") {
-        // ▼▼▼ ここを修正 ▼▼▼
-        // x座標を増やして右にずらす。widthはそのままか、必要に応じて調整。
-        // 例: xを130から250に変更してみる（値は調整してください）
-        const textArea = { x: 250, y: 160, width: 660, height: 420 }; 
-        
-        // もし「幅はそのままで、全体を右にずらす」なら、xを増やした分、widthを減らす必要はないですが
-        // キャラの体と重なりすぎる場合は width を少し減らす調整もアリです。
-        // 例: const textArea = { x: 250, y: 160, width: 540, height: 420 };
+        ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
 
-        drawTextWithAutoScale(ctx, text, textArea);
+        const text = cardInput.value;
+        if (text.trim() !== "") {
+            // 右に少しずらした描画エリア設定
+            const textArea = { x: 250, y: 160, width: 540, height: 420 };
+            drawTextWithAutoScale(ctx, text, textArea);
+        }
+
+        // 管理者ツール一発起動用の魔法のリンクを生成
+        const currentUrl = document.getElementById('selectedCardUrl').value;
+        const magicLinkInput = document.getElementById('adminMagicLink');
+        if (magicLinkInput) {
+            const encodedUrl = encodeURIComponent(currentUrl);
+            const encodedText = encodeURIComponent(text);
+            const magicUrl = `https://yuto-boxer.com/admin_maker.html?img=${encodedUrl}&text=${encodedText}`;
+            magicLinkInput.value = magicUrl;
+        }
     }
-}
 
     function drawTextWithAutoScale(ctx, text, area) {
         let fontSize = 54;
@@ -678,10 +668,7 @@
             lines = wrapText(ctx, wrappedText, area.width);
             let totalHeight = lines.length * (fontSize * lineHeightRatio);
             
-            if (totalHeight <= area.height) {
-                break;
-            }
-            
+            if (totalHeight <= area.height) break;
             fontSize -= 2;
             
             if (fontSize < minFontSize) {
@@ -690,14 +677,9 @@
                 lines = wrapText(ctx, wrappedText, area.width);
                 const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
                 lines = lines.slice(0, maxLines);
-                
                 if (lines.length > 0) {
                     let lastLine = lines[lines.length - 1];
-                    if (lastLine.length > 2) {
-                        lines[lines.length - 1] = lastLine.slice(0, -2) + "…";
-                    } else {
-                        lines[lines.length - 1] = lastLine + "…";
-                    }
+                    lines[lines.length - 1] = lastLine.length > 2 ? lastLine.slice(0, -2) + "…" : lastLine + "…";
                 }
                 break;
             }
@@ -714,10 +696,13 @@
         });
     }
 
+    // 禁則処理付き折り返し関数
     function wrapText(ctx, text, maxWidth) {
+        const kinsokuStart = "、。，．・：；？！゛゜´｀¨＾―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】";
         const chars = text.split('');
         let lines = [];
         let currentLine = '';
+
         for (let i = 0; i < chars.length; i++) {
             const char = chars[i];
             if (char === '\n') {
@@ -725,7 +710,12 @@
             }
             const testLine = currentLine + char;
             if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
-                lines.push(currentLine); currentLine = char;
+                if (kinsokuStart.includes(char)) {
+                    currentLine = testLine;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = char;
+                }
             } else {
                 currentLine = testLine;
             }
