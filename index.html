@@ -338,7 +338,7 @@
         const text = cardInput.value;
         if (text.trim() !== "") {
             // ▼ テキストエリアを拡張 (左寄せ・幅広・縦長) ▼
-            const textArea = { x: 96, y: 64, width: 900, height: 640 };
+            const textArea = { x: 96, y: 0, width: 900, height: 600 };
             drawTextWithAutoScale(ctx, text, textArea);
         }
 
