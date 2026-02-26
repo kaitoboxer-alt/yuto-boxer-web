@@ -488,7 +488,7 @@
         }, 5000);
     });
 
-    /* ＝＝＝ 背景スライドショー（完全プリロード＆フリーズ防止版） ＝＝＝ */
+   /* ＝＝＝ 背景スライドショー（完全クロスフェード・ブラックアウト根絶版） ＝＝＝ */
     const totalImages = 93;
     const imageUrls = [];
     for (let i = 1; i <= totalImages; i++) {
@@ -498,8 +498,10 @@
 
     const panels = document.querySelectorAll('.panel');
 
-    // 初期表示
+    // 初期設定（クロスフェードのためにJS側で少しスタイルを補強します）
     panels.forEach(panel => {
+        panel.style.position = 'relative'; // 画像を重ねるための必須設定
+        panel.style.overflow = 'hidden';
         const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
         panel.style.backgroundImage = `url('${randomImg}')`;
     });
@@ -508,37 +510,48 @@
         const randomPanelIndex = Math.floor(Math.random() * panels.length);
         const targetPanel = panels[randomPanelIndex];
         
-        // すでにアニメーション中（準備中・フェード中）なら他のパネルへ譲る
+        // 既にアニメーション中のパネルは無視
         if (targetPanel.classList.contains('animating')) return;
-        targetPanel.classList.add('animating'); // 二重動作を防ぐロック
+        targetPanel.classList.add('animating');
         
-        const nextImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+        const nextImgUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
         const tempImg = new Image();
         
-        // 【重要】画像のダウンロードが完全に終わってからフェードアウトを開始する
         tempImg.onload = () => {
-            // 1. ゆっくり黒へ消える
-            targetPanel.classList.add('fade-out');
+            // 【変更点】新しい画像を「上に重ねる」ための透明なレイヤーを作成
+            const crossfadeLayer = document.createElement('div');
+            crossfadeLayer.style.position = 'absolute';
+            crossfadeLayer.style.top = '0';
+            crossfadeLayer.style.left = '0';
+            crossfadeLayer.style.width = '100%';
+            crossfadeLayer.style.height = '100%';
+            crossfadeLayer.style.backgroundImage = `url('${nextImgUrl}')`;
+            crossfadeLayer.style.backgroundSize = 'cover';
+            crossfadeLayer.style.backgroundPosition = 'center';
+            crossfadeLayer.style.opacity = '0'; // 最初は透明
+            crossfadeLayer.style.transition = 'opacity 2s ease-in-out'; // 2秒かけてフェードイン
             
-            // 2. 完全に消えきったタイミング（2秒後）で画像を差し替え
+            targetPanel.appendChild(crossfadeLayer);
+            
+            // ブラウザに描画を認識させてからフェードインを開始
+            requestAnimationFrame(() => {
+                crossfadeLayer.style.opacity = '1';
+            });
+            
+            // 2秒後（フェード完了後）、元の背景をすり替えてレイヤーを削除
             setTimeout(() => {
-                targetPanel.style.backgroundImage = `url('${nextImg}')`;
-                targetPanel.classList.remove('fade-out'); // 再び浮かび上がる
-                
-                // 3. 浮かび上がり完了（さらに2秒後）でロック解除
-                setTimeout(() => {
-                    targetPanel.classList.remove('animating');
-                }, 2000);
-            }, 2000); 
+                targetPanel.style.backgroundImage = `url('${nextImgUrl}')`;
+                targetPanel.removeChild(crossfadeLayer);
+                targetPanel.classList.remove('animating'); // ロック解除
+            }, 2000);
         };
         
-        // 万が一欠番（404）を引いた場合は、黒くせずにそのままロック解除（やり直し）
+        // エラー時（欠番など）は何もせずロック解除
         tempImg.onerror = () => {
             targetPanel.classList.remove('animating');
         };
         
-        // 裏側でダウンロード開始
-        tempImg.src = nextImg;
+        tempImg.src = nextImgUrl;
         
     }, 3000);
 
