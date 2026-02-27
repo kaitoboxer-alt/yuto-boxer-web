@@ -31,10 +31,9 @@
         z-index: 10;
     }
 
-    /* ガンメタリック・ボタン（金属の質感とサイバーブルーの発光） */
+    /* ガンメタリック・ボタン */
     .gunmetal-btn {
         position: relative;
-        /* ヘアライン加工（細い溝）と金属グラデーションを重ねる */
         background: 
             repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
             linear-gradient(135deg, #4a4e59 0%, #2b2e35 50%, #1a1c20 100%);
@@ -61,7 +60,6 @@
         color: #ffffff;
         border-color: #00f0ff;
         transform: translateX(-10px);
-        /* ホバー時にサイバーブルーの光が漏れ出す */
         box-shadow: 
             0 8px 15px rgba(0, 0, 0, 0.8),
             0 0 12px rgba(0, 240, 255, 0.4),
@@ -94,11 +92,6 @@
         opacity: 1;
         visibility: visible;
         right: 105%;
-    }
-
-    /* 予備スペース（非表示） */
-    .spare-btn {
-        display: none !important;
     }
 
     /* Contactボタン（右下固定） */
@@ -155,16 +148,12 @@
 <body>
 
     <div class="menu-area">
-        <a href="#" class="gunmetal-btn" data-tooltip="ギャラリー">Gallery</a>
-        <a href="#" class="gunmetal-btn" data-tooltip="小説">Novel</a>
-        <a href="#" class="gunmetal-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
-        <a href="#" class="gunmetal-btn" data-tooltip="ダウンロード">Download</a>
-        <a href="#" class="gunmetal-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
-        <a href="#" class="gunmetal-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
-        
-        <a href="#" class="gunmetal-btn spare-btn" data-tooltip="予備1">Spare 1</a>
-        <a href="#" class="gunmetal-btn spare-btn" data-tooltip="予備2">Spare 2</a>
-        <a href="#" class="gunmetal-btn spare-btn" data-tooltip="予備3">Spare 3</a>
+        <a href="../03_gallery/index.html" class="gunmetal-btn" data-tooltip="ギャラリー">Gallery</a>
+        <a href="../04_novel/index.html" class="gunmetal-btn" data-tooltip="小説">Novel</a>
+        <a href="../05_YouthfulMoments/index.html" class="gunmetal-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
+        <a href="../06_download/index.html" class="gunmetal-btn" data-tooltip="ダウンロード">Download</a>
+        <a href="../08_pressrelease/index.html" class="gunmetal-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
+        <a href="../07_yuto-room/index.html" class="gunmetal-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
     </div>
 
     <a href="#" class="contact-btn">Contact</a>

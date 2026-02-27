@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery - yuto-boxer.com</title> <style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-color: #000;
+        /* ★ここに表示させたい一枚絵のURLを指定します */
+        background-image: url('https://media.yuto-boxer.com/03_gallery/03_gallery_BG.webp'); 
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden; /* スクロールバーを隠す */
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* 部室へ戻るボタン */
+    .back-btn {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        background: rgba(20, 20, 25, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        color: #ddd;
+        padding: 12px 20px;
+        text-decoration: none;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+
+    .back-btn:hover {
+        background: rgba(0, 240, 255, 0.2);
+        border-color: #00f0ff;
+        color: #fff;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+</style>
+</head>
+<body>
+
+    <a href="../02_clubroom/index.html" class="back-btn">← Clubroomへ戻る</a>
+
+</body>
+</html>
