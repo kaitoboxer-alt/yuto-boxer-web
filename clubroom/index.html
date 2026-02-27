@@ -23,7 +23,7 @@
     .menu-area {
         position: absolute;
         right: 8%;
-        top: 20%; /* ボタンが増えたため、少し上に調整 */
+        top: 20%;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -31,40 +31,48 @@
         z-index: 10;
     }
 
-    /* 新しいサイバーブルー・ホログラムボタン */
-    .hologram-btn {
+    /* ガンメタリック・ボタン（金属の質感とサイバーブルーの発光） */
+    .gunmetal-btn {
         position: relative;
-        background: rgba(0, 240, 255, 0.05); 
-        backdrop-filter: blur(8px); 
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(0, 240, 255, 0.3); 
-        border-radius: 8px;
+        /* ヘアライン加工（細い溝）と金属グラデーションを重ねる */
+        background: 
+            repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
+            linear-gradient(135deg, #4a4e59 0%, #2b2e35 50%, #1a1c20 100%);
+        border: 1px solid #5a5f6b;
+        border-top: 1px solid #7a808d;
+        border-bottom: 1px solid #0a0c0e;
+        border-radius: 4px;
         padding: 16px 20px;
-        color: #00f0ff;
+        color: #d0d5dc;
         text-decoration: none;
         text-align: center;
         font-size: 1.1rem;
         letter-spacing: 2px;
         font-weight: bold;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(0, 240, 255, 0.05);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         display: block;
     }
 
-    .hologram-btn:hover {
-        background: rgba(0, 240, 255, 0.2);
-        border: 1px solid #00f0ff;
-        color: #fff;
-        transform: translateX(-10px); /* 既存のクールな動きを踏襲 */
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.4);
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    .gunmetal-btn:hover {
+        background: 
+            repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
+            linear-gradient(135deg, #545966 0%, #32363e 50%, #1f2226 100%);
+        color: #ffffff;
+        border-color: #00f0ff;
+        transform: translateX(-10px);
+        /* ホバー時にサイバーブルーの光が漏れ出す */
+        box-shadow: 
+            0 8px 15px rgba(0, 0, 0, 0.8),
+            0 0 12px rgba(0, 240, 255, 0.4),
+            inset 0 0 8px rgba(0, 240, 255, 0.2);
     }
 
     /* 日本語訳のフキダシ */
-    .hologram-btn::before {
+    .gunmetal-btn::before {
         content: attr(data-tooltip);
         position: absolute;
-        right: 115%; /* ボタンの左側に配置 */
+        right: 115%;
         top: 50%;
         transform: translateY(-50%);
         background: rgba(0, 240, 255, 0.9);
@@ -78,12 +86,14 @@
         visibility: hidden;
         transition: all 0.3s ease;
         pointer-events: none;
+        z-index: 10;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
     }
 
-    .hologram-btn:hover::before {
+    .gunmetal-btn:hover::before {
         opacity: 1;
         visibility: visible;
-        right: 105%; /* ホバーで少し近づく */
+        right: 105%;
     }
 
     /* 予備スペース（非表示） */
@@ -99,6 +109,7 @@
         background: rgba(0, 240, 255, 0.02);
         border: 1px solid rgba(0, 240, 255, 0.3);
         backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         padding: 10px 20px;
         color: #00f0ff;
         text-decoration: none;
@@ -116,7 +127,7 @@
         box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
     }
 
-    /* ダイアログボックス（既存のまま） */
+    /* ダイアログボックス */
     .dialogue-box {
         position: absolute;
         bottom: 5%;
@@ -144,16 +155,16 @@
 <body>
 
     <div class="menu-area">
-        <a href="#" class="hologram-btn" data-tooltip="ギャラリー">Gallery</a>
-        <a href="#" class="hologram-btn" data-tooltip="小説">Novel</a>
-        <a href="#" class="hologram-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
-        <a href="#" class="hologram-btn" data-tooltip="ダウンロード">Download</a>
-        <a href="#" class="hologram-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
-        <a href="#" class="hologram-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
+        <a href="#" class="gunmetal-btn" data-tooltip="ギャラリー">Gallery</a>
+        <a href="#" class="gunmetal-btn" data-tooltip="小説">Novel</a>
+        <a href="#" class="gunmetal-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
+        <a href="#" class="gunmetal-btn" data-tooltip="ダウンロード">Download</a>
+        <a href="#" class="gunmetal-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
+        <a href="#" class="gunmetal-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
         
-        <a href="#" class="hologram-btn spare-btn" data-tooltip="予備1">Spare 1</a>
-        <a href="#" class="hologram-btn spare-btn" data-tooltip="予備2">Spare 2</a>
-        <a href="#" class="hologram-btn spare-btn" data-tooltip="予備3">Spare 3</a>
+        <a href="#" class="gunmetal-btn spare-btn" data-tooltip="予備1">Spare 1</a>
+        <a href="#" class="gunmetal-btn spare-btn" data-tooltip="予備2">Spare 2</a>
+        <a href="#" class="gunmetal-btn spare-btn" data-tooltip="予備3">Spare 3</a>
     </div>
 
     <a href="#" class="contact-btn">Contact</a>
