@@ -12,7 +12,6 @@
         background-color: #000; 
         background-image: url('https://media.yuto-boxer.com/02_clubroom/clubroom.webp'); 
         background-size: cover;
-        /* ★ 背景画像を左端にくっつける！ */
         background-position: left center; 
         font-family: 'Helvetica Neue', Arial, sans-serif;
         overflow: hidden; 
@@ -24,7 +23,7 @@
     .menu-area {
         position: absolute;
         right: 8%;
-        top: 25%;
+        top: 20%; /* ボタンが増えたため、少し上に調整 */
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -32,29 +31,92 @@
         z-index: 10;
     }
 
-    .glass-btn {
-        background: rgba(20, 20, 20, 0.7); 
+    /* 新しいサイバーブルー・ホログラムボタン */
+    .hologram-btn {
+        position: relative;
+        background: rgba(0, 240, 255, 0.05); 
         backdrop-filter: blur(8px); 
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.15); 
+        border: 1px solid rgba(0, 240, 255, 0.3); 
         border-radius: 8px;
-        padding: 18px 20px;
-        color: #fff;
+        padding: 16px 20px;
+        color: #00f0ff;
         text-decoration: none;
         text-align: center;
         font-size: 1.1rem;
         letter-spacing: 2px;
+        font-weight: bold;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(0, 240, 255, 0.05);
+        display: block;
     }
 
-    .glass-btn:hover {
-        background: rgba(50, 50, 50, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        transform: translateX(-10px); 
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    .hologram-btn:hover {
+        background: rgba(0, 240, 255, 0.2);
+        border: 1px solid #00f0ff;
+        color: #fff;
+        transform: translateX(-10px); /* 既存のクールな動きを踏襲 */
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.4);
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
     }
 
+    /* 日本語訳のフキダシ */
+    .hologram-btn::before {
+        content: attr(data-tooltip);
+        position: absolute;
+        right: 115%; /* ボタンの左側に配置 */
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 240, 255, 0.9);
+        color: #000;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border-radius: 4px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+
+    .hologram-btn:hover::before {
+        opacity: 1;
+        visibility: visible;
+        right: 105%; /* ホバーで少し近づく */
+    }
+
+    /* 予備スペース（非表示） */
+    .spare-btn {
+        display: none !important;
+    }
+
+    /* Contactボタン（右下固定） */
+    .contact-btn {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        background: rgba(0, 240, 255, 0.02);
+        border: 1px solid rgba(0, 240, 255, 0.3);
+        backdrop-filter: blur(4px);
+        padding: 10px 20px;
+        color: #00f0ff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+    .contact-btn:hover {
+        background: rgba(0, 240, 255, 0.15);
+        border-color: #00f0ff;
+        color: #fff;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+    }
+
+    /* ダイアログボックス（既存のまま） */
     .dialogue-box {
         position: absolute;
         bottom: 5%;
@@ -73,11 +135,8 @@
         z-index: 10;
     }
 
-    
-
     .name-g { color: #ff6b6b; font-weight: bold; margin-right: 10px; } 
     .name-b { color: #4da8da; font-weight: bold; margin-right: 10px; } 
-    
     .dialogue-line { margin-bottom: 10px; }
     .dialogue-line:last-child { margin-bottom: 0; }
 </style>
@@ -85,11 +144,19 @@
 <body>
 
     <div class="menu-area">
-        <a href="#" class="glass-btn">GALLERY</a>
-        <a href="#" class="glass-btn">NOVEL</a>
-        <a href="#" class="glass-btn">PROFILE</a>
-        <a href="#" class="glass-btn">YUTO'S ROOM</a>
+        <a href="#" class="hologram-btn" data-tooltip="ギャラリー">Gallery</a>
+        <a href="#" class="hologram-btn" data-tooltip="小説">Novel</a>
+        <a href="#" class="hologram-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
+        <a href="#" class="hologram-btn" data-tooltip="ダウンロード">Download</a>
+        <a href="#" class="hologram-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
+        <a href="#" class="hologram-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
+        
+        <a href="#" class="hologram-btn spare-btn" data-tooltip="予備1">Spare 1</a>
+        <a href="#" class="hologram-btn spare-btn" data-tooltip="予備2">Spare 2</a>
+        <a href="#" class="hologram-btn spare-btn" data-tooltip="予備3">Spare 3</a>
     </div>
+
+    <a href="#" class="contact-btn">Contact</a>
 
     <div class="dialogue-box" id="dialogue-box">
     </div>
