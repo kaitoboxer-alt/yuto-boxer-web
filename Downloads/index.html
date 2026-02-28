@@ -1,36 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>Downloads - yuto-boxer.com</title>
+<meta charset="UTF-8"><title>Downloads - yuto-boxer.com</title>
 <style>
-    body { 
-        margin: 0; 
-        height: 100vh; 
-        /* 画像アドレスは元のまま一切変更していません */
-        background: #000 url('https://media.yuto-boxer.com/06_download/06_download_BG.webp') center/cover no-repeat; 
-        font-family: 'Helvetica Neue', Arial, sans-serif; 
-        overflow: hidden; 
-    }
-    .back-btn { 
-        position: absolute; 
-        top: 30px; 
-        left: 30px; 
-        background: rgba(0,0,0,0.7); 
-        border: 1px solid #555; 
-        color: #fff; 
-        padding: 12px 20px; 
-        text-decoration: none; 
-        border-radius: 4px; 
-        transition: all 0.3s;
-    }
-    .back-btn:hover { 
-        background: #fff; 
-        color: #000; 
-    }
+    body { margin: 0; height: 100vh; background: #000 url('https://media.yuto-boxer.com/06_download/06_download_BG.webp') center/cover no-repeat; font-family: sans-serif; overflow: hidden; }
+    .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; }
+    .back-btn:hover { background: #fff; color: #000; }
+    .floating-send-btn { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s; z-index: 200; backdrop-filter: blur(5px); }
+    .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 15px #00f0ff; }
 </style>
 </head>
 <body>
     <a href="../clubroom/index.html" class="back-btn">← clubroomへ戻る</a>
+    <a href="/index.html?open=contact" class="floating-send-btn">Send Message</a>
 </body>
 </html>

@@ -2,11 +2,38 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Youthful Moments - yuto-boxer.com</title>
 <style>
-    body { margin: 0; height: 100vh; background: #000 url('https://media.yuto-boxer.com/05_YouthfulMoments/05_YouthfulMomentsBG.webp') center/cover no-repeat; font-family: sans-serif; overflow: hidden; }
-    .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; }
-    .back-btn:hover { background: #fff; color: #000; }
+    body { 
+        margin: 0; 
+        height: 100vh; 
+        background-color: #000; 
+        /* 1. 画像は元のまま維持 */
+        background-image: url('https://media.yuto-boxer.com/05_YouthfulMoments/05_YouthfulMomentsBG.webp'); 
+        background-size: cover; 
+        /* 2. 【修正】画像を「右」に寄せることで、キャラを「左」に配置 */
+        background-position: right center; 
+        background-repeat: no-repeat;
+        overflow: hidden; 
+        font-family: 'Helvetica Neue', Arial, sans-serif; 
+    }
+    .back-btn { 
+        position: absolute; 
+        top: 30px; 
+        left: 30px; 
+        background: rgba(0,0,0,0.7); 
+        border: 1px solid #555; 
+        color: #fff; 
+        padding: 12px 20px; 
+        text-decoration: none; 
+        border-radius: 4px; 
+        transition: all 0.3s;
+    }
+    .back-btn:hover { 
+        background: #fff; 
+        color: #000; 
+    }
 </style>
 </head>
 <body>
