@@ -2,38 +2,78 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>yuto-boxer.com</title>
+    <style>
+        /* TOPページの基本スタイル */
+        body { margin: 0; background: #000; color: #fff; font-family: sans-serif; }
+        
+        /* スプラッシュ画面 */
+        #splash {
+            position: fixed; width: 100%; height: 100%; background: #000;
+            display: flex; align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        /* メッセージウィンドウ（初期は非表示） */
+        #sendmessage {
+            display: none;
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80%; max-width: 500px; background: #222; border: 2px solid #555;
+            padding: 20px; z-index: 1000; box-shadow: 0 0 20px rgba(0,240,255,0.5);
+        }
+
+        .close-btn { color: #00f0ff; cursor: pointer; float: right; }
+        .main-content { padding: 50px; text-align: center; }
+    </style>
 </head>
 <body>
+
+    <div id="splash">
+        <h1>LOADING...</h1>
+    </div>
+
+    <div class="main-content">
+        <h1>yuto-boxer.com</h1>
+        <p>Welcome to the ring.</p>
+        <button onclick="openMessageModal()">Send Message</button>
+    </div>
+
+    <div id="sendmessage">
+        <span class="close-btn" onclick="closeMessageModal()">[CLOSE]</span>
+        <h2>Contact Form</h2>
+        <p>メッセージを入力してください。</p>
+        <textarea style="width:100%; height:100px; background:#333; color:#fff;"></textarea>
+        <button style="margin-top:10px;">送信</button>
+    </div>
+
     <script>
-        // 既存のスクリプトがある場合はその下に追記してください
-        
-        window.addEventListener('load', function() {
+        // 通常の制御
+        function openMessageModal() { document.getElementById('sendmessage').style.display = 'block'; }
+        function closeMessageModal() { document.getElementById('sendmessage').style.display = 'none'; }
+
+        // スプラッシュ画面を通常通り消す処理（例：2秒後）
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                if (splash) splash.style.opacity = '0';
+                setTimeout(() => { if(splash) splash.style.display = 'none'; }, 500);
+            }, 1000);
+        });
+
+        /* --- ここが重要：部室からの指示を受け取る処理 --- */
+        (function() {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('open') === 'contact') {
-                
-                // 1. スプラッシュ画面を即座に隠す
-                const splash = document.getElementById('splash'); 
-                if (splash) {
-                    splash.style.display = 'none';
-                    // 必要に応じてopacityなども調整
-                    splash.style.opacity = '0';
-                    splash.style.visibility = 'hidden';
-                }
-
-                // 2. メッセージ送信ウィンドウを表示する
-                // 元々のサイトにある「Send Message」ボタンが押された時の処理をシミュレート
-                const modal = document.getElementById('sendmessage');
-                if (modal) {
-                    modal.style.display = 'block';
-                    // もしクラスで制御している場合はクラスを追加
-                    modal.classList.add('active'); 
-                }
-
-                // URLのパラメータを消してスッキリさせる（任意）
-                history.replaceState(null, null, window.location.pathname);
+                window.addEventListener('DOMContentLoaded', () => {
+                    // スプラッシュを即座に消す
+                    const splash = document.getElementById('splash');
+                    if (splash) splash.style.display = 'none';
+                    // メッセージ画面を即座に出す
+                    openMessageModal();
+                });
             }
-        });
+        })();
     </script>
 </body>
 </html>

@@ -6,99 +6,52 @@
 <title>部室 - yuto-boxer.com</title>
 <style>
     body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background-color: #000; 
+        margin: 0; padding: 0; height: 100vh; background-color: #000; 
         background-image: url('https://media.yuto-boxer.com/02_clubroom/clubroom.webp'); 
-        background-size: cover;
-        background-position: left center; 
+        background-size: cover; background-position: left center; 
         font-family: 'Helvetica Neue', Arial, sans-serif;
-        overflow: hidden; 
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
     }
 
     .menu-area {
-        position: absolute;
-        right: 8%;
-        top: 15%;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        width: 250px;
-        z-index: 100;
+        position: absolute; right: 8%; top: 15%;
+        display: flex; flex-direction: column; gap: 20px; width: 250px; z-index: 100;
     }
 
     .gunmetal-btn {
-        display: block;
-        position: relative;
+        display: block; position: relative;
         background: 
             repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
             linear-gradient(135deg, #444, #222);
-        color: #fff;
-        text-decoration: none;
-        padding: 15px 25px;
-        font-weight: bold;
-        text-align: center;
-        border: 2px solid #555;
-        border-radius: 4px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        transition: all 0.3s ease;
-        overflow: hidden;
-        font-size: 1.1rem;
-        letter-spacing: 2px;
-        text-shadow: 1px 1px 2px #000;
+        color: #fff; text-decoration: none; padding: 15px 25px;
+        font-weight: bold; text-align: center; border: 2px solid #555;
+        border-radius: 4px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease; overflow: hidden; font-size: 1.1rem;
+        letter-spacing: 2px; text-shadow: 1px 1px 2px #000;
     }
 
     .gunmetal-btn:hover {
-        background: linear-gradient(135deg, #555, #333);
-        border-color: #00f0ff;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-        transform: scale(1.05);
+        background: linear-gradient(135deg, #555, #333); border-color: #00f0ff;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); transform: scale(1.05);
     }
 
     .contact-btn {
-        position: absolute;
-        bottom: 5%;
-        right: 8%;
-        background: rgba(40, 40, 40, 0.8);
-        border: 2px solid #fff;
-        color: #fff;
-        padding: 12px 25px;
-        text-decoration: none;
-        font-size: 1rem;
-        font-weight: bold;
-        border-radius: 4px;
-        transition: all 0.3s;
-        z-index: 100;
+        position: absolute; bottom: 5%; right: 8%;
+        background: rgba(40, 40, 40, 0.8); border: 2px solid #fff;
+        color: #fff; padding: 12px 25px; text-decoration: none;
+        font-size: 1rem; font-weight: bold; border-radius: 4px;
+        transition: all 0.3s; z-index: 100;
     }
 
-    .contact-btn:hover {
-        background: #fff;
-        color: #000;
-    }
+    .contact-btn:hover { background: #fff; color: #000; }
 
     .dialogue-box {
-        position: absolute;
-        bottom: 15%;
-        left: 5%;
-        width: 60%;
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 20px;
-        color: #ddd;
-        min-height: 80px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        font-size: 1.2rem;
-        line-height: 1.6;
-        cursor: pointer;
-        z-index: 50;
+        position: absolute; bottom: 15%; left: 5%; width: 60%;
+        background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px; color: #ddd; min-height: 80px; display: flex;
+        flex-direction: column; justify-content: center; font-size: 1.2rem;
+        line-height: 1.6; cursor: pointer; z-index: 50;
     }
-
     .name-g { color: #88ccff; font-weight: bold; margin-right: 10px; }
     .name-b { color: #ffcc88; font-weight: bold; margin-right: 10px; }
 </style>
@@ -106,12 +59,12 @@
 <body>
 
     <div class="menu-area">
-        <a href="/03_gallery/index.html" class="gunmetal-btn">Gallery</a>
-        <a href="/04_novel/index.html" class="gunmetal-btn">Novel</a>
-        <a href="/05_YouthfulMoments/index.html" class="gunmetal-btn">YouthfulMoments</a>
-        <a href="/06_download/index.html" class="gunmetal-btn">Download</a>
-        <a href="/08_pressrelease/index.html" class="gunmetal-btn">Press Release</a>
-        <a href="/07_yuto-room/index.html" class="gunmetal-btn">Yuto's Room</a>
+        <a href="../gallery/index.html" class="gunmetal-btn">Gallery</a>
+        <a href="../novel/index.html" class="gunmetal-btn">Novel</a>
+        <a href="../moments/index.html" class="gunmetal-btn">YouthfulMoments</a>
+        <a href="../download/index.html" class="gunmetal-btn">Download</a>
+        <a href="../news/index.html" class="gunmetal-btn">Press Release</a>
+        <a href="../yuto-room/index.html" class="gunmetal-btn">Yuto's Room</a>
     </div>
 
     <a href="/index.html?open=contact" class="contact-btn">Contact</a>
@@ -130,12 +83,10 @@
 
     let currentIdx = 0;
     const box = document.getElementById('dialogue-box');
-
     function showDialogue() {
         box.innerHTML = conversations[currentIdx];
         currentIdx = (currentIdx + 1) % conversations.length;
     }
-
     box.addEventListener('click', showDialogue);
     showDialogue();
 </script>
