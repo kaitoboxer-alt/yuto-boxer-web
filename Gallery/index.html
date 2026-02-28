@@ -3,105 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clubroom Gallery</title>
+    <title>Clubroom Gallery | Stage</title>
     <style>
-        /* 1. 背景設定：メディアサーバーのBGを指定 */
         body, html {
             margin: 0; padding: 0; width: 100%; min-height: 100vh;
             background-color: #000;
             background-image: url('https://media.yuto-boxer.com/03_gallery/03_gallery_BG.webp'); 
             background-size: cover; background-attachment: fixed; background-position: center;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
-            color: #fff; overflow-x: hidden;
+            font-family: sans-serif; color: #fff; overflow-x: hidden;
         }
 
-        /* 2. 全体レイアウト */
         .gallery-wrapper {
-            display: flex; gap: 40px; padding: 80px 40px;
-            min-height: 100vh; background: rgba(0, 0, 0, 0.4);
-            box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 40px; padding: 100px 20px; min-height: 100vh;
+            background: rgba(0, 0, 0, 0.4); box-sizing: border-box;
         }
 
-        /* 横画像エリア（3枚） */
-        .landscape-grid {
-            flex: 3; display: grid;
-            grid-template-columns: repeat(3, 1fr); gap: 30px;
-            align-content: start;
+        /* 👑 中央メインステージ */
+        .main-stage {
+            width: 100%; max-width: 900px; margin-bottom: 20px;
         }
 
-        /* 縦画像エリア（1枚：番人） */
-        .vertical-area {
-            flex: 1; position: sticky; top: 80px;
-            height: calc(100vh - 160px);
+        /* 🖼️ 下段サブグリッド (PCで3列、スマホで1列) */
+        .sub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; width: 100%; max-width: 1100px;
         }
 
-        /* 3. フロストガラスデザイン */
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px; padding: 12px; cursor: pointer; transition: 0.4s;
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
+            padding: 12px; cursor: pointer; transition: 0.4s;
         }
-        .glass-card img { width: 100%; height: auto; border-radius: 4px; display: block; }
+        .glass-card img { width: 100%; height: auto; border-radius: 6px; display: block; }
         .glass-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-8px); background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* ✉️ SendMessage（左下） */
+        /* ✉️ SendMessage (左下) */
         .send-message-btn {
             position: fixed; bottom: 30px; left: 30px;
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
-            padding: 10px 25px; border-radius: 50px; cursor: pointer;
-            font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s;
+            padding: 12px 25px; border-radius: 50px; cursor: pointer;
+            font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; z-index: 100;
         }
         .send-message-btn:hover { background: #fff; color: #000; }
 
-        /* 4. モーダル（作品詳細） */
+        /* モーダル */
         .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); 
-            z-index: 9999; justify-content: center; align-items: center;
-            backdrop-filter: blur(20px);
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 9999;
+            justify-content: center; align-items: center; backdrop-filter: blur(20px);
         }
         .modal-content {
-            position: relative; max-width: 850px; width: 90%;
+            position: relative; max-width: 800px; width: 90%;
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px; padding: 40px; text-align: center;
         }
-        #modal-image { max-width: 100%; max-height: 60vh; border-radius: 8px; margin-bottom: 20px; }
-        .close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; opacity: 0.6; }
-
-        /* スマホ対応 */
-        @media (max-width: 900px) {
-            .gallery-wrapper { flex-direction: column; }
-            .landscape-grid { grid-template-columns: 1fr; }
-            .vertical-area { position: static; height: auto; }
-        }
+        #modal-image { max-width: 100%; max-height: 65vh; border-radius: 8px; margin-bottom: 20px; }
+        .close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="gallery-wrapper">
-        <main class="landscape-grid">
-            <div class="glass-card" onclick="openModal('01.webp', 'landscape')">
-                <img src="https://media.yuto-boxer.com/03_gallery/landscape/01.webp" alt="Work 01">
+        <div class="main-stage">
+            <div class="glass-card" onclick="openModal('00_main.webp', 'landscape')">
+                <img src="https://media.yuto-boxer.com/03_gallery/landscape/00_main.webp" alt="Main Work">
             </div>
-            <div class="glass-card" onclick="openModal('02.webp', 'landscape')">
-                <img src="https://media.yuto-boxer.com/03_gallery/landscape/02.webp" alt="Work 02">
-            </div>
-            <div class="glass-card" onclick="openModal('03.webp', 'landscape')">
-                <img src="https://media.yuto-boxer.com/03_gallery/landscape/03.webp" alt="Work 03">
-            </div>
-        </main>
+        </div>
 
-        <aside class="vertical-area">
-            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')">
-                <img src="https://media.yuto-boxer.com/03_gallery/Vertical/11.webp" alt="Vertical Work">
-            </div>
-        </aside>
+        <div class="sub-grid">
+            <div class="glass-card" onclick="openModal('01.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/01.webp"></div>
+            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')"><img src="https://media.yuto-boxer.com/03_gallery/Vertical/11.webp"></div>
+            <div class="glass-card" onclick="openModal('02.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/02.webp"></div>
+        </div>
     </div>
 
     <button class="send-message-btn" onclick="location.href='clubroom.html#contact'">SEND MESSAGE</button>
@@ -110,29 +90,27 @@
         <div class="modal-content" onclick="event.stopPropagation()">
             <img id="modal-image" src="" alt="">
             <div class="comment-section">
-                <h2 id="modal-title" style="margin:0;"></h2>
-                <p id="modal-text" style="margin-top:10px; color:#ccc; line-height: 1.6;"></p>
+                <h2 id="modal-title" style="margin:0; font-weight: 200;"></h2>
+                <p id="modal-text" style="margin-top:15px; color:#ccc; line-height: 1.8;"></p>
             </div>
             <button class="close-btn" onclick="closeModal()">×</button>
         </div>
     </div>
 
     <script>
-        const JSON_PATH = 'Gallery/comments.json'; // 管理パネルが書き換えるファイル
+        const JSON_PATH = 'Gallery/comments.json';
         let galleryData = {};
 
         async function loadComments() {
             try {
                 const response = await fetch(`${JSON_PATH}?v=${new Date().getTime()}`);
                 galleryData = await response.json();
-            } catch (e) { console.warn("Comments JSON not found."); }
+            } catch (e) { console.warn("Comments JSON load failed."); }
         }
 
         function openModal(fileName, folder) {
             const modal = document.getElementById('gallery-modal');
             const img = document.getElementById('modal-image');
-            
-            // 作品画像もメディアサーバーから取得
             img.src = `https://media.yuto-boxer.com/03_gallery/${folder}/${fileName}?v=${new Date().getTime()}`;
 
             const type = folder.toLowerCase();
