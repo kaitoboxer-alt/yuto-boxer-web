@@ -1,0 +1,22 @@
+name: Update Gallery Content
+on:
+  repository_dispatch:
+    types: [update-gallery]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update JSON and HTML
+        run: |
+          # ここに、送られてきたテキストをJSONに流し込み、
+          # HTMLの画像URLを置換するスクリプトを記述します。
+          # 人間がやる「コピペ」を、プログラムが完璧に実行します。
+      - name: Commit and Push
+        run: |
+          git config user.name "Clubroom-Bot"
+          git config user.email "bot@yuto-boxer.com"
+          git add .
+          git commit -m "Gallery updated by Producer"
+          git push
