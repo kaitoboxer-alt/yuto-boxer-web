@@ -5,64 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>404 Not Found - yuto-boxer.com</title>
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        background-color: #000; /* 基本黒ページ */
-        color: #fff;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
+    body { 
+        margin: 0; height: 100vh; background-color: #000; color: #fff; 
+        font-family: 'Helvetica Neue', Arial, sans-serif; 
+        display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; 
     }
-
-    .error-msg {
-        font-size: 2rem;
-        font-weight: bold;
-        letter-spacing: 0.1em;
-        margin-bottom: 40px;
-        color: #fff;
+    h1 { color: #00f0ff; letter-spacing: 5px; font-size: 4rem; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0,240,255,0.4); }
+    p { color: #aaa; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; }
+    
+    .back-btn { 
+        background: rgba(0,0,0,0.7); border: 2px solid #555; color: #fff; 
+        padding: 15px 40px; text-decoration: none; border-radius: 4px; 
+        transition: 0.3s; font-weight: bold; display: inline-block;
     }
-
-    /* メニューページへの戻るリンク（ボタンとテキストの中間的な表現） */
-    .back-link {
-        display: inline-block;
-        color: #fff;
-        text-decoration: none;
-        font-size: 1.1rem;
-        padding: 12px 30px;
-        border: 1px solid #444;
-        background: rgba(255, 255, 255, 0.05);
-        transition: all 0.3s;
-    }
-
-    .back-link:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: #fff;
-    }
-
-    /* 右下のチャンピオンベルト画像 */
-    .belt-icon {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        width: 180px; /* 適宜サイズ調整してください */
-        opacity: 0.6;
-        pointer-events: none;
-    }
+    .back-btn:hover { border-color: #00f0ff; box-shadow: 0 0 15px rgba(0,240,255,0.5); }
+    
+    .en-text { display: block; font-size: 0.8rem; color: #888; margin-top: 5px; font-weight: normal; transition: 0.3s; }
+    .back-btn:hover .en-text { color: #ccc; }
 </style>
 </head>
 <body>
-
-    <div class="error-msg">404 エラーが発生しました</div>
-
-    <a href="/02_clubroom/index.html" class="back-link">→ Clubroom（メニューページ）へ戻る</a>
-
-    <img src="https://media.yuto-boxer.com/99_system/championbelt404.webp" alt="belt" class="belt-icon">
-
+    <h1>404</h1>
+    <p>
+        お探しのページは見つかりませんでした。<br>
+        リングの外に出てしまったようです。<br>
+        <span style="font-size: 0.85em; color: #777;">The page you are looking for could not be found.</span>
+    </p>
+    
+    <a href="/clubroom/index.html" class="back-btn">
+        ← clubroomへ戻る
+        <span class="en-text">Return to clubroom</span>
+    </a>
 </body>
 </html>
