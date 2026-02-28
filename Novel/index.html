@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8"><title>Novel - yuto-boxer.com</title>
 <style>
-    body { margin: 0; height: 100vh; background: #000 url('https://media.yuto-boxer.com/04_novel/04_novels_BG.webp') right center/cover no-repeat; font-family: sans-serif; overflow: hidden; }
-    .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; }
+    body { 
+        margin: 0; height: 100vh; 
+        background: #000 url('https://media.yuto-boxer.com/04_novel/04_novels_BG.webp') no-repeat;
+        background-size: cover; 
+        /* 修正：100%（右端）に固定してキャラを左に押し切る */
+        background-position: 100% center; 
+        font-family: sans-serif; overflow: hidden; 
+    }
+    .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }
     .back-btn:hover { background: #fff; color: #000; }
     .floating-send-btn { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s; z-index: 200; backdrop-filter: blur(5px); }
     .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 15px #00f0ff; }
