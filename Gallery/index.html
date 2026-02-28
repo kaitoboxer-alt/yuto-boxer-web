@@ -1,179 +1,217 @@
-<section id="gallery-root">
-    <div class="gallery-wrapper">
-        <main class="landscape-grid" id="landscape-container">
-            </main>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubroom Gallery</title>
+    <style>
+        /* 1. ベース設定：背景画を維持 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #000; /* 背景画がない場合の予備 */
+            /* 背景画の設定：もしCSSで指定済みならここは無視されます */
+            background-image: url('../path-to-your-background.webp'); 
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            color: #fff;
+        }
 
-        <aside class="vertical-sticky-area" id="vertical-container">
-            </aside>
+        /* 2. ギャラリー全体のレイアウト（75%ブラックのオーバーレイ） */
+        .gallery-wrapper {
+            display: flex;
+            gap: 40px;
+            padding: 60px 40px;
+            min-height: 100vh;
+            background: rgba(0, 0, 0, 0.4); /* 背景画を活かしつつ視認性を確保 */
+            box-sizing: border-box;
+        }
+
+        /* 横画像エリア：3カラム〜の自動グリッド */
+        .landscape-grid {
+            flex: 3;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            align-content: start;
+        }
+
+        /* 縦画像エリア：右側に固定 */
+        .vertical-sticky-area {
+            flex: 1;
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* 3. フロストガラス・カードデザイン */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .glass-card img {
+            width: 100%;
+            height: auto; /* 正方形・横長を維持 */
+            border-radius: 6px;
+            display: block;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        /* 4. モーダル：没入感のある75%ブラック */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); 
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content.glass-effect {
+            position: relative;
+            max-width: 900px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        #modal-image {
+            max-width: 100%;
+            max-height: 65vh;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        .comment-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .comment-section p {
+            font-size: 1rem;
+            color: #ddd;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 100;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .close-btn:hover { opacity: 1; }
+
+        /* スマホ対応：1列に */
+        @media (max-width: 768px) {
+            .gallery-wrapper { flex-direction: column; }
+            .vertical-sticky-area { position: static; height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-wrapper">
+        <main class="landscape-grid">
+            <div class="glass-card" onclick="openGalleryModal('01.webp', 'landscape')">
+                <img src="Gallery/Landscape/01.webp" alt="Work 01">
+            </div>
+            <div class="glass-card" onclick="openGalleryModal('02.webp', 'landscape')">
+                <img src="Gallery/Landscape/02.webp" alt="Work 02">
+            </div>
+        </main>
+
+        <aside class="vertical-sticky-area">
+            <div class="glass-card" onclick="openGalleryModal('01.webp', 'vertical')">
+                <img src="Gallery/Vertical/01.webp" alt="Vertical Work 01">
+            </div>
+        </aside>
     </div>
 
     <div id="gallery-modal" class="modal-overlay" onclick="closeGalleryModal()">
         <div class="modal-content glass-effect" onclick="event.stopPropagation()">
-            <img id="modal-image" src="" alt="Full size image">
+            <img id="modal-image" src="" alt="View">
             <div class="comment-section">
-                <h2 id="modal-title" style="color: #fff; margin-bottom: 10px;">TITLE</h2>
-                <p id="modal-text" style="color: #ddd; line-height: 1.6;">Comment Loading...</p>
+                <h2 id="modal-title">TITLE</h2>
+                <p id="modal-text">Loading...</p>
             </div>
-            <button class="close-btn" onclick="closeGalleryModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:#fff; font-size:30px; cursor:pointer;">×</button>
+            <button class="close-btn" onclick="closeGalleryModal()">×</button>
         </div>
     </div>
-</section>
 
-<style>
-/* ギャラリー全体のレイアウト */
-.gallery-wrapper {
-    display: flex;
-    gap: 30px;
-    padding: 40px;
-    min-height: 100vh;
-    background: transparent; /* 既存の背景を活かす */
-}
+    <script>
+        // GitHub上のJSONパスを正しく設定してください
+        const JSON_PATH = 'Gallery/comments.json'; 
+        let galleryData = {};
 
-/* 横画像エリア：3カラムのグリッド */
-.landscape-grid {
-    flex: 3;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 25px;
-    align-content: start;
-}
+        async function loadComments() {
+            try {
+                const response = await fetch(JSON_PATH);
+                galleryData = await response.json();
+            } catch (e) { console.warn("Comments JSON not found."); }
+        }
 
-/* 縦画像エリア：右側に固定 */
-.vertical-sticky-area {
-    flex: 1;
-    position: sticky;
-    top: 40px;
-    height: calc(100vh - 80px);
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
+        function openGalleryModal(fileName, type) {
+            const modal = document.getElementById('gallery-modal');
+            const img = document.getElementById('modal-image');
+            const title = document.getElementById('modal-title');
+            const text = document.getElementById('modal-text');
 
-/* フロストガラス・カードデザイン */
-.glass-card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 15px;
-    padding: 12px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
+            // フォルダ名の大文字・小文字は実際のディレクトリ名に正確に合わせる
+            img.src = `Gallery/${type === 'landscape' ? 'Landscape' : 'Vertical'}/${fileName}`;
 
-.glass-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    display: block;
-}
+            const data = galleryData[type]?.[fileName];
+            title.innerText = data ? data.title : "無題";
+            text.innerText = data ? data.description : "（解説準備中）";
 
-.glass-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    border-color: rgba(255, 255, 255, 0.3);
-}
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
 
-/* モーダル：75%ブラック */
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.75); 
-    z-index: 9999;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(20px);
-}
+        function closeGalleryModal() {
+            document.getElementById('gallery-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
-.modal-content.glass-effect {
-    position: relative;
-    max-width: 800px;
-    width: 90%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    padding: 40px;
-    text-align: center;
-}
-
-#modal-image {
-    max-width: 100%;
-    max-height: 65vh;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.6);
-}
-/* 1. 親要素が背景を隠さないように透明化 */
-#gallery-root {
-    background: transparent !important;
-}
-
-.gallery-wrapper {
-    display: flex;
-    gap: 30px;
-    padding: 40px;
-    min-height: 100vh;
-    /* 背景画を透過させるために background-color を削除、または透明に */
-    background: rgba(0, 0, 0, 0.4); /* 背景画を活かしつつ、文字を見やすくするために40%の薄い黒を敷く */
-    backdrop-filter: none; /* ここでボカすと背景画全体がボケてしまうので注意 */
-}
-
-/* 2. もし背景画自体が消えてしまった場合、ここに元の背景パスを再設定します */
-/* body {
-    background-image: url('あなたの背景画像のパス');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-}
-*/
-</style>
-
-<script>
-// JSONのパス (GitHubのURLまたは相対パス)
-// 開発中は相対パス、本番はRAW URLを推奨
-const COMMENTS_JSON_PATH = 'Gallery/comments.json'; 
-
-let galleryData = {};
-
-// JSONを取得
-async function loadComments() {
-    try {
-        const response = await fetch(COMMENTS_JSON_PATH);
-        galleryData = await response.json();
-    } catch (e) {
-        console.warn("JSON load failed, using empty data.");
-    }
-}
-
-function openGalleryModal(fileName, type) {
-    const modal = document.getElementById('gallery-modal');
-    const modalImg = document.getElementById('modal-image');
-    const modalTitle = document.getElementById('modal-title');
-    const modalText = document.getElementById('modal-text');
-
-    // パス構築 (大文字小文字はディレクトリ名に合わせてください)
-    const folder = type === 'landscape' ? 'Gallery/Landscape/' : 'Gallery/Vertical/';
-    modalImg.src = folder + fileName;
-
-    // JSONからデータを取得
-    const data = galleryData[type] && galleryData[type][fileName];
-    
-    modalTitle.innerText = data ? data.title : fileName;
-    modalText.innerText = data ? data.description : "No comment available.";
-
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // スクロール禁止
-}
-
-function closeGalleryModal() {
-    document.getElementById('gallery-modal').style.display = 'none';
-    document.body.style.overflow = 'auto'; // スクロール再開
-}
-
-// 初期化
-loadComments();
-</script>
+        window.onload = loadComments;
+    </script>
+</body>
+</html>
