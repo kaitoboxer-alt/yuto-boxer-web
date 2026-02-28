@@ -20,18 +20,20 @@
         justify-content: space-between;
     }
 
+    /* メニューエリア：クリックを確実に有効化 */
     .menu-area {
         position: absolute;
         right: 8%;
-        top: 20%;
+        top: 15%; /* 少し上に調整 */
         display: flex;
         flex-direction: column;
         gap: 20px;
         width: 250px;
-        z-index: 10;
+        z-index: 100; /* 最前面へ */
     }
 
     .gunmetal-btn {
+        display: block; /* リンク範囲を広げる */
         position: relative;
         background: 
             repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
@@ -58,23 +60,27 @@
         transform: scale(1.05);
     }
 
+    /* Contactボタン：白文字に変更し、視認性を向上 */
     .contact-btn {
         position: absolute;
         bottom: 5%;
         right: 8%;
-        background: rgba(20, 20, 20, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: #888;
-        padding: 10px 20px;
+        background: rgba(40, 40, 40, 0.8); /* 背景を少し濃く */
+        border: 2px solid rgba(255, 255, 255, 0.5); /* 枠線をハッキリ */
+        color: #fff; /* 白文字に変更 */
+        padding: 12px 25px;
         text-decoration: none;
-        font-size: 0.9rem;
-        border-radius: 2px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 4px;
         transition: all 0.3s;
+        z-index: 100;
     }
 
     .contact-btn:hover {
-        color: #fff;
+        background: rgba(255, 255, 255, 0.2);
         border-color: #fff;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     .dialogue-box {
@@ -93,6 +99,7 @@
         font-size: 1.2rem;
         line-height: 1.6;
         cursor: pointer;
+        z-index: 50;
     }
 
     .name-g { color: #88ccff; font-weight: bold; margin-right: 10px; }
@@ -102,15 +109,15 @@
 <body>
 
     <div class="menu-area">
-        <a href="/03_gallery/index.html" class="gunmetal-btn" data-tooltip="ギャラリー">Gallery</a>
-        <a href="/04_novel/index.html" class="gunmetal-btn" data-tooltip="小説">Novel</a>
-        <a href="/05_YouthfulMoments/index.html" class="gunmetal-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
-        <a href="/06_download/index.html" class="gunmetal-btn" data-tooltip="ダウンロード">Download</a>
-        <a href="/08_pressrelease/index.html" class="gunmetal-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
-        <a href="/07_yuto-room/index.html" class="gunmetal-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
+        <a href="/03_gallery/index.html" class="gunmetal-btn">Gallery</a>
+        <a href="/04_novel/index.html" class="gunmetal-btn">Novel</a>
+        <a href="/05_YouthfulMoments/index.html" class="gunmetal-btn">YouthfulMoments</a>
+        <a href="/06_download/index.html" class="gunmetal-btn">Download</a>
+        <a href="/08_pressrelease/index.html" class="gunmetal-btn">Press Release</a>
+        <a href="/07_yuto-room/index.html" class="gunmetal-btn">Yuto's Room</a>
     </div>
 
-    <a href="/09_contact/index.html" class="contact-btn">Contact</a>
+    <a href="/index.html#sendmessage" class="contact-btn">Contact</a>
 
     <div class="dialogue-box" id="dialogue-box"></div>
 
