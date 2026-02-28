@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 Not Found - yuto-boxer.com</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-color: #000;
+        /* 背景は部室の画像などを流用しても良いでしょう */
+        background-image: url('https://media.yuto-boxer.com/02_clubroom/clubroom.webp');
+        background-size: cover;
+        background-position: center;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        overflow: hidden;
+    }
+
+    .error-container {
+        text-align: center;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 40px;
+        border-radius: 8px;
+        border: 2px solid #555;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        max-width: 500px;
+    }
+
+    h1 {
+        font-size: 5rem;
+        margin: 0;
+        color: #ff4444;
+        text-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin: 20px 0;
+    }
+
+    .character-voice {
+        border-left: 4px solid #00f0ff;
+        padding-left: 15px;
+        text-align: left;
+        margin-bottom: 30px;
+        font-style: italic;
+        color: #ddd;
+    }
+
+    .back-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #444, #222);
+        color: #fff;
+        text-decoration: none;
+        padding: 15px 30px;
+        border: 2px solid #555;
+        border-radius: 4px;
+        transition: all 0.3s;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .back-btn:hover {
+        border-color: #00f0ff;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        transform: translateY(-2px);
+    }
+</style>
+</head>
+<body>
+
+<div class="error-container">
+    <h1>404</h1>
+    <p>おっと、場外乱闘か？<br>指定されたページは見つからなかったぜ。</p>
+    
+    <div class="character-voice">
+        「…ここは部室ですらないみたいだね。道に迷ったなら、一度戻ったほうがいい。僕の計算では、ここに君が求めるものはないよ。」
+    </div>
+
+    <a href="/02_clubroom/index.html" class="back-btn">部室へ戻る</a>
+</div>
+
+</body>
+</html>
