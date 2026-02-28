@@ -20,20 +20,19 @@
         justify-content: space-between;
     }
 
-    /* メニューエリア：クリックを確実に有効化 */
     .menu-area {
         position: absolute;
         right: 8%;
-        top: 15%; /* 少し上に調整 */
+        top: 15%;
         display: flex;
         flex-direction: column;
         gap: 20px;
         width: 250px;
-        z-index: 100; /* 最前面へ */
+        z-index: 100;
     }
 
     .gunmetal-btn {
-        display: block; /* リンク範囲を広げる */
+        display: block;
         position: relative;
         background: 
             repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
@@ -60,14 +59,13 @@
         transform: scale(1.05);
     }
 
-    /* Contactボタン：白文字に変更し、視認性を向上 */
     .contact-btn {
         position: absolute;
         bottom: 5%;
         right: 8%;
-        background: rgba(40, 40, 40, 0.8); /* 背景を少し濃く */
-        border: 2px solid rgba(255, 255, 255, 0.5); /* 枠線をハッキリ */
-        color: #fff; /* 白文字に変更 */
+        background: rgba(40, 40, 40, 0.8);
+        border: 2px solid #fff;
+        color: #fff;
         padding: 12px 25px;
         text-decoration: none;
         font-size: 1rem;
@@ -78,9 +76,8 @@
     }
 
     .contact-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: #fff;
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        background: #fff;
+        color: #000;
     }
 
     .dialogue-box {
