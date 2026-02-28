@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8"><title>Youthful Moments - yuto-boxer.com</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youthful Moments - yuto-boxer.com</title>
 <style>
     body { 
-        margin: 0; height: 100vh; 
-        background: #000 url('https://media.yuto-boxer.com/05_YouthfulMoments/05_YouthfulMomentsBG.webp') no-repeat;
-        background-size: cover; 
-        /* 修正：75%程度に寄せることで、肩を組んでいるキャラを画面内に入れます */
-        background-position: 75% center; 
+        margin: 0; height: 100vh; background-color: #000;
+        /* 【重要】ここを left center に変更し、左端のキャラを確実に表示させます */
+        background: url('https://media.yuto-boxer.com/05_YouthfulMoments/05_YouthfulMomentsBG.webp') left center / cover no-repeat;
         font-family: sans-serif; overflow: hidden; 
     }
     .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }

@@ -429,6 +429,21 @@
         })
         .catch(() => alert("通信エラーが発生しました。"));
     });
+
+    // ▼ 今回追加した必須コード（外部からのSend Messageボタン連携用） ▼
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('open') === 'contact') {
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                splashScreen.style.display = 'none';
+            }
+            // 少し遅延を入れてフォントやCanvasの準備完了を待ってから開く
+            setTimeout(() => {
+                openGeneratorModal();
+            }, 100);
+        }
+    });
 </script>
 </body>
 </html>
