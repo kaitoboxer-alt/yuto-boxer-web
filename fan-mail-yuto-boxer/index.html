@@ -2,148 +2,67 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【管理者専用】メッセージカード合成ツール</title>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <title>Gallery Studio Manager</title>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #1a1a1a; color: #fff; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .container { background-color: #333; padding: 20px; border-radius: 8px; width: 100%; max-width: 800px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h1 { font-size: 1.5rem; text-align: center; margin-top: 0; border-bottom: 1px solid #555; padding-bottom: 10px; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.9rem; margin-bottom: 5px; color: #ccc; }
-        input[type="text"], textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 4px; border: none; font-size: 14px; font-family: 'Zen Maru Gothic', inherit; }
-        textarea { height: 100px; resize: vertical; }
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
-        button { padding: 10px 20px; font-size: 16px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: 0.2s; }
-        .btn-preview { background-color: #28a745; color: white; }
-        .btn-preview:hover { background-color: #218838; }
-        .btn-download { background-color: #ff4500; color: white; }
-        .btn-download:hover { background-color: #cc3700; }
-        .canvas-wrapper { width: 100%; border: 2px dashed #555; border-radius: 4px; overflow: hidden; }
-        canvas { width: 100%; height: auto; display: block; background-color: #000; }
+        body { background: #0a0a0a; color: #eee; font-family: sans-serif; display: flex; justify-content: center; padding: 40px; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(20px); padding: 40px; border-radius: 20px; width: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        h2 { font-weight: 200; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 30px; letter-spacing: 2px; }
+        label { display: block; margin-top: 20px; font-size: 0.7rem; color: #888; letter-spacing: 1px; }
+        input, textarea { width: 100%; box-sizing: border-box; background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; padding: 12px; border-radius: 8px; margin-top: 5px; }
+        .row { display: flex; gap: 10px; }
+        button { width: 100%; margin-top: 40px; padding: 15px; background: #fff; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { transform: scale(1.02); background: #ccc; }
+        #status { margin-top: 20px; font-size: 0.8rem; text-align: center; color: #cead5e; }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>📩 メッセージカード合成ツール</h1>
-    <div class="input-group">
-        <label>① メールに届いた「画像URL」</label>
-        <input type="text" id="bgUrl" placeholder="例: https://media.yuto-boxer.com/card/card_05.png">
-    </div>
-    <div class="input-group">
-        <label>② メールに届いた「メッセージ本文」</label>
-        <textarea id="msgText" placeholder="熱いメッセージをここにペースト"></textarea>
-    </div>
-    <div class="btn-group">
-        <button class="btn-preview" onclick="previewCard()">1. プレビューを生成 👁️</button>
-        <button class="btn-download" onclick="downloadCard()">2. PCに保存 💾</button>
-    </div>
-    <div class="canvas-wrapper">
-        <canvas id="adminCanvas" width="1280" height="720"></canvas>
-    </div>
-</div>
-
-<script>
-    const canvas = document.getElementById('adminCanvas');
-    const ctx = canvas.getContext('2d');
-    let currentImage = new Image();
-
-    // 魔法のリンクでの自動起動処理
-    window.onload = () => {
-        const params = new URLSearchParams(window.location.search);
-        let hasData = false;
-        if (params.has('img')) { document.getElementById('bgUrl').value = params.get('img'); hasData = true; }
-        if (params.has('text')) { document.getElementById('msgText').value = params.get('text'); hasData = true; }
-        if (hasData) { previewCard(); }
-    };
-
-    function previewCard() {
-        const url = document.getElementById('bgUrl').value.trim();
-        const text = document.getElementById('msgText').value.trim();
-        if (!url) { alert("画像URLが入力されていません！"); return; }
-
-        currentImage = new Image();
-        currentImage.crossOrigin = "anonymous";
-        currentImage.onload = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
-            if (text !== "") {
-                // ▼ テキストエリア拡張 (index.htmlと同じ値に) ▼
-                const textArea = { x: 220, y: 120, width: 600, height: 500 };
-                drawTextWithAutoScale(ctx, text, textArea);
-            }
-        };
-        currentImage.onerror = () => alert("画像の読み込みに失敗しました。");
-        currentImage.src = url + "?t=" + new Date().getTime();
-    }
-
-    function drawTextWithAutoScale(ctx, text, area) {
-        let fontSize = 54;
-        const minFontSize = 24;
-        // ▼ 丸ゴシックを適用 ▼
-        const fontFamily = "'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif";
-        const lineHeightRatio = 1.4;
-        let lines = [];
-        let wrappedText = text.replace(/\r\n/g, '\n');
+    <div class="card">
+        <h2>Gallery Manager</h2>
         
-        document.fonts.ready.then(() => {
-            while (fontSize >= minFontSize) {
-                ctx.font = `bold ${fontSize}px ${fontFamily}`;
-                lines = wrapText(ctx, wrappedText, area.width);
-                if (lines.length * (fontSize * lineHeightRatio) <= area.height) break;
-                fontSize -= 2;
-                
-                if (fontSize < minFontSize) {
-                    fontSize = minFontSize;
-                    ctx.font = `bold ${fontSize}px ${fontFamily}`;
-                    lines = wrapText(ctx, wrappedText, area.width);
-                    const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
-                    lines = lines.slice(0, maxLines);
-                    if (lines.length > 0) {
-                        let lastLine = lines[lines.length - 1];
-                        lines[lines.length - 1] = lastLine.length > 2 ? lastLine.slice(0, -2) + "…" : lastLine + "…";
-                    }
-                    break;
+        <label>GITHUB TOKEN</label>
+        <input type="password" id="token" placeholder="ghp_xxxx">
+
+        <label>👑 MAIN 作品 (00_main.webp)</label>
+        <div class="row"><input type="text" id="t00" placeholder="Title"> <input type="text" id="d00" placeholder="Description"></div>
+
+        <label>🖼️ 横 01 (01.webp)</label>
+        <div class="row"><input type="text" id="t01"> <input type="text" id="d01"></div>
+
+        <label>🖼️ 横 02 (02.webp)</label>
+        <div class="row"><input type="text" id="t02"> <input type="text" id="d02"></div>
+
+        <label>📐 縦 11 (11.webp)</label>
+        <div class="row"><input type="text" id="t11"> <input type="text" id="d11"></div>
+
+        <button onclick="sendUpdate()">PUBLISH TO GALLERY</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        async function sendUpdate() {
+            const token = document.getElementById('token').value;
+            const status = document.getElementById('status');
+            if(!token) return alert("トークンを入力してください");
+            status.innerText = "GitHubへ送信中...";
+
+            const payload = {
+                event_type: "update-gallery",
+                client_payload: {
+                    t00: document.getElementById('t00').value, d00: document.getElementById('d00').value,
+                    t01: document.getElementById('t01').value, d01: document.getElementById('d01').value,
+                    t02: document.getElementById('t02').value, d02: document.getElementById('d02').value,
+                    t11: document.getElementById('t11').value, d11: document.getElementById('d11').value
                 }
-            }
+            };
 
-            ctx.fillStyle = "#333333";
-            ctx.textBaseline = "top";
-            const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
-            const startY = area.y + (area.height - totalTextHeight) / 2;
-
-            lines.forEach((line, index) => {
-                ctx.fillText(line, area.x, startY + index * (fontSize * lineHeightRatio));
+            const res = await fetch('https://api.github.com/repos/kaitoboxer-alt/yuto-boxer-web/dispatches', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' },
+                body: JSON.stringify(payload)
             });
-        });
-    }
 
-    function wrapText(ctx, text, maxWidth) {
-        const kinsokuStart = "、。，．・：；？！゛゜´｀¨＾―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】";
-        const chars = text.split('');
-        let lines = [], currentLine = '';
-
-        for (let i = 0; i < chars.length; i++) {
-            const char = chars[i];
-            if (char === '\n') { lines.push(currentLine); currentLine = ''; continue; }
-            const testLine = currentLine + char;
-            if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
-                if (kinsokuStart.includes(char)) { currentLine = testLine; }
-                else { lines.push(currentLine); currentLine = char; }
-            } else { currentLine = testLine; }
+            status.innerText = res.ok ? "✅ 成功。約1分後に反映されます。" : "❌ 失敗しました。";
         }
-        lines.push(currentLine);
-        return lines;
-    }
-
-    function downloadCard() {
-        if (!currentImage.src) { alert("先にプレビューを生成してください！"); return; }
-        const link = document.createElement('a');
-        link.download = `From_Fan_Message_${new Date().getTime()}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }
-</script>
+    </script>
 </body>
 </html>
