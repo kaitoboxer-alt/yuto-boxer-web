@@ -4,21 +4,202 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Novel - yuto-boxer.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
 <style>
     body { 
         margin: 0; height: 100vh; background-color: #000;
-        /* 【重要】ここを left center に変更し、左端のキャラを確実に表示させます */
-        background: url('https://media.yuto-boxer.com/04_novel/04_novels_BG.webp') left center / cover no-repeat;
+        /* 背景を左に200px移動 */
+        background: url('https://media.yuto-boxer.com/04_novel/04_novels_BG.webp') -200px center / cover no-repeat;
         font-family: sans-serif; overflow: hidden; 
     }
     .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }
     .back-btn:hover { background: #fff; color: #000; }
-    .floating-send-btn { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s; z-index: 200; backdrop-filter: blur(5px); }
+    .floating-send-btn { position: fixed; bottom: 20px; right: 20px; background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s; z-index: 200; backdrop-filter: blur(5px); cursor: pointer; }
     .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 15px #00f0ff; }
+
+    /* ▼ TOPから移植したモーダル用CSS ▼ */
+    .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 10000; backdrop-filter: blur(5px); }
+    .modal.active { opacity: 1; pointer-events: auto; }
+    .modal-content { width: 80%; max-width: 600px; border-radius: 8px; overflow: hidden; text-align: left; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; max-height: 90vh; }
+    .modal-header { background-color: #111111; color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+    .modal-title { margin: 0; font-size: 1.2rem; letter-spacing: 2px; font-weight: bold; }
+    .close-btn { font-size: 1.8rem; cursor: pointer; opacity: 0.7; transition: opacity 0.3s; line-height: 1; }
+    .close-btn:hover { opacity: 1; }
+    .text-content { padding: 30px 40px; line-height: 1.8; font-size: 0.95rem; overflow-y: auto; }
+
+    #modal-generator .modal-content { max-width: 700px; }
+    #modal-generator .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; padding: 15px 25px; }
+    #modal-generator h3 { font-size: 1rem; margin-top: 0; margin-bottom: 8px; border-bottom: 2px solid #333; padding-bottom: 3px; }
+    .gen-canvas-container { margin-bottom: 10px; border-radius: 8px; overflow: hidden; background: #eee; }
+    .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
+    .gen-textarea { width: 100%; box-sizing: border-box; height: 70px; padding: 8px; font-size: 14px; border: 2px solid #ccc; border-radius: 6px; font-family: 'Zen Maru Gothic', inherit; resize: vertical; margin-bottom: 10px; }
+    .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
+    .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+    .gen-btn:hover { background-color: #000; }
+    .gen-btn-dl { background-color: #ff4500; }
+    .gen-btn-dl:hover { background-color: #cc3700; }
+    .gen-btn-submit { background-color: #28a745; width: 100%; padding: 12px; font-size: 16px; color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; }
+    .gen-btn-submit:hover { background-color: #218838; }
+    .gen-hr { margin: 12px 0; border: 0; border-top: 1px dashed #ccc; } 
+    .reply-notice { font-size: 12px; color: #444; margin-top: 10px; text-align: left; line-height: 1.4; background-color: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+    .reply-notice a { color: #1da1f2; text-decoration: none; font-weight: bold; }
+    .reply-notice a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
     <a href="../clubroom/index.html" class="back-btn">← clubroomへ戻る</a>
-    <a href="/index.html?open=contact" class="floating-send-btn">Send Message</a>
+    
+    <a onclick="openGeneratorModal()" class="floating-send-btn">Send Message</a>
+
+    <div id="modal-generator" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h2 class="modal-title">Send Message</h2><span class="close-btn" onclick="closeGeneratorModal()">×</span></div>
+            <div class="text-content">
+                <h3 style="margin-top:0;">◆ メッセージカード生成</h3>
+                <div class="gen-canvas-container">
+                    <canvas id="myCanvas" width="1280" height="720"></canvas>
+                </div>
+                <div class="gen-buttons">
+                    <button class="gen-btn" type="button" onclick="changeRandomCard()">キャラを変える🎲</button>
+                    <button class="gen-btn gen-btn-dl" type="button" onclick="downloadCard()">この画像を保存💾</button>
+                </div>
+                <hr class="gen-hr">
+                <h3 style="margin-top:0;">◆ ゆーとにメッセージを送る</h3>
+                <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
+                    <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
+                    <input type="hidden" id="adminMagicLink" name="Admin_Magic_Link" value="">
+                    <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="ここに応援メッセージや質問を入力すると、上のカードにリアルタイムで書き込まれます！"></textarea>
+                    <button type="submit" class="gen-btn-submit">メッセージを送信する 🚀</button>
+                    <div class="reply-notice">
+                        ※お返事できるときはX（旧Twitter）の <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> からになります。<br>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function openGeneratorModal() {
+        document.getElementById('modal-generator').classList.add('active');
+        changeRandomCard();
+    }
+    function closeGeneratorModal() { document.getElementById('modal-generator').classList.remove('active'); }
+    
+    // 背景クリックで閉じる
+    window.onclick = function(event) { if (event.target.classList.contains('modal')) event.target.classList.remove('active'); };
+
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    const cardInput = document.getElementById('cardInput');
+    let currentImage = new Image();
+
+    cardInput.addEventListener('input', drawCard);
+
+    function changeRandomCard() {
+        const currentCardNumber = Math.floor(Math.random() * 20) + 1;
+        const paddedNum = String(currentCardNumber).padStart(1, '0');
+        const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
+
+        document.getElementById('selectedCardUrl').value = imageUrl;
+
+        currentImage = new Image();
+        currentImage.crossOrigin = "anonymous";
+        currentImage.onload = () => drawCard();
+        currentImage.src = imageUrl + "?t=" + new Date().getTime();
+    }
+
+    function drawCard() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+
+        const text = cardInput.value;
+        if (text.trim() !== "") {
+            const textArea = { x:220, y: 90, width: 720, height: 500 };
+            drawTextWithAutoScale(ctx, text, textArea);
+        }
+
+        const currentUrl = document.getElementById('selectedCardUrl').value;
+        const magicLinkInput = document.getElementById('adminMagicLink');
+        if (magicLinkInput) {
+            const magicUrl = `https://yuto-boxer.com/admin_maker.html?img=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(text)}`;
+            magicLinkInput.value = magicUrl;
+        }
+    }
+
+    function drawTextWithAutoScale(ctx, text, area) {
+        let fontSize = 54;
+        const minFontSize = 24;
+        const fontFamily = "'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif";
+        const lineHeightRatio = 1.4;
+        let lines = [];
+        let wrappedText = text.replace(/\r\n/g, '\n');
+        
+        document.fonts.ready.then(() => {
+            while (fontSize >= minFontSize) {
+                ctx.font = `bold ${fontSize}px ${fontFamily}`;
+                lines = wrapText(ctx, wrappedText, area.width);
+                if (lines.length * (fontSize * lineHeightRatio) <= area.height) break;
+                fontSize -= 2;
+                
+                if (fontSize < minFontSize) {
+                    fontSize = minFontSize;
+                    ctx.font = `bold ${fontSize}px ${fontFamily}`;
+                    lines = wrapText(ctx, wrappedText, area.width);
+                    const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
+                    lines = lines.slice(0, maxLines);
+                    if (lines.length > 0) {
+                        let lastLine = lines[lines.length - 1];
+                        lines[lines.length - 1] = lastLine.length > 2 ? lastLine.slice(0, -2) + "…" : lastLine + "…";
+                    }
+                    break;
+                }
+            }
+            ctx.fillStyle = "#333333";
+            ctx.textBaseline = "top";
+            const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
+            const startY = area.y + (area.height - totalTextHeight) / 2;
+            lines.forEach((line, index) => {
+                ctx.fillText(line, area.x, startY + index * (fontSize * lineHeightRatio));
+            });
+        });
+    }
+
+    function wrapText(ctx, text, maxWidth) {
+        const kinsokuStart = "、。，．・：；？！゛゜´｀¨＾―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】";
+        const chars = text.split('');
+        let lines = [], currentLine = '';
+        for (let i = 0; i < chars.length; i++) {
+            const char = chars[i];
+            if (char === '\n') { lines.push(currentLine); currentLine = ''; continue; }
+            const testLine = currentLine + char;
+            if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
+                if (kinsokuStart.includes(char)) { currentLine = testLine; }
+                else { lines.push(currentLine); currentLine = char; }
+            } else { currentLine = testLine; }
+        }
+        lines.push(currentLine);
+        return lines;
+    }
+
+    function downloadCard() {
+        const link = document.createElement('a');
+        link.download = `Message_card_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }
+
+    const form = document.getElementById('myForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' } })
+        .then(response => {
+            if (response.ok) {
+                alert("メッセージを送信しました！ありがとうございます！");
+                form.reset(); drawCard(); closeGeneratorModal(); 
+            } else { alert("送信に失敗しました。もう一度お試しください。"); }
+        })
+        .catch(() => alert("通信エラーが発生しました。"));
+    });
+</script>
 </body>
 </html>
