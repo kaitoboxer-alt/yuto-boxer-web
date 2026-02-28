@@ -1,22 +1,110 @@
-name: Update Gallery Content
-on:
-  repository_dispatch:
-    types: [update-gallery]
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Clubroom Gallery</title>
+    <style>
+        /* 1. 背景：メディアサーバー直結 */
+        body, html {
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            background-color: #000;
+            background-image: url('https://media.yuto-boxer.com/03_gallery/03_gallery_BG.webp'); 
+            background-size: cover; background-attachment: fixed; background-position: center;
+            font-family: sans-serif; color: #fff; overflow-x: hidden;
+        }
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Update JSON and HTML
-        run: |
-          # ここに、送られてきたテキストをJSONに流し込み、
-          # HTMLの画像URLを置換するスクリプトを記述します。
-          # 人間がやる「コピペ」を、プログラムが完璧に実行します。
-      - name: Commit and Push
-        run: |
-          git config user.name "Clubroom-Bot"
-          git config user.email "bot@yuto-boxer.com"
-          git add .
-          git commit -m "Gallery updated by Producer"
-          git push
+        .gallery-wrapper {
+            display: flex; gap: 40px; padding: 80px 40px;
+            min-height: 100vh; background: rgba(0, 0, 0, 0.4); box-sizing: border-box;
+        }
+
+        .landscape-grid { flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .vertical-area { flex: 1; position: sticky; top: 80px; height: calc(100vh - 160px); }
+
+        /* フロストガラス・カード */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
+            padding: 12px; cursor: pointer; transition: 0.4s;
+        }
+        .glass-card img { width: 100%; height: auto; border-radius: 4px; display: block; }
+        .glass-card:hover { transform: translateY(-8px); background: rgba(255, 255, 255, 0.12); }
+
+        /* ✉️ SendMessage（左下） */
+        .send-message-btn {
+            position: fixed; bottom: 30px; left: 30px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
+            padding: 10px 25px; border-radius: 50px; cursor: pointer; font-size: 0.8rem;
+        }
+
+        /* モーダル */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(20px); }
+        .modal-content { position: relative; max-width: 850px; width: 90%; background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        #modal-image { max-width: 100%; max-height: 60vh; border-radius: 8px; margin-bottom: 20px; }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-wrapper">
+        <main class="landscape-grid">
+            <div class="glass-card" onclick="openModal('01.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/01.webp" alt=""></div>
+            <div class="glass-card" onclick="openModal('02.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/02.webp" alt=""></div>
+            <div class="glass-card" onclick="openModal('03.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/03.webp" alt=""></div>
+        </main>
+        <aside class="vertical-area">
+            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')"><img src="https://media.yuto-boxer.com/03_gallery/Vertical/11.webp" alt=""></div>
+        </aside>
+    </div>
+
+    <button class="send-message-btn" onclick="location.href='clubroom.html#contact'">SEND MESSAGE</button>
+
+    <div id="gallery-modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="modal-image" src="" alt="">
+            <div class="comment-section">
+                <h2 id="modal-title" style="margin:0;"></h2>
+                <p id="modal-text" style="margin-top:10px; color:#ccc;"></p>
+            </div>
+            <button class="close-btn" onclick="closeModal()">×</button>
+        </div>
+    </div>
+
+    <script>
+        // コメント管理JSONの場所（これはGitHub内に置いておくのが管理しやすいです）
+        const JSON_PATH = 'Gallery/comments.json';
+        let galleryData = {};
+
+        async function loadComments() {
+            try {
+                const response = await fetch(`${JSON_PATH}?v=${new Date().getTime()}`);
+                galleryData = await response.json();
+            } catch (e) { console.warn("JSON load failed."); }
+        }
+
+        function openModal(fileName, folder) {
+            const modal = document.getElementById('gallery-modal');
+            const img = document.getElementById('modal-image');
+            
+            // 🌐 モーダル内もメディアサーバーを参照
+            img.src = `https://media.yuto-boxer.com/03_gallery/${folder}/${fileName}?v=${new Date().getTime()}`;
+
+            const type = folder.toLowerCase();
+            const data = galleryData[type]?.[fileName];
+            document.getElementById('modal-title').innerText = data ? data.title : "Untitled";
+            document.getElementById('modal-text').innerText = data ? data.description : "";
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('gallery-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onload = loadComments;
+    </script>
+</body>
+</html>
