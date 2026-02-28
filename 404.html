@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found - Yuto's Archive</title>
+    <title>404 Not Found - ページが見つかりません</title>
     <style>
-        /* ベース設定：75%ブラックの没入感 */
         body {
             margin: 0;
             padding: 0;
             background-color: #000;
             color: #fff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -19,65 +18,65 @@
             overflow: hidden;
         }
 
-        /* 404メッセージエリア */
         .error-content {
             text-align: center;
             z-index: 10;
         }
 
         h1 {
-            font-size: 8rem;
+            font-size: 6rem;
             margin: 0;
             font-weight: 100;
-            letter-spacing: 20px;
-            opacity: 0.5;
+            letter-spacing: 15px;
+            opacity: 0.4;
         }
 
-        p {
-            font-size: 1.2rem;
-            letter-spacing: 5px;
-            opacity: 0.8;
+        .message {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            margin: 20px 0;
+            line-height: 2;
         }
 
         .back-link {
-            margin-top: 30px;
+            margin-top: 40px;
             display: inline-block;
             color: #fff;
             text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 10px 30px;
-            border-radius: 50px;
-            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 12px 40px;
+            border-radius: 4px; /* 丸すぎない、落ち着いたデザイン */
+            transition: all 0.4s ease;
+            background: rgba(255,255,255,0.03);
         }
 
         .back-link:hover {
             background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
             backdrop-filter: blur(5px);
         }
 
-        /* 🏆 チャンピオンベルト：右下固定配置 */
+        /* 🏆 チャンピオンベルト：右下固定 */
         .champion-belt-container {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 40px;
+            right: 40px;
             z-index: 100;
-            pointer-events: none; /* クリックの邪魔をしない */
+            pointer-events: none;
         }
 
         .champion-belt-container img {
-            width: 350px; /* サイズは適宜調整してください */
+            width: 320px;
             height: auto;
-            opacity: 0.6; /* 404の静寂に馴染ませる */
-            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
-            transition: opacity 1s ease;
+            opacity: 0.5;
+            filter: drop-shadow(0 0 25px rgba(0,0,0,0.9));
         }
 
-        /* 背景に薄くノイズやグラデーションを入れるとより雰囲気が増します */
         .overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
             pointer-events: none;
         }
     </style>
@@ -88,8 +87,15 @@
 
     <div class="error-content">
         <h1>404</h1>
-        <p>THE PAGE IS GONE, BUT THE PRIDE REMAINS.</p>
-        <a href="/" class="back-link">RETURN TO GYM</a>
+        <div class="message">
+            探していた場所は、ここにはないようです。<br>
+            <span style="font-size: 0.9rem; opacity: 0.6;">THE PAGE IS GONE, BUT THE PRIDE REMAINS.</span>
+        </div>
+        
+        <a href="clubroom.html" class="back-link">
+            Clubroomへ戻る<br>
+            <span style="font-size: 0.7rem; opacity: 0.7;">RETURN TO CLUBROOM</span>
+        </a>
     </div>
 
     <div class="champion-belt-container">
