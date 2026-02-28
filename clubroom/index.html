@@ -12,52 +12,36 @@
         font-family: 'Helvetica Neue', Arial, sans-serif;
         overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
     }
-
     .menu-area {
         position: absolute; right: 8%; top: 15%;
         display: flex; flex-direction: column; gap: 20px; width: 250px; z-index: 100;
     }
-
     .gunmetal-btn {
         display: block; position: relative;
-        background: 
-            repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
-            linear-gradient(135deg, #444, #222);
+        background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
+                    linear-gradient(135deg, #444, #222);
         color: #fff; text-decoration: none; padding: 15px 25px;
         font-weight: bold; text-align: center; border: 2px solid #555;
         border-radius: 4px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        transition: all 0.3s ease; overflow: hidden; font-size: 1.1rem;
-        letter-spacing: 2px; text-shadow: 1px 1px 2px #000;
+        transition: all 0.3s ease; font-size: 1.1rem; letter-spacing: 2px; text-shadow: 1px 1px 2px #000;
     }
-
-    .gunmetal-btn:hover {
-        background: linear-gradient(135deg, #555, #333); border-color: #00f0ff;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); transform: scale(1.05);
-    }
-
+    .gunmetal-btn:hover { background: linear-gradient(135deg, #555, #333); border-color: #00f0ff; box-shadow: 0 0 15px rgba(0, 240, 255, 0.5); transform: scale(1.05); }
     .contact-btn {
         position: absolute; bottom: 5%; right: 8%;
         background: rgba(40, 40, 40, 0.8); border: 2px solid #fff;
-        color: #fff; padding: 12px 25px; text-decoration: none;
-        font-size: 1rem; font-weight: bold; border-radius: 4px;
-        transition: all 0.3s; z-index: 100;
+        color: #fff; padding: 12px 25px; text-decoration: none; font-weight: bold; border-radius: 4px; z-index: 100;
     }
-
     .contact-btn:hover { background: #fff; color: #000; }
-
     .dialogue-box {
         position: absolute; bottom: 15%; left: 5%; width: 60%;
         background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 20px; color: #ddd; min-height: 80px; display: flex;
-        flex-direction: column; justify-content: center; font-size: 1.2rem;
-        line-height: 1.6; cursor: pointer; z-index: 50;
+        padding: 20px; color: #ddd; min-height: 80px; font-size: 1.2rem; cursor: pointer; z-index: 50;
     }
-    .name-g { color: #88ccff; font-weight: bold; margin-right: 10px; }
-    .name-b { color: #ffcc88; font-weight: bold; margin-right: 10px; }
+    .name-g { color: #88ccff; font-weight: bold; }
+    .name-b { color: #ffcc88; font-weight: bold; }
 </style>
 </head>
 <body>
-
     <div class="menu-area">
         <a href="../Gallery/index.html" class="gunmetal-btn">Gallery</a>
         <a href="../Novel/index.html" class="gunmetal-btn">Novel</a>
@@ -66,29 +50,16 @@
         <a href="../pressrelease/index.html" class="gunmetal-btn">Press Release</a>
         <a href="../yuto-room/index.html" class="gunmetal-btn">Yuto's Room</a>
     </div>
-
     <a href="/index.html?open=contact" class="contact-btn">Contact</a>
-
     <div class="dialogue-box" id="dialogue-box"></div>
-
 <script>
-    const conversations = [
-        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「なぁ、今日の部活の後、ラーメン行かね？」</div>
-         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「…君は少しは減量という言葉を覚えたらどうだい？ まぁ、付き合うけど。」</div>`,
-        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「見ろよあのリングの光。…ゾクゾクしねぇか？」</div>
-         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「ああ。静かだが、確かに熱を帯びているね。」</div>`,
-        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「おい、そのグローブ、新しくしたのか？」</div>
-         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「気づいたかい？ 特注のシャンパンゴールドさ。僕の拳にはこれくらいが似合う。」</div>`
+    const convs = [
+        `<span class="name-g">学ラン:</span>「なぁ、今日の部活の後、ラーメン行かね？」<br><span class="name-b">ブレザー:</span>「…君は減量という言葉を知らないのかい？ まぁ、付き合うけど。」`,
+        `<span class="name-g">学ラン:</span>「見ろよあのリングの光。…ゾクゾクしねぇか？」<br><span class="name-b">ブレザー:</span>「ああ。静かだが、確かに熱を帯びているね。」`
     ];
-
-    let currentIdx = 0;
-    const box = document.getElementById('dialogue-box');
-    function showDialogue() {
-        box.innerHTML = conversations[currentIdx];
-        currentIdx = (currentIdx + 1) % conversations.length;
-    }
-    box.addEventListener('click', showDialogue);
-    showDialogue();
+    let i = 0; const b = document.getElementById('dialogue-box');
+    function s() { b.innerHTML = convs[i]; i = (i + 1) % convs.length; }
+    b.onclick = s; s();
 </script>
 </body>
 </html>
