@@ -7,8 +7,8 @@
         margin: 0; height: 100vh; 
         background: #000 url('https://media.yuto-boxer.com/04_novel/04_novels_BG.webp') no-repeat;
         background-size: cover; 
-        /* 修正：100%（右端）に固定してキャラを左に押し切る */
-        background-position: 100% center; 
+        /* 修正：右端(100%)ではなく70%にすることで、隠れたキャラを左側に表示 */
+        background-position: 70% center; 
         font-family: sans-serif; overflow: hidden; 
     }
     .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }
