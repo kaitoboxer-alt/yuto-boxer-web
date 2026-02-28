@@ -1,48 +1,155 @@
-<div class="card">
-    <h2>Gallery Manager (4 Works)</h2>
-    <label>GitHub Token</label>
-    <input type="password" id="token" placeholder="ghp_xxx">
-
-    <label>横 01: タイトル / 解説</label>
-    <input type="text" id="t01"> <textarea id="d01" rows="1"></textarea>
-
-    <label>横 02: タイトル / 解説</label>
-    <input type="text" id="t02"> <textarea id="d02" rows="1"></textarea>
-
-    <label>横 03: タイトル / 解説</label>
-    <input type="text" id="t03"> <textarea id="d03" rows="1"></textarea>
-
-    <label>縦 11: タイトル / 解説</label>
-    <input type="text" id="t11"> <textarea id="d11" rows="1"></textarea>
-
-    <button onclick="sendUpdate()">4枚一括更新を実行</button>
-    <div id="status"></div>
-</div>
-
-<script>
-async function sendUpdate() {
-    const token = document.getElementById('token').value;
-    const status = document.getElementById('status');
-    if(!token) return alert("トークンが必要です");
-
-    status.innerText = "GitHubへ送信中...";
-
-    const payload = {
-        event_type: "update-gallery",
-        client_payload: {
-            t01: document.getElementById('t01').value, d01: document.getElementById('d01').value,
-            t02: document.getElementById('t02').value, d02: document.getElementById('d02').value,
-            t03: document.getElementById('t03').value, d03: document.getElementById('d03').value,
-            t11: document.getElementById('t11').value, d11: document.getElementById('d11').value
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubroom Gallery</title>
+    <style>
+        /* 1. 背景設定：メディアサーバーのBGを指定 */
+        body, html {
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
+            background-color: #000;
+            background-image: url('https://media.yuto-boxer.com/03_gallery/03_gallery_BG.webp'); 
+            background-size: cover; background-attachment: fixed; background-position: center;
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+            color: #fff; overflow-x: hidden;
         }
-    };
 
-    const res = await fetch('https://api.github.com/repos/YOUR_GITHUB_USER/YOUR_REPO_NAME/dispatches', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' },
-        body: JSON.stringify(payload)
-    });
+        /* 2. 全体レイアウト */
+        .gallery-wrapper {
+            display: flex; gap: 40px; padding: 80px 40px;
+            min-height: 100vh; background: rgba(0, 0, 0, 0.4);
+            box-sizing: border-box;
+        }
 
-    status.innerText = res.ok ? "✅ 成功！1分ほどお待ちください" : "❌ 送信失敗";
-}
-</script>
+        /* 横画像エリア（3枚） */
+        .landscape-grid {
+            flex: 3; display: grid;
+            grid-template-columns: repeat(3, 1fr); gap: 30px;
+            align-content: start;
+        }
+
+        /* 縦画像エリア（1枚：番人） */
+        .vertical-area {
+            flex: 1; position: sticky; top: 80px;
+            height: calc(100vh - 160px);
+        }
+
+        /* 3. フロストガラスデザイン */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px; padding: 12px; cursor: pointer; transition: 0.4s;
+        }
+        .glass-card img { width: 100%; height: auto; border-radius: 4px; display: block; }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ✉️ SendMessage（左下） */
+        .send-message-btn {
+            position: fixed; bottom: 30px; left: 30px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
+            padding: 10px 25px; border-radius: 50px; cursor: pointer;
+            font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s;
+        }
+        .send-message-btn:hover { background: #fff; color: #000; }
+
+        /* 4. モーダル（作品詳細） */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); 
+            z-index: 9999; justify-content: center; align-items: center;
+            backdrop-filter: blur(20px);
+        }
+        .modal-content {
+            position: relative; max-width: 850px; width: 90%;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px; padding: 40px; text-align: center;
+        }
+        #modal-image { max-width: 100%; max-height: 60vh; border-radius: 8px; margin-bottom: 20px; }
+        .close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; opacity: 0.6; }
+
+        /* スマホ対応 */
+        @media (max-width: 900px) {
+            .gallery-wrapper { flex-direction: column; }
+            .landscape-grid { grid-template-columns: 1fr; }
+            .vertical-area { position: static; height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-wrapper">
+        <main class="landscape-grid">
+            <div class="glass-card" onclick="openModal('01.webp', 'landscape')">
+                <img src="https://media.yuto-boxer.com/03_gallery/landscape/01.webp" alt="Work 01">
+            </div>
+            <div class="glass-card" onclick="openModal('02.webp', 'landscape')">
+                <img src="https://media.yuto-boxer.com/03_gallery/landscape/02.webp" alt="Work 02">
+            </div>
+            <div class="glass-card" onclick="openModal('03.webp', 'landscape')">
+                <img src="https://media.yuto-boxer.com/03_gallery/landscape/03.webp" alt="Work 03">
+            </div>
+        </main>
+
+        <aside class="vertical-area">
+            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')">
+                <img src="https://media.yuto-boxer.com/03_gallery/Vertical/11.webp" alt="Vertical Work">
+            </div>
+        </aside>
+    </div>
+
+    <button class="send-message-btn" onclick="location.href='clubroom.html#contact'">SEND MESSAGE</button>
+
+    <div id="gallery-modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <img id="modal-image" src="" alt="">
+            <div class="comment-section">
+                <h2 id="modal-title" style="margin:0;"></h2>
+                <p id="modal-text" style="margin-top:10px; color:#ccc; line-height: 1.6;"></p>
+            </div>
+            <button class="close-btn" onclick="closeModal()">×</button>
+        </div>
+    </div>
+
+    <script>
+        const JSON_PATH = 'Gallery/comments.json'; // 管理パネルが書き換えるファイル
+        let galleryData = {};
+
+        async function loadComments() {
+            try {
+                const response = await fetch(`${JSON_PATH}?v=${new Date().getTime()}`);
+                galleryData = await response.json();
+            } catch (e) { console.warn("Comments JSON not found."); }
+        }
+
+        function openModal(fileName, folder) {
+            const modal = document.getElementById('gallery-modal');
+            const img = document.getElementById('modal-image');
+            
+            // 作品画像もメディアサーバーから取得
+            img.src = `https://media.yuto-boxer.com/03_gallery/${folder}/${fileName}?v=${new Date().getTime()}`;
+
+            const type = folder.toLowerCase();
+            const data = galleryData[type]?.[fileName];
+            document.getElementById('modal-title').innerText = data ? data.title : "Untitled";
+            document.getElementById('modal-text').innerText = data ? data.description : "";
+
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('gallery-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onload = loadComments;
+    </script>
+</body>
+</html>
