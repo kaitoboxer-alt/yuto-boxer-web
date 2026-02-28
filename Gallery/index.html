@@ -107,6 +107,29 @@
     margin-bottom: 20px;
     box-shadow: 0 0 40px rgba(0,0,0,0.6);
 }
+/* 1. 親要素が背景を隠さないように透明化 */
+#gallery-root {
+    background: transparent !important;
+}
+
+.gallery-wrapper {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    min-height: 100vh;
+    /* 背景画を透過させるために background-color を削除、または透明に */
+    background: rgba(0, 0, 0, 0.4); /* 背景画を活かしつつ、文字を見やすくするために40%の薄い黒を敷く */
+    backdrop-filter: none; /* ここでボカすと背景画全体がボケてしまうので注意 */
+}
+
+/* 2. もし背景画自体が消えてしまった場合、ここに元の背景パスを再設定します */
+/* body {
+    background-image: url('あなたの背景画像のパス');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+*/
 </style>
 
 <script>
