@@ -1,4 +1,23 @@
-- name: Update comments.json
+name: Gallery Bot
+
+on:
+  # 管理パネル（外部）からの命令だけを受け付ける
+  repository_dispatch:
+    types: [update-gallery]
+    
+  # 通常のファイル保存（Push）が発生しても、この自動処理は起動させない
+  push:
+    branches-ignore:
+      - '**'
+
+jobs:
+  update-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Update comments.json
         run: |
           echo '{
             "landscape": {
@@ -10,3 +29,11 @@
               "11.webp": { "title": "${{ github.event.client_payload.t11 }}", "description": "${{ github.event.client_payload.d11 }}" }
             }
           }' > Gallery/comments.json
+
+      - name: Commit and Push
+        run: |
+          git config user.name "Clubroom-Bot"
+          git config user.email "bot@yuto-boxer.com"
+          git add Gallery/comments.json
+          git commit -m "Gallery updated via Private Admin Panel"
+          git push
