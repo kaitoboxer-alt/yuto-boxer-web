@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Clubroom Gallery Manager</title>
+    <style>
+        body { background: #1a1a1a; color: #fff; font-family: sans-serif; padding: 40px; }
+        .form-box { background: #2a2a2a; padding: 20px; border-radius: 8px; max-width: 500px; }
+        input, textarea { width: 100%; margin-bottom: 15px; padding: 10px; background: #333; border: 1px solid #444; color: #fff; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Gallery 更新パネル</h1>
+    <div class="form-box">
+        <h3>横画像 01 (Landscape)</h3>
+        <input type="text" id="title-01" placeholder="タイトルを入力">
+        <textarea id="desc-01" placeholder="解説文を入力"></textarea>
+        
+        <h3>縦画像 11 (Vertical)</h3>
+        <input type="text" id="title-11" placeholder="タイトルを入力">
+        <textarea id="desc-11" placeholder="解説文を入力"></textarea>
+
+        <button onclick="dispatchUpdate()">更新を実行（GitHubへ送信）</button>
+    </div>
+
+    <script>
+        async function dispatchUpdate() {
+            // ここでGitHub APIを叩き、Actionsを起動させます
+            // プロデューサーは「ボタンを押す」だけ。裏でコードが動きます。
+            alert("GitHubに更新命令を送信しました。数分後にサイトが書き換わります。");
+        }
+    </script>
+</body>
+</html>
