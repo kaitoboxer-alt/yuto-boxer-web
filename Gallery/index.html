@@ -2,152 +2,61 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clubroom Gallery</title>
     <style>
-        /* 1. 全体背景：背景画を維持 */
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; min-height: 100vh;
-            background-color: #000;
-            /* 背景画のパスをここに指定してください */
-            background-image: url('https://media.yuto-boxer.com/03_gallery/03_gallery_BG.webp'); 
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            color: #fff;
-            overflow-x: hidden;
+        /* 背景設定：別サーバーのパスに書き換えてください */
+        body {
+            margin: 0; background-color: #000;
+            background-image: url('https://media.yuto-boxer.com/99_system/background.webp'); 
+            background-size: cover; background-attachment: fixed; background-position: center;
+            color: #fff; font-family: sans-serif;
         }
 
-        /* 2. レイアウト（75%ブラックオーバーレイ） */
-        .gallery-wrapper {
-            display: flex;
-            gap: 40px;
-            padding: 80px 40px;
-            min-height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            box-sizing: border-box;
+        .gallery-wrapper { display: flex; gap: 40px; padding: 60px; min-height: 100vh; background: rgba(0,0,0,0.4); }
+        .landscape-grid { flex: 3; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .vertical-area { flex: 1; position: sticky; top: 60px; height: calc(100vh - 120px); }
+
+        /* ガラスカード */
+        .glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 12px; cursor: pointer; transition: 0.4s; }
+        .glass-card img { width: 100%; border-radius: 4px; display: block; }
+        .glass-card:hover { transform: translateY(-8px); background: rgba(255,255,255,0.12); }
+
+        /* ✉️ SendMessageボタン（右下に配置） */
+        .send-message-btn {
+            position: fixed; bottom: 30px; left: 30px; /* ベルトが右なら左に */
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); color: #fff;
+            padding: 10px 20px; border-radius: 50px; cursor: pointer; z-index: 100;
         }
 
-        /* 横画像エリア：3枚固定グリッド */
-        .landscape-grid {
-            flex: 3;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3枚固定 */
-            gap: 30px;
-            align-content: start;
-        }
-
-        /* 縦画像エリア：右側に固定 */
-        .vertical-area {
-            flex: 1;
-            position: sticky;
-            top: 80px;
-            height: calc(100vh - 160px);
-        }
-
-        /* 3. フロストガラスデザイン */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 12px;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .glass-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            display: block;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* 4. モーダル（詳細表示） */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75); 
-            z-index: 9999;
-            justify-content: center; align-items: center;
-            backdrop-filter: blur(20px);
-        }
-
-        .modal-content {
-            position: relative;
-            max-width: 850px;
-            width: 90%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-        }
-
-        #modal-image {
-            max-width: 100%;
-            max-height: 60vh;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            background: none; border: none;
-            color: #fff; font-size: 35px;
-            cursor: pointer; opacity: 0.6;
-        }
-
-        /* スマホ対応 */
-        @media (max-width: 900px) {
-            .gallery-wrapper { flex-direction: column; }
-            .landscape-grid { grid-template-columns: 1fr; }
-            .vertical-area { position: static; height: auto; }
-        }
+        /* モーダル共通 */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; justify-content: center; align-items: center; backdrop-filter: blur(20px); }
+        .modal-content { position: relative; max-width: 800px; width: 90%; background: rgba(255,255,255,0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
+        #modal-image { max-width: 100%; max-height: 60vh; border-radius: 8px; }
+        .close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #fff; font-size: 30px; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div class="gallery-wrapper">
         <main class="landscape-grid">
-            <div class="glass-card" onclick="openModal('01.webp', 'Landscape')">
-                <img src="Gallery/Landscape/01.webp" alt="Work 01">
-            </div>
-            <div class="glass-card" onclick="openModal('02.webp', 'Landscape')">
-                <img src="Gallery/Landscape/02.webp" alt="Work 02">
-            </div>
-            <div class="glass-card" onclick="openModal('03.webp', 'Landscape')">
-                <img src="Gallery/Landscape/03.webp" alt="Work 03">
-            </div>
+            <div class="glass-card" onclick="openModal('01.webp', 'Landscape')"><img src="Gallery/Landscape/01.webp" alt=""></div>
+            <div class="glass-card" onclick="openModal('02.webp', 'Landscape')"><img src="Gallery/Landscape/02.webp" alt=""></div>
+            <div class="glass-card" onclick="openModal('03.webp', 'Landscape')"><img src="Gallery/Landscape/03.webp" alt=""></div>
         </main>
-
         <aside class="vertical-area">
-            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')">
-                <img src="Gallery/Vertical/11.webp" alt="Vertical Work">
-            </div>
+            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')"><img src="Gallery/Vertical/11.webp" alt=""></div>
         </aside>
     </div>
 
-    <div id="gallery-modal" class="modal-overlay" onclick="closeModal()">
+    <button class="send-message-btn" onclick="openMessageForm()">SEND MESSAGE</button>
+
+    <div id="gallery-modal" class="modal-overlay" onclick="closeModal('gallery-modal')">
         <div class="modal-content" onclick="event.stopPropagation()">
             <img id="modal-image" src="" alt="">
-            <div class="comment-section">
-                <h2 id="modal-title" style="margin:0;"></h2>
-                <p id="modal-text" style="margin-top:10px; color:#ccc;"></p>
-            </div>
-            <button class="close-btn" onclick="closeModal()">×</button>
+            <h2 id="modal-title"></h2>
+            <p id="modal-text"></p>
+            <button class="close-btn" onclick="closeModal('gallery-modal')">×</button>
         </div>
     </div>
 
@@ -157,32 +66,30 @@
 
         async function loadComments() {
             try {
-                const response = await fetch(JSON_PATH);
+                // キャッシュ回避のためにクエリを付与
+                const response = await fetch(`${JSON_PATH}?t=${new Date().getTime()}`);
                 galleryData = await response.json();
-            } catch (e) { console.warn("Comments JSON not found."); }
+            } catch (e) { console.warn("JSON load failed."); }
         }
 
         function openModal(fileName, folder) {
             const modal = document.getElementById('gallery-modal');
             const img = document.getElementById('modal-image');
-            
-            // フォルダ名とファイル名を結合
-            img.src = `Gallery/${folder}/${fileName}`;
+            img.src = `Gallery/${folder}/${fileName}?t=${new Date().getTime()}`; // キャッシュ回避
 
-            // JSONキーは 'landscape' または 'vertical'（小文字）で検索
             const type = folder.toLowerCase();
             const data = galleryData[type]?.[fileName];
-
-            document.getElementById('modal-title').innerText = data ? data.title : "無題";
-            document.getElementById('modal-text').innerText = data ? data.description : "（解説準備中）";
+            document.getElementById('modal-title').innerText = data ? data.title : "Untitled";
+            document.getElementById('modal-text').innerText = data ? data.description : "";
 
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() {
-            document.getElementById('gallery-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // SendMessage用（以前のURLへ飛ばすか、フォームを開く処理をここに）
+        function openMessageForm() {
+            window.location.href = 'clubroom.html#contact'; // 例：Clubroomのコンタクトへ
         }
 
         window.onload = loadComments;

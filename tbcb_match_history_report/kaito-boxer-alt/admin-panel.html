@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Clubroom Private Manager</title>
+    <style>
+        body { background: #0a0a0a; color: #eee; font-family: sans-serif; display: flex; justify-content: center; padding: 50px; }
+        .card { background: #1a1a1a; padding: 30px; border-radius: 12px; border: 1px solid #333; width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2 { border-bottom: 1px solid #333; padding-bottom: 10px; font-weight: 200; letter-spacing: 2px; }
+        label { display: block; margin-top: 20px; font-size: 0.8rem; color: #888; }
+        input, textarea { width: 100%; box-sizing: border-box; background: #222; border: 1px solid #444; color: #fff; padding: 10px; border-radius: 4px; margin-top: 5px; }
+        button { width: 100%; margin-top: 30px; padding: 12px; background: #cead5e; color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #fff; }
+        #status { margin-top: 15px; font-size: 0.8rem; text-align: center; color: #cead5e; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Gallery Manager</h2>
+        
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxx">
+
+        <label>画像01 (Landscape) タイトル / 解説</label>
+        <input type="text" id="t01" placeholder="Title">
+        <textarea id="d01" rows="2" placeholder="Description"></textarea>
+
+        <label>画像11 (Vertical) タイトル / 解説</label>
+        <input type="text" id="t11" placeholder="Title">
+        <textarea id="d11" rows="2" placeholder="Description"></textarea>
+
+        <button onclick="sendUpdate()">更新をコミットする</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        async function sendUpdate() {
+            const token = document.getElementById('token').value;
+            const status = document.getElementById('status');
+            
+            if(!token) { alert("トークンを入力してください"); return; }
+            status.innerText = "送信中...";
+
+            const payload = {
+                event_type: "update-gallery",
+                client_payload: {
+                    t01: document.getElementById('t01').value,
+                    d01: document.getElementById('d01').value,
+                    t11: document.getElementById('t11').value,
+                    d11: document.getElementById('d11').value
+                }
+            };
+
+            const response = await fetch('https://api.github.com/repos/YOUR_GITHUB_USER/YOUR_REPO_NAME/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                status.innerText = "✅ GitHub Actions起動成功。約1分後に反映されます。";
+            } else {
+                status.innerText = "❌ 失敗。トークンや設定を確認してください。";
+            }
+        }
+    </script>
+</body>
+</html>
