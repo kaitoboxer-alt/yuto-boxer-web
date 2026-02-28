@@ -31,153 +31,109 @@
         z-index: 10;
     }
 
-    /* ガンメタリック・ボタン */
     .gunmetal-btn {
         position: relative;
         background: 
             repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
-            linear-gradient(135deg, #4a4e59 0%, #2b2e35 50%, #1a1c20 100%);
-        border: 1px solid #5a5f6b;
-        border-top: 1px solid #7a808d;
-        border-bottom: 1px solid #0a0c0e;
-        border-radius: 4px;
-        padding: 16px 20px;
-        color: #d0d5dc;
+            linear-gradient(135deg, #444, #222);
+        color: #fff;
         text-decoration: none;
+        padding: 15px 25px;
+        font-weight: bold;
         text-align: center;
+        border: 2px solid #555;
+        border-radius: 4px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+        overflow: hidden;
         font-size: 1.1rem;
         letter-spacing: 2px;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        display: block;
+        text-shadow: 1px 1px 2px #000;
     }
 
     .gunmetal-btn:hover {
-        background: 
-            repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px),
-            linear-gradient(135deg, #545966 0%, #32363e 50%, #1f2226 100%);
-        color: #ffffff;
+        background: linear-gradient(135deg, #555, #333);
         border-color: #00f0ff;
-        transform: translateX(-10px);
-        box-shadow: 
-            0 8px 15px rgba(0, 0, 0, 0.8),
-            0 0 12px rgba(0, 240, 255, 0.4),
-            inset 0 0 8px rgba(0, 240, 255, 0.2);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        transform: scale(1.05);
     }
 
-    /* 日本語訳のフキダシ */
-    .gunmetal-btn::before {
-        content: attr(data-tooltip);
-        position: absolute;
-        right: 115%;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 240, 255, 0.9);
-        color: #000;
-        padding: 8px 15px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        border-radius: 4px;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        pointer-events: none;
-        z-index: 10;
-        box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-    }
-
-    .gunmetal-btn:hover::before {
-        opacity: 1;
-        visibility: visible;
-        right: 105%;
-    }
-
-    /* Contactボタン（右下固定） */
     .contact-btn {
         position: absolute;
-        bottom: 30px;
-        right: 30px;
-        background: rgba(0, 240, 255, 0.02);
-        border: 1px solid rgba(0, 240, 255, 0.3);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
+        bottom: 5%;
+        right: 8%;
+        background: rgba(20, 20, 20, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #888;
         padding: 10px 20px;
-        color: #00f0ff;
         text-decoration: none;
         font-size: 0.9rem;
-        letter-spacing: 1px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-        z-index: 10;
+        border-radius: 2px;
+        transition: all 0.3s;
     }
 
     .contact-btn:hover {
-        background: rgba(0, 240, 255, 0.15);
-        border-color: #00f0ff;
         color: #fff;
-        box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        border-color: #fff;
     }
 
-    /* ダイアログボックス */
     .dialogue-box {
         position: absolute;
-        bottom: 5%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80%;
-        max-width: 800px;
-        background: linear-gradient(to bottom, rgba(10, 10, 15, 0.85), rgba(0, 0, 0, 0.95));
-        border: 2px solid rgba(255, 255, 255, 0.15);
-        border-radius: 10px;
-        padding: 25px 30px;
-        color: #eee;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-        line-height: 1.8;
-        font-size: 1.05rem;
-        z-index: 10;
+        bottom: 15%;
+        left: 5%;
+        width: 60%;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        color: #ddd;
+        min-height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-size: 1.2rem;
+        line-height: 1.6;
+        cursor: pointer;
     }
 
-    .name-g { color: #ff6b6b; font-weight: bold; margin-right: 10px; } 
-    .name-b { color: #4da8da; font-weight: bold; margin-right: 10px; } 
-    .dialogue-line { margin-bottom: 10px; }
-    .dialogue-line:last-child { margin-bottom: 0; }
+    .name-g { color: #88ccff; font-weight: bold; margin-right: 10px; }
+    .name-b { color: #ffcc88; font-weight: bold; margin-right: 10px; }
 </style>
 </head>
 <body>
 
     <div class="menu-area">
-        <a href="../03_gallery/index.html" class="gunmetal-btn" data-tooltip="ギャラリー">Gallery</a>
-        <a href="../04_novel/index.html" class="gunmetal-btn" data-tooltip="小説">Novel</a>
-        <a href="../05_YouthfulMoments/index.html" class="gunmetal-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
-        <a href="../06_download/index.html" class="gunmetal-btn" data-tooltip="ダウンロード">Download</a>
-        <a href="../08_pressrelease/index.html" class="gunmetal-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
-        <a href="../07_yuto-room/index.html" class="gunmetal-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
+        <a href="/03_gallery/index.html" class="gunmetal-btn" data-tooltip="ギャラリー">Gallery</a>
+        <a href="/04_novel/index.html" class="gunmetal-btn" data-tooltip="小説">Novel</a>
+        <a href="/05_YouthfulMoments/index.html" class="gunmetal-btn" data-tooltip="青春の一瞬">YouthfulMoments</a>
+        <a href="/06_download/index.html" class="gunmetal-btn" data-tooltip="ダウンロード">Download</a>
+        <a href="/08_pressrelease/index.html" class="gunmetal-btn" data-tooltip="高校新聞部連合・特別派遣記者速報">Press Release</a>
+        <a href="/07_yuto-room/index.html" class="gunmetal-btn" data-tooltip="ゆーとの部屋">Yuto's Room</a>
     </div>
 
-    <a href="#" class="contact-btn">Contact</a>
+    <a href="/09_contact/index.html" class="contact-btn">Contact</a>
 
-    <div class="dialogue-box" id="dialogue-box">
-    </div>
+    <div class="dialogue-box" id="dialogue-box"></div>
 
 <script>
     const conversations = [
         `<div class="dialogue-line"><span class="name-g">学ラン:</span>「なぁ、今日の部活の後、ラーメン行かね？」</div>
          <div class="dialogue-line"><span class="name-b">ブレザー:</span>「…君は少しは減量という言葉を覚えたらどうだい？ まぁ、付き合うけど。」</div>`,
-        
         `<div class="dialogue-line"><span class="name-g">学ラン:</span>「見ろよあのリングの光。…ゾクゾクしねぇか？」</div>
          <div class="dialogue-line"><span class="name-b">ブレザー:</span>「ああ。静かだが、確かに熱を帯びているね。」</div>`,
-        
-        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「おっ、新しい客か？ 右のメニューから好きなとこ選んでくれよな。」</div>
-         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「迷ったら、まずは『Novel』で物語に触れてみるのもおすすめです。」</div>`
+        `<div class="dialogue-line"><span class="name-g">学ラン:</span>「おい、そのグローブ、新しくしたのか？」</div>
+         <div class="dialogue-line"><span class="name-b">ブレザー:</span>「気づいたかい？ 特注のシャンパンゴールドさ。僕の拳にはこれくらいが似合う。」</div>`
     ];
 
-    window.onload = function() {
-        const randomIndex = Math.floor(Math.random() * conversations.length);
-        document.getElementById("dialogue-box").innerHTML = conversations[randomIndex];
-    };
-</script>
+    let currentIdx = 0;
+    const box = document.getElementById('dialogue-box');
 
+    function showDialogue() {
+        box.innerHTML = conversations[currentIdx];
+        currentIdx = (currentIdx + 1) % conversations.length;
+    }
+
+    box.addEventListener('click', showDialogue);
+    showDialogue();
+</script>
 </body>
 </html>
