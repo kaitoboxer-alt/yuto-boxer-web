@@ -1,40 +1,100 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 Not Found - yuto-boxer.com</title>
-<style>
-    body { 
-        margin: 0; height: 100vh; background-color: #000; color: #fff; 
-        font-family: 'Helvetica Neue', Arial, sans-serif; 
-        display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; 
-    }
-    h1 { color: #00f0ff; letter-spacing: 5px; font-size: 4rem; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0,240,255,0.4); }
-    p { color: #aaa; margin-bottom: 40px; line-height: 1.8; letter-spacing: 1px; }
-    
-    .back-btn { 
-        background: rgba(0,0,0,0.7); border: 2px solid #555; color: #fff; 
-        padding: 15px 40px; text-decoration: none; border-radius: 4px; 
-        transition: 0.3s; font-weight: bold; display: inline-block;
-    }
-    .back-btn:hover { border-color: #00f0ff; box-shadow: 0 0 15px rgba(0,240,255,0.5); }
-    
-    .en-text { display: block; font-size: 0.8rem; color: #888; margin-top: 5px; font-weight: normal; transition: 0.3s; }
-    .back-btn:hover .en-text { color: #ccc; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found - Yuto's Archive</title>
+    <style>
+        /* ベース設定：75%ブラックの没入感 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 404メッセージエリア */
+        .error-content {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 8rem;
+            margin: 0;
+            font-weight: 100;
+            letter-spacing: 20px;
+            opacity: 0.5;
+        }
+
+        p {
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            opacity: 0.8;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 30px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        /* 🏆 チャンピオンベルト：右下固定配置 */
+        .champion-belt-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            pointer-events: none; /* クリックの邪魔をしない */
+        }
+
+        .champion-belt-container img {
+            width: 350px; /* サイズは適宜調整してください */
+            height: auto;
+            opacity: 0.6; /* 404の静寂に馴染ませる */
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+            transition: opacity 1s ease;
+        }
+
+        /* 背景に薄くノイズやグラデーションを入れるとより雰囲気が増します */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>404</h1>
-    <p>
-        お探しのページは見つかりませんでした。<br>
-        リングの外に出てしまったようです。<br>
-        <span style="font-size: 0.85em; color: #777;">The page you are looking for could not be found.</span>
-    </p>
-    
-    <a href="/clubroom/index.html" class="back-btn">
-        ← clubroomへ戻る
-        <span class="en-text">Return to clubroom</span>
-    </a>
+
+    <div class="overlay"></div>
+
+    <div class="error-content">
+        <h1>404</h1>
+        <p>THE PAGE IS GONE, BUT THE PRIDE REMAINS.</p>
+        <a href="/" class="back-link">RETURN TO GYM</a>
+    </div>
+
+    <div class="champion-belt-container">
+        <img src="https://media.yuto-boxer.com/99_system/championbelt_fade.webp" alt="Champion Belt">
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,14 @@
+{
+  "landscape": {
+    "img01.jpg": {
+      "title": "作品のタイトル",
+      "description": "ここにこだわりやコメントを記載します。"
+    }
+  },
+  "vertical": {
+    "v_img01.jpg": {
+      "title": "縦画像のタイトル",
+      "description": "右側に配置した画像へのコメントです。"
+    }
+  }
+}
