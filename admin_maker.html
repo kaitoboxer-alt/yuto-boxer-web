@@ -2,90 +2,64 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Card Viewer - yuto-boxer.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { 
-            margin: 0; padding: 20px; background-color: #222; color: #fff; 
-            font-family: 'Zen Maru Gothic', sans-serif; text-align: center; 
-        }
-        .container { max-width: 900px; margin: 0 auto; background: #333; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { font-size: 1.2rem; margin-bottom: 20px; color: #00f0ff; }
-        
-        canvas { width: 100%; height: auto; border-radius: 8px; background: #000; margin-bottom: 20px; }
-        
-        .info { text-align: left; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; }
-        .btn-download { 
-            display: inline-block; margin-top: 20px; padding: 12px 25px; 
-            background: #ff4500; color: #fff; text-decoration: none; 
-            font-weight: bold; border-radius: 6px; cursor: pointer; border: none;
-        }
-        .btn-download:hover { background: #cc3700; }
+        body { margin: 0; padding: 20px; background-color: #222; color: #fff; font-family: sans-serif; text-align: center; }
+        .container { max-width: 900px; margin: 0 auto; background: #333; padding: 20px; border-radius: 12px; }
+        canvas { width: 100%; height: auto; border-radius: 8px; background: #000; }
+        .info { text-align: left; background: rgba(0,0,0,0.3); padding: 15px; margin-top: 15px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h1>Message Card Viewer</h1>
-    
     <canvas id="adminCanvas" width="1280" height="720"></canvas>
-    
-    <div class="info" id="infoPanel">
-        データを確認中...
-    </div>
-    
-    <button class="btn-download" onclick="downloadImage()">この画像を保存する 💾</button>
+    <div class="info" id="infoPanel">読み込み中...</div>
 </div>
 
 <script>
     const canvas = document.getElementById('adminCanvas');
     const ctx = canvas.getContext('2d');
-    const infoPanel = document.getElementById('infoPanel');
-
-    // URLパラメータから画像とテキストを取得
     const params = new URLSearchParams(window.location.search);
     const imgUrl = params.get('img');
     const message = params.get('text');
 
-    if (!imgUrl || message === null) {
-        infoPanel.innerHTML = "❌ エラー: データが見つかりません。メールのリンクを再度確認してください。";
-    } else {
-        loadAndDraw();
-    }
+    async function loadAndDraw() {
+        if (!imgUrl || message === null) {
+            document.getElementById('infoPanel').innerText = "エラー: データが不足しています。";
+            return;
+        }
 
-    function loadAndDraw() {
+        // 1. フォントの読み込みを待つ
+        await document.fonts.ready;
+
+        // 2. 画像の読み込み
         const img = new Image();
         img.crossOrigin = "anonymous";
-        img.onload = function() {
-            // 背景画像を描画
+        img.src = imgUrl;
+
+        img.onload = () => {
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             
-            // テキストを描画
+            // 3. テキスト描画
             ctx.fillStyle = "#333333";
-            ctx.font = "bold 44px 'Zen Maru Gothic', sans-serif";
+            ctx.font = "bold 44px 'Zen Maru Gothic'";
             ctx.textBaseline = "top";
 
             const lines = message.split('\n');
             lines.forEach((line, i) => {
                 ctx.fillText(line, 220, 150 + (i * 55));
             });
-
-            infoPanel.innerHTML = `<strong>【受信内容】</strong><br>カードURL: ${imgUrl}<br>メッセージ: ${message.replace(/\n/g, ' / ')}`;
+            
+            document.getElementById('infoPanel').innerText = "✅ 表示完了";
         };
-        img.onerror = function() {
-            infoPanel.innerHTML = "❌ 画像の読み込みに失敗しました。URLを確認してください。";
+        
+        img.onerror = () => {
+            document.getElementById('infoPanel').innerText = "❌ 画像の読み込みに失敗しました。";
         };
-        img.src = imgUrl;
     }
 
-    function downloadImage() {
-        const link = document.createElement('a');
-        link.download = `Received_Message_${new Date().getTime()}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }
+    loadAndDraw();
 </script>
-
 </body>
 </html>
