@@ -1,93 +1,123 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Card Viewer - yuto-boxer.com</title>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
-<style>
-    /* 1. 全体の色味と雰囲気の修正：プロデューサー承認済みデザインを継承 */
-    body { 
-        margin: 0; padding: 20px; background-color: #000; color: #fff; 
-        font-family: sans-serif; text-align: center; 
-    }
-    .container { max-width: 900px; margin: 0 auto; background: #000; padding: 0; }
-    h1 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; font-family: 'Zen Maru Gothic', sans-serif; }
-    
-    /* カード表示エリア：index.html のモーダルと同じ影と角丸を適用 */
-    .card-display {
-        width: 100%; border-radius: 8px; overflow: hidden; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-        background: #eee; /* 読み込み前のプレースホルダー色 */
-    }
-    canvas { width: 100%; height: auto; display: block; }
-    
-    /* 情報パネル：index.html の reply-notice と同じスタイルを適用 */
-    .info { 
-        text-align: left; background-color: #f8f9fa; color: #333; 
-        padding: 15px; margin-top: 20px; font-size: 0.8rem; 
-        border-radius: 8px; border: 1px solid #ddd; line-height: 1.6;
-    }
-    .info strong { color: #000; }
-</style>
+    <meta charset="UTF-8">
+    <title>Admin Card Viewer - yuto-boxer.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 20px; background-color: #000; color: #fff; font-family: sans-serif; text-align: center; }
+        .container { max-width: 900px; margin: 0 auto; }
+        canvas { width: 100%; height: auto; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); display: block; }
+        .controls { margin-top: 20px; display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        .btn-download { 
+            background-color: #ff4500; color: white; border: none; padding: 15px 40px; 
+            font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; 
+            transition: 0.3s; text-decoration: none; font-family: 'Zen Maru Gothic', sans-serif;
+        }
+        .btn-download:hover { background-color: #cc3700; transform: scale(1.05); box-shadow: 0 0 20px #ff4500; }
+        .info { text-align: left; background: #f8f9fa; color: #333; padding: 15px; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 0.85rem; }
+    </style>
 </head>
 <body>
+
 <div class="container">
-    <h1>Message Card Viewer</h1>
+    <canvas id="adminCanvas" width="1280" height="720"></canvas>
     
-    <div class="card-display">
-        <canvas id="adminCanvas" width="1280" height="720"></canvas>
-    </div>
-    
-    <div class="info" id="infoPanel">
-        データを確認中...
+    <div class="controls">
+        <button class="btn-download" onclick="downloadCard()">この画像を保存する 💾</button>
+        <div class="info" id="infoPanel">読み込み中...</div>
     </div>
 </div>
 
 <script>
     const canvas = document.getElementById('adminCanvas');
     const ctx = canvas.getContext('2d');
-    const infoPanel = document.getElementById('infoPanel');
-
-    // URLパラメータから画像とテキストを取得
     const params = new URLSearchParams(window.location.search);
     const imgUrl = params.get('img');
     const message = params.get('text');
 
-    if (!imgUrl || message === null) {
-        infoPanel.innerHTML = "❌ エラー: データが見つかりません。メールのリンクを再度確認してください。";
-    } else {
-        loadAndDraw();
-    }
-
-    async function loadAndDraw() {
-        // 2. フォントの読み込みを待つ（文字が消えるのを防ぐ）
+    async function init() {
+        if (!imgUrl || message === null) {
+            document.getElementById('infoPanel').innerText = "エラー: データが不足しています。";
+            return;
+        }
         await document.fonts.ready;
-
         const img = new Image();
         img.crossOrigin = "anonymous";
-        img.onload = function() {
-            // 背景画像を描画（色味をそのまま出す）
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            
-            // 3. フォントと配置位置の修正：index.html の drawCard と同じ設定を適用
-            ctx.fillStyle = "#333333";
-            ctx.font = "bold 44px 'Zen Maru Gothic', sans-serif";
-            ctx.textBaseline = "top";
-
-            const lines = message.split('\n');
-            // index.html と同じ座標 (220, 150) と行間 (55px) を使用
-            lines.forEach((line, i) => {
-                ctx.fillText(line, 220, 150 + (i * 55));
-            });
-
-            infoPanel.innerHTML = `<strong>【受信内容】</strong><br>カードURL: ${imgUrl}<br>メッセージ: ${message.replace(/\n/g, ' / ')}`;
-        };
-        img.onerror = function() {
-            infoPanel.innerHTML = "❌ 画像の読み込みに失敗しました。URLを確認してください。";
-        };
         img.src = imgUrl;
+        img.onload = () => draw(img);
     }
+
+    function draw(img) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        if (message.trim() !== "") {
+            // プロデューサー指定の描画エリア（中央付近）
+            const area = { x: 220, y: 90, width: 720, height: 500 };
+            drawTextWithAutoScale(ctx, message, area);
+        }
+        document.getElementById('infoPanel').innerHTML = `<strong>メッセージ内容:</strong><br>${message.replace(/\n/g, '<br>')}`;
+    }
+
+    // 文字数に応じてリサイズし、上下中央に配置するロジック
+    function drawTextWithAutoScale(ctx, text, area) {
+        let fontSize = 54; 
+        const minFontSize = 24; 
+        const fontFamily = "'Zen Maru Gothic', sans-serif";
+        const lineHeightRatio = 1.4;
+        let lines = [];
+
+        // 最適なフォントサイズを探すループ
+        while (fontSize >= minFontSize) {
+            ctx.font = `bold ${fontSize}px ${fontFamily}`;
+            lines = wrapText(ctx, text, area.width);
+            if (lines.length * (fontSize * lineHeightRatio) <= area.height) break;
+            fontSize -= 2;
+        }
+
+        ctx.fillStyle = "#333333";
+        ctx.textAlign = "left"; // 基準は左ですが、fillTextのX座標計算で中央寄せにします
+        ctx.textBaseline = "top";
+
+        const totalHeight = lines.length * (fontSize * lineHeightRatio);
+        const startY = area.y + (area.height - totalHeight) / 2; // 上下中央寄せの開始位置
+
+        lines.forEach((line, i) => {
+            const lineWidth = ctx.measureText(line).width;
+            const startX = area.x + (area.width - lineWidth) / 2; // 左右中央寄せ
+            ctx.fillText(line, startX, startY + i * (fontSize * lineHeightRatio));
+        });
+    }
+
+    function wrapText(ctx, text, maxWidth) {
+        const lines = [];
+        const paragraphs = text.split('\n');
+        paragraphs.forEach(p => {
+            const chars = p.split('');
+            let currentLine = '';
+            for (let i = 0; i < chars.length; i++) {
+                let testLine = currentLine + chars[i];
+                if (ctx.measureText(testLine).width > maxWidth) {
+                    lines.push(currentLine);
+                    currentLine = chars[i];
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            lines.push(currentLine);
+        });
+        return lines;
+    }
+
+    function downloadCard() {
+        const link = document.createElement('a');
+        link.download = `Yuto_Message_Card_${new Date().getTime()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }
+
+    init();
 </script>
 </body>
 </html>
