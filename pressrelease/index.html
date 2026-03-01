@@ -14,7 +14,6 @@
         .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }
         .back-btn:hover { background: #fff; color: #000; }
 
-        /* Floating Button - Corrected Class */
         .floating-send-btn { 
             position: fixed; bottom: 30px; right: 30px; 
             background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; 
@@ -23,20 +22,19 @@
         }
         .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px #00f0ff; }
 
-        /* Modal Base */
+        /* Modal Styles */
         .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: none; justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(10px); background: rgba(0,0,0,0.7); }
         .modal.active { display: flex; }
         .modal-content { width: 90%; max-width: 700px; background: #fff; color: #333; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
         .modal-header { background: #111; color: #fff; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
-        .close-btn { font-size: 2rem; cursor: pointer; line-height: 1; }
+        .close-btn { font-size: 2rem; cursor: pointer; line-height: 1; border: none; background: none; color: #fff; }
         
-        /* Generator Content */
         .text-content { padding: 25px; overflow-y: auto; }
         .gen-canvas-container { margin-bottom: 15px; border-radius: 8px; overflow: hidden; background: #eee; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
         .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
-        .gen-textarea { width: 100%; height: 100px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: 'Zen Maru Gothic', sans-serif; resize: none; margin-bottom: 15px; }
+        .gen-textarea { width: 100%; height: 100px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: 'Zen Maru Gothic', sans-serif; resize: none; margin-bottom: 15px; box-sizing: border-box; font-size: 16px; }
         .gen-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
-        .gen-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .gen-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 0.9rem; }
         .btn-random { background: #333; color: #fff; }
         .btn-download { background: #ff4500; color: #fff; }
         .gen-btn-submit { width: 100%; padding: 15px; background: #28a745; color: #fff; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
@@ -50,7 +48,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2 style="margin:0; font-size:1.2rem;">Send Message Card</h2>
-                <span class="close-btn" onclick="closeModal()">×</span>
+                <button class="close-btn" onclick="closeModal()">×</button>
             </div>
             <div class="text-content">
                 <div class="gen-canvas-container">
@@ -58,11 +56,13 @@
                 </div>
                 <div class="gen-buttons">
                     <button class="gen-btn btn-random" onclick="changeRandomCard()">キャラを変える🎲</button>
-                    <button class="gen-btn btn-download" onclick="downloadCard()">保存💾</button>
+                    <button class="gen-btn btn-download" onclick="downloadCard()">この画像を保存💾</button>
                 </div>
                 <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
                     <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
-                    <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="メッセージを入力してください..."></textarea>
+                    <input type="hidden" id="adminMagicLink" name="Admin_Magic_Link" value="">
+                    
+                    <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="ここにメッセージを入力すると上のカードに書き込まれます！"></textarea>
                     <button type="submit" class="gen-btn-submit">メッセージを送信する 🚀</button>
                 </form>
             </div>
@@ -75,37 +75,95 @@
         const cardInput = document.getElementById('cardInput');
         let currentImage = new Image();
 
-        function openModal() { document.getElementById('modal-generator').classList.add('active'); changeRandomCard(); }
+        function openModal() { 
+            document.getElementById('modal-generator').classList.add('active'); 
+            if (!currentImage.src) changeRandomCard(); 
+        }
         function closeModal() { document.getElementById('modal-generator').classList.remove('active'); }
 
         function changeRandomCard() {
+            // 01〜20までのカード画像をランダムで選択
             const num = String(Math.floor(Math.random() * 20) + 1).padStart(2, '0');
             const url = `https://media.yuto-boxer.com/card/card_${num}.png`;
+            updateCardImage(url);
+        }
+
+        function updateCardImage(url) {
             document.getElementById('selectedCardUrl').value = url;
             currentImage = new Image();
             currentImage.crossOrigin = "anonymous";
             currentImage.onload = draw;
-            currentImage.src = url + "?t=" + new Date().getTime();
+            currentImage.src = url + "?t=" + new Date().getTime(); // キャッシュ回避
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+            if (currentImage.complete) {
+                ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+            }
+            
             const text = cardInput.value;
-            ctx.fillStyle = "#333";
-            ctx.font = "bold 40px 'Zen Maru Gothic'";
-            // 簡易描画（実際はwrapText関数をここに入れます）
-            ctx.fillText(text, 220, 150); 
+            if (text) {
+                ctx.fillStyle = "#333";
+                ctx.font = "bold 40px 'Zen Maru Gothic'";
+                ctx.textBaseline = "top";
+                
+                // 改行処理：テキストエリアの入力をそのまま反映
+                const lines = text.split('\n');
+                lines.forEach((line, i) => {
+                    ctx.fillText(line, 220, 150 + (i * 50));
+                });
+            }
+
+            // 【Admin Magic Link】の動的生成
+            const currentUrl = document.getElementById('selectedCardUrl').value;
+            // 管理者ページ(admin_maker.html)に画像URLとテキストを渡すリンク
+            document.getElementById('adminMagicLink').value = 
+                `https://yuto-boxer.com/admin_maker.html?img=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(text)}`;
         }
 
         cardInput.addEventListener('input', draw);
 
+        function downloadCard() {
+            const link = document.createElement('a');
+            link.download = `Message_card_${new Date().getTime()}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
+
         // 送信処理 (Ajax)
         document.getElementById('myForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const res = await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: {'Accept': 'application/json'} });
-            if(res.ok) { alert("送信しました！"); closeModal(); }
+            
+            const status = confirm("メッセージを送信してもよろしいですか？");
+            if(!status) return;
+
+            const formData = new FormData(e.target);
+            try {
+                const res = await fetch(e.target.action, { 
+                    method: 'POST', 
+                    body: formData, 
+                    headers: {'Accept': 'application/json'} 
+                });
+                
+                if (res.ok) {
+                    alert("送信完了！プロデューサー、メッセージを受け付けました。");
+                    e.target.reset();
+                    closeModal();
+                    draw(); // キャンバスをリセット
+                } else {
+                    alert("送信に失敗しました。時間をおいて再度お試しください。");
+                }
+            } catch (error) {
+                alert("接続エラーが発生しました。");
+            }
         });
+
+        // モーダル外クリックで閉じる
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-generator');
+            if (event.target == modal) closeModal();
+        };
     </script>
 </body>
 </html>

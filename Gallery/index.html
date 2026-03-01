@@ -3,131 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clubroom Gallery | Stage</title>
+    <title>Gallery - yuto-boxer.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0; padding: 0; width: 100%; min-height: 100vh;
-            background-color: #000;
-            background-image: url('https://media.yuto-boxer.com/03_gallery/03_gallery_BG.webp'); 
-            background-size: cover; background-attachment: fixed; background-position: center;
-            font-family: sans-serif; color: #fff; overflow-x: hidden;
+        /* 基本設定 */
+        body { 
+            margin: 0; min-height: 100vh; background-color: #050505;
+            font-family: 'Helvetica Neue', Arial, sans-serif; color: #fff;
+            line-height: 1.6;
         }
 
-        .gallery-wrapper {
+        /* 戻るボタン */
+        .back-btn { 
+            position: absolute; top: 30px; left: 30px; 
+            background: rgba(0,0,0,0.7); border: 1px solid #444; color: #fff; 
+            padding: 12px 20px; text-decoration: none; border-radius: 4px; 
+            transition: 0.3s; z-index: 100; 
+        }
+        .back-btn:hover { background: #fff; color: #000; }
+
+        /* メインコンテナ：全体を中央に寄せる */
+        .container {
+            max-width: 1200px; margin: 0 auto; padding: 100px 20px;
             display: flex; flex-direction: column; align-items: center;
-            gap: 40px; padding: 100px 20px; min-height: 100vh;
-            background: rgba(0, 0, 0, 0.4); box-sizing: border-box;
         }
 
-        /* 👑 中央メインステージ */
+        /* タイトルエリア */
+        .gallery-header { text-align: center; margin-bottom: 60px; }
+        .gallery-header h1 { font-size: 2.5rem; letter-spacing: 0.2rem; margin-bottom: 10px; }
+        .gallery-header p { color: #888; font-size: 1rem; }
+
+        /* 【重要】メインステージ：中央に王者を配置 */
         .main-stage {
-            width: 100%; max-width: 900px; margin-bottom: 20px;
+            width: 100%; max-width: 900px; margin-bottom: 80px;
+            position: relative; text-align: center;
+        }
+        .main-stage img {
+            width: 100%; height: auto; border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); transition: 0.5s;
+        }
+        .main-caption { 
+            margin-top: 20px; font-size: 1.2rem; font-weight: bold; color: #00f0ff; 
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
         }
 
-        /* 🖼️ 下段サブグリッド (PCで3列、スマホで1列) */
+        /* 【重要】サブグリッド：レスポンシブな格子状配置 */
         .sub-grid {
             display: grid;
+            /* 画面幅に応じて列数を自動調整（最小280px） */
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px; width: 100%; max-width: 1100px;
+            gap: 40px; width: 100%;
         }
 
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
-            padding: 12px; cursor: pointer; transition: 0.4s;
+        .gallery-item {
+            background: rgba(255,255,255,0.03); border: 1px solid #222;
+            border-radius: 8px; overflow: hidden; transition: 0.3s;
         }
-        .glass-card img { width: 100%; height: auto; border-radius: 6px; display: block; }
-        .glass-card:hover {
-            transform: translateY(-8px); background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.3);
+        .gallery-item:hover { 
+            transform: translateY(-10px); border-color: #555; 
+            background: rgba(255,255,255,0.07);
         }
+        .gallery-item img { width: 100%; height: auto; display: block; }
+        .item-info { padding: 15px; text-align: center; }
+        .item-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; }
+        .item-desc { font-size: 0.8rem; color: #888; }
 
-        /* ✉️ SendMessage (左下) */
-        .send-message-btn {
-            position: fixed; bottom: 30px; left: 30px;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2); color: #fff;
-            padding: 12px 25px; border-radius: 50px; cursor: pointer;
-            font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; z-index: 100;
+        /* Send Message Floating Button */
+        .floating-send-btn { 
+            position: fixed; bottom: 30px; right: 30px; 
+            background: rgba(0, 240, 255, 0.1); border: 1px solid #00f0ff; color: #00f0ff; 
+            padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; 
+            transition: 0.3s; z-index: 200; backdrop-filter: blur(8px); cursor: pointer;
         }
-        .send-message-btn:hover { background: #fff; color: #000; }
+        .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px #00f0ff; }
 
-        /* モーダル */
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85); z-index: 9999;
-            justify-content: center; align-items: center; backdrop-filter: blur(20px);
+        /* レスポンシブ調整 */
+        @media (max-width: 768px) {
+            .gallery-header h1 { font-size: 1.8rem; }
+            .main-stage { margin-bottom: 40px; }
+            .sub-grid { gap: 20px; }
         }
-        .modal-content {
-            position: relative; max-width: 800px; width: 90%;
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px; padding: 40px; text-align: center;
-        }
-        #modal-image { max-width: 100%; max-height: 65vh; border-radius: 8px; margin-bottom: 20px; }
-        .close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 35px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="gallery-wrapper">
+    <a href="../clubroom/index.html" class="back-btn">← clubroomへ戻る</a>
+
+    <div class="container">
+        <div class="gallery-header">
+            <h1>GALLERY</h1>
+            <p>青春の一瞬、リングの記憶</p>
+        </div>
+
         <div class="main-stage">
-            <div class="glass-card" onclick="openModal('00_main.webp', 'landscape')">
-                <img src="https://media.yuto-boxer.com/03_gallery/landscape/00_main.webp" alt="Main Work">
-            </div>
+            <img src="https://media.yuto-boxer.com/00_main/00_main.webp" alt="Main Visual">
+            <div class="main-caption">Featured: 頂点への咆哮</div>
         </div>
 
         <div class="sub-grid">
-            <div class="glass-card" onclick="openModal('01.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/01.webp"></div>
-            <div class="glass-card" onclick="openModal('11.webp', 'Vertical')"><img src="https://media.yuto-boxer.com/03_gallery/Vertical/11.webp"></div>
-            <div class="glass-card" onclick="openModal('02.webp', 'landscape')"><img src="https://media.yuto-boxer.com/03_gallery/landscape/02.webp"></div>
-        </div>
-    </div>
-
-    <button class="send-message-btn" onclick="location.href='clubroom.html#contact'">SEND MESSAGE</button>
-
-    <div id="gallery-modal" class="modal-overlay" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <img id="modal-image" src="" alt="">
-            <div class="comment-section">
-                <h2 id="modal-title" style="margin:0; font-weight: 200;"></h2>
-                <p id="modal-text" style="margin-top:15px; color:#ccc; line-height: 1.8;"></p>
+            <div class="gallery-item">
+                <img src="https://media.yuto-boxer.com/01_sub/01_sub.webp" alt="Sub 01">
+                <div class="item-info">
+                    <div class="item-title">練習の風景</div>
+                    <div class="item-desc">朝の静寂に響くサンドバッグの音。</div>
+                </div>
             </div>
-            <button class="close-btn" onclick="closeModal()">×</button>
-        </div>
+
+            <div class="gallery-item">
+                <img src="https://media.yuto-boxer.com/02_sub/02_sub.webp" alt="Sub 02">
+                <div class="item-info">
+                    <div class="item-title">ライバル</div>
+                    <div class="item-desc">視線が交差する、試合直前の緊張感。</div>
+                </div>
+            </div>
+
+            </div>
     </div>
 
-    <script>
-        const JSON_PATH = 'Gallery/comments.json';
-        let galleryData = {};
+    <a href="../pressrelease/index.html" class="floating-send-btn">Send Message</a>
 
-        async function loadComments() {
-            try {
-                const response = await fetch(`${JSON_PATH}?v=${new Date().getTime()}`);
-                galleryData = await response.json();
-            } catch (e) { console.warn("Comments JSON load failed."); }
-        }
-
-        function openModal(fileName, folder) {
-            const modal = document.getElementById('gallery-modal');
-            const img = document.getElementById('modal-image');
-            img.src = `https://media.yuto-boxer.com/03_gallery/${folder}/${fileName}?v=${new Date().getTime()}`;
-
-            const type = folder.toLowerCase();
-            const data = galleryData[type]?.[fileName];
-            document.getElementById('modal-title').innerText = data ? data.title : "Untitled";
-            document.getElementById('modal-text').innerText = data ? data.description : "";
-
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('gallery-modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        window.onload = loadComments;
-    </script>
 </body>
 </html>
