@@ -6,69 +6,50 @@
     <title>Gallery - yuto-boxer.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            margin: 0; padding: 0; width: 100%; height: 100vh;
-            overflow: hidden; background-color: #000;
-        }
+        /* 共通設定 */
+        html, body { margin: 0; padding: 0; width: 100%; height: 100vh; overflow: hidden; background-color: #000; }
 
-        /* 背景：プロデューサーの世界観を確実に表示 */
+        /* 背景：絶対表示 */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://media.yuto-boxer.com/00_main/00_main.webp');
-            background-position: center center;
-            background-size: cover;
-            background-repeat: no-repeat;
-            z-index: -2;
+            background: url('https://media.yuto-boxer.com/00_main/00_main.webp') center center / cover no-repeat;
+            z-index: 1; /* z-indexを前面に調整し、オーバーレイを重ねる */
         }
-
-        /* 背景に黒33%を乗せる */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.33);
-            z-index: -1;
+            background: rgba(0, 0, 0, 0.33); z-index: 2;
         }
 
-        /* サイト共通UI：左上の戻るボタン */
+        /* プロデューサー承認済み共通デザイン：戻るボタン */
         .back-btn { 
             position: absolute; top: 30px; left: 30px; 
             background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; 
             padding: 12px 20px; text-decoration: none; border-radius: 4px; 
-            transition: 0.3s; z-index: 1000; font-family: sans-serif;
+            z-index: 1000; font-family: sans-serif; font-size: 16px; /* サイズ固定 */
         }
         .back-btn:hover { background: #fff; color: #000; }
 
-        /* サイト共通UI：右下のSendMessageボタン（フローティング） */
+        /* プロデューサー承認済み共通デザイン：SendMessage */
         .floating-send-btn { 
             position: fixed; bottom: 30px; right: 30px; 
             background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; 
             padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; 
-            transition: 0.3s; z-index: 1000; backdrop-filter: blur(8px); cursor: pointer;
-            font-family: 'Zen Maru Gothic', sans-serif;
-        }
-        .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px #00f0ff; }
-
-        /* キャンバス：設計図の画像を配置 */
-        .canvas {
-            position: relative;
-            width: 100vw; height: 100vh;
-            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; backdrop-filter: blur(8px); cursor: pointer;
+            font-family: 'Zen Maru Gothic', sans-serif; font-size: 18px; /* 小さくなっていたのを修正 */
         }
 
+        /* 画像配置コンテナ */
+        .canvas { position: relative; width: 100vw; height: 100vh; z-index: 10; display: flex; justify-content: center; align-items: center; }
         .frame { position: absolute; background: rgba(0,0,0,0.5); overflow: hidden; }
         .frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 上段3枚：高さを5%で完璧に揃える */
-        .item-t1 { width: 22%; aspect-ratio: 16 / 9; top: 5%; left: 5%; }
-        .item-t2 { width: 22%; aspect-ratio: 16 / 9; top: 5%; left: 39%; }
-        .item-t3 { width: 22%; aspect-ratio: 16 / 9; top: 5%; right: 5%; }
-
-        /* 左右縦長（9:16） */
-        .item-v1 { width: 13%; aspect-ratio: 9 / 16; top: 48%; left: 5%; }
-        .item-v2 { width: 13%; aspect-ratio: 9 / 16; top: 48%; right: 5%; }
-
-        /* 中央下メイン（16:9） */
-        .item-main { width: 56%; aspect-ratio: 16 / 9; bottom: 8%; left: 22%; }
-
+        /* 配置座標（上段整列） */
+        .item-t1 { width: 22%; aspect-ratio: 16/9; top: 8%; left: 5%; }
+        .item-t2 { width: 22%; aspect-ratio: 16/9; top: 8%; left: 39%; }
+        .item-t3 { width: 22%; aspect-ratio: 16/9; top: 8%; right: 5%; }
+        .item-v1 { width: 13%; aspect-ratio: 9/16; top: 45%; left: 5%; }
+        .item-v2 { width: 13%; aspect-ratio: 9/16; top: 45%; right: 5%; }
+        .item-main { width: 56%; aspect-ratio: 16/9; bottom: 10%; left: 22%; }
     </style>
 </head>
 <body>
@@ -79,14 +60,12 @@
     <a href="../pressrelease/index.html" class="floating-send-btn">Send Message</a>
 
     <div class="canvas">
-        <div class="frame item-t1"><img src="https://media.yuto-boxer.com/02_sub/02_sub.webp" alt=""></div>
-        <div class="frame item-t2"><img src="https://media.yuto-boxer.com/03_sub/03_sub.webp" alt=""></div>
-        <div class="frame item-t3"><img src="https://media.yuto-boxer.com/04_sub/04_sub.webp" alt=""></div>
-
-        <div class="frame item-v1"><img src="https://media.yuto-boxer.com/01_sub/v1.webp" alt=""></div>
-        <div class="frame item-v2"><img src="https://media.yuto-boxer.com/05_sub/v2.webp" alt=""></div>
-
-        <div class="frame item-main"><img src="https://media.yuto-boxer.com/00_main/00_main.webp" alt=""></div>
+        <div class="frame item-t1"><img src="https://media.yuto-boxer.com/02_sub/02_sub.webp"></div>
+        <div class="frame item-t2"><img src="https://media.yuto-boxer.com/03_sub/03_sub.webp"></div>
+        <div class="frame item-t3"><img src="https://media.yuto-boxer.com/04_sub/04_sub.webp"></div>
+        <div class="frame item-v1"><img src="https://media.yuto-boxer.com/01_sub/v1.webp"></div>
+        <div class="frame item-v2"><img src="https://media.yuto-boxer.com/05_sub/v2.webp"></div>
+        <div class="frame item-main"><img src="https://media.yuto-boxer.com/00_main/00_main.webp"></div>
     </div>
 </body>
 </html>
