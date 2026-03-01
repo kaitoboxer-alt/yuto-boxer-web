@@ -6,121 +6,89 @@
     <title>Gallery - yuto-boxer.com</title>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* 基本設定 */
         body { 
-            margin: 0; min-height: 100vh; background-color: #050505;
-            font-family: 'Helvetica Neue', Arial, sans-serif; color: #fff;
-            line-height: 1.6;
+            margin: 0; min-height: 100vh; background-color: #000;
+            /* 背景画像を復活 */
+            background: url('https://media.yuto-boxer.com/00_main/00_main.webp') center / cover no-repeat fixed;
+            font-family: sans-serif; color: #fff;
+        }
+        /* 背景にオーバーレイをかけて文字と画像を見やすくする */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); z-index: -1;
         }
 
-        /* 戻るボタン */
-        .back-btn { 
-            position: absolute; top: 30px; left: 30px; 
-            background: rgba(0,0,0,0.7); border: 1px solid #444; color: #fff; 
-            padding: 12px 20px; text-decoration: none; border-radius: 4px; 
-            transition: 0.3s; z-index: 100; 
-        }
+        .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }
         .back-btn:hover { background: #fff; color: #000; }
 
-        /* メインコンテナ：全体を中央に寄せる */
         .container {
             max-width: 1200px; margin: 0 auto; padding: 100px 20px;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* タイトルエリア */
-        .gallery-header { text-align: center; margin-bottom: 60px; }
-        .gallery-header h1 { font-size: 2.5rem; letter-spacing: 0.2rem; margin-bottom: 10px; }
-        .gallery-header p { color: #888; font-size: 1rem; }
-
-        /* 【重要】メインステージ：中央に王者を配置 */
-        .main-stage {
-            width: 100%; max-width: 900px; margin-bottom: 80px;
-            position: relative; text-align: center;
-        }
-        .main-stage img {
-            width: 100%; height: auto; border: 1px solid #333;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8); transition: 0.5s;
-        }
-        .main-caption { 
-            margin-top: 20px; font-size: 1.2rem; font-weight: bold; color: #00f0ff; 
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        /* 【重要】トップセクション：メイン(横)と縦画像の並び */
+        .top-feature-area {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* 左にメイン(広め)、右に縦画像 */
+            gap: 30px;
+            width: 100%;
+            margin-bottom: 50px;
         }
 
-        /* 【重要】サブグリッド：レスポンシブな格子状配置 */
+        .main-hero { width: 100%; }
+        .main-hero img { width: 100%; height: auto; border: 2px solid #00f0ff; box-shadow: 0 0 30px rgba(0,240,255,0.3); }
+
+        .vertical-feature { width: 100%; }
+        .vertical-feature img { width: 100%; height: 100%; object-fit: cover; border: 1px solid #444; }
+
+        /* 【重要】サブグリッド：その他の画像 */
         .sub-grid {
             display: grid;
-            /* 画面幅に応じて列数を自動調整（最小280px） */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px; width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
         }
 
-        .gallery-item {
-            background: rgba(255,255,255,0.03); border: 1px solid #222;
-            border-radius: 8px; overflow: hidden; transition: 0.3s;
-        }
-        .gallery-item:hover { 
-            transform: translateY(-10px); border-color: #555; 
-            background: rgba(255,255,255,0.07);
-        }
-        .gallery-item img { width: 100%; height: auto; display: block; }
-        .item-info { padding: 15px; text-align: center; }
-        .item-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; }
-        .item-desc { font-size: 0.8rem; color: #888; }
+        .sub-item img { width: 100%; height: auto; border: 1px solid #222; transition: 0.3s; }
+        .sub-item:hover img { border-color: #00f0ff; transform: scale(1.02); }
 
-        /* Send Message Floating Button */
+        .caption { margin-top: 10px; font-size: 0.9rem; color: #ccc; text-align: center; }
+
         .floating-send-btn { 
             position: fixed; bottom: 30px; right: 30px; 
-            background: rgba(0, 240, 255, 0.1); border: 1px solid #00f0ff; color: #00f0ff; 
+            background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; 
             padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; 
-            transition: 0.3s; z-index: 200; backdrop-filter: blur(8px); cursor: pointer;
-        }
-        .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px #00f0ff; }
-
-        /* レスポンシブ調整 */
-        @media (max-width: 768px) {
-            .gallery-header h1 { font-size: 1.8rem; }
-            .main-stage { margin-bottom: 40px; }
-            .sub-grid { gap: 20px; }
+            transition: 0.3s; z-index: 200; backdrop-filter: blur(8px);
         }
     </style>
 </head>
 <body>
-
     <a href="../clubroom/index.html" class="back-btn">← clubroomへ戻る</a>
 
     <div class="container">
-        <div class="gallery-header">
-            <h1>GALLERY</h1>
-            <p>青春の一瞬、リングの記憶</p>
-        </div>
-
-        <div class="main-stage">
-            <img src="https://media.yuto-boxer.com/00_main/00_main.webp" alt="Main Visual">
-            <div class="main-caption">Featured: 頂点への咆哮</div>
+        <div class="top-feature-area">
+            <div class="main-hero">
+                <img src="https://media.yuto-boxer.com/00_main/00_main.webp" alt="Main Visual">
+                <div class="caption">Featured: 魂の咆哮</div>
+            </div>
+            <div class="vertical-feature">
+                <img src="https://media.yuto-boxer.com/01_sub/01_sub_vertical.webp" alt="Vertical Featured">
+                <div class="caption">Moment: 青春の一瞬</div>
+            </div>
         </div>
 
         <div class="sub-grid">
-            <div class="gallery-item">
-                <img src="https://media.yuto-boxer.com/01_sub/01_sub.webp" alt="Sub 01">
-                <div class="item-info">
-                    <div class="item-title">練習の風景</div>
-                    <div class="item-desc">朝の静寂に響くサンドバッグの音。</div>
-                </div>
-            </div>
-
-            <div class="gallery-item">
+            <div class="sub-item">
                 <img src="https://media.yuto-boxer.com/02_sub/02_sub.webp" alt="Sub 02">
-                <div class="item-info">
-                    <div class="item-title">ライバル</div>
-                    <div class="item-desc">視線が交差する、試合直前の緊張感。</div>
-                </div>
+                <div class="caption">トレーニングの風景</div>
             </div>
-
+            <div class="sub-item">
+                <img src="https://media.yuto-boxer.com/03_sub/03_sub.webp" alt="Sub 03">
+                <div class="caption">試合直前の静寂</div>
+            </div>
             </div>
     </div>
 
     <a href="../pressrelease/index.html" class="floating-send-btn">Send Message</a>
-
 </body>
 </html>
