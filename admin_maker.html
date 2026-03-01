@@ -1,65 +1,93 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Card Viewer - yuto-boxer.com</title>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body { margin: 0; padding: 20px; background-color: #222; color: #fff; font-family: sans-serif; text-align: center; }
-        .container { max-width: 900px; margin: 0 auto; background: #333; padding: 20px; border-radius: 12px; }
-        canvas { width: 100%; height: auto; border-radius: 8px; background: #000; }
-        .info { text-align: left; background: rgba(0,0,0,0.3); padding: 15px; margin-top: 15px; font-size: 0.9rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Card Viewer - yuto-boxer.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+<style>
+    /* 1. 全体の色味と雰囲気の修正：プロデューサー承認済みデザインを継承 */
+    body { 
+        margin: 0; padding: 20px; background-color: #000; color: #fff; 
+        font-family: sans-serif; text-align: center; 
+    }
+    .container { max-width: 900px; margin: 0 auto; background: #000; padding: 0; }
+    h1 { font-size: 1.2rem; margin-bottom: 20px; color: #fff; font-family: 'Zen Maru Gothic', sans-serif; }
+    
+    /* カード表示エリア：index.html のモーダルと同じ影と角丸を適用 */
+    .card-display {
+        width: 100%; border-radius: 8px; overflow: hidden; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        background: #eee; /* 読み込み前のプレースホルダー色 */
+    }
+    canvas { width: 100%; height: auto; display: block; }
+    
+    /* 情報パネル：index.html の reply-notice と同じスタイルを適用 */
+    .info { 
+        text-align: left; background-color: #f8f9fa; color: #333; 
+        padding: 15px; margin-top: 20px; font-size: 0.8rem; 
+        border-radius: 8px; border: 1px solid #ddd; line-height: 1.6;
+    }
+    .info strong { color: #000; }
+</style>
 </head>
 <body>
 <div class="container">
-    <canvas id="adminCanvas" width="1280" height="720"></canvas>
-    <div class="info" id="infoPanel">読み込み中...</div>
+    <h1>Message Card Viewer</h1>
+    
+    <div class="card-display">
+        <canvas id="adminCanvas" width="1280" height="720"></canvas>
+    </div>
+    
+    <div class="info" id="infoPanel">
+        データを確認中...
+    </div>
 </div>
 
 <script>
     const canvas = document.getElementById('adminCanvas');
     const ctx = canvas.getContext('2d');
+    const infoPanel = document.getElementById('infoPanel');
+
+    // URLパラメータから画像とテキストを取得
     const params = new URLSearchParams(window.location.search);
     const imgUrl = params.get('img');
     const message = params.get('text');
 
-    async function loadAndDraw() {
-        if (!imgUrl || message === null) {
-            document.getElementById('infoPanel').innerText = "エラー: データが不足しています。";
-            return;
-        }
+    if (!imgUrl || message === null) {
+        infoPanel.innerHTML = "❌ エラー: データが見つかりません。メールのリンクを再度確認してください。";
+    } else {
+        loadAndDraw();
+    }
 
-        // 1. フォントの読み込みを待つ
+    async function loadAndDraw() {
+        // 2. フォントの読み込みを待つ（文字が消えるのを防ぐ）
         await document.fonts.ready;
 
-        // 2. 画像の読み込み
         const img = new Image();
         img.crossOrigin = "anonymous";
-        img.src = imgUrl;
-
-        img.onload = () => {
+        img.onload = function() {
+            // 背景画像を描画（色味をそのまま出す）
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             
-            // 3. テキスト描画
+            // 3. フォントと配置位置の修正：index.html の drawCard と同じ設定を適用
             ctx.fillStyle = "#333333";
-            ctx.font = "bold 44px 'Zen Maru Gothic'";
+            ctx.font = "bold 44px 'Zen Maru Gothic', sans-serif";
             ctx.textBaseline = "top";
 
             const lines = message.split('\n');
+            // index.html と同じ座標 (220, 150) と行間 (55px) を使用
             lines.forEach((line, i) => {
                 ctx.fillText(line, 220, 150 + (i * 55));
             });
-            
-            document.getElementById('infoPanel').innerText = "✅ 表示完了";
-        };
-        
-        img.onerror = () => {
-            document.getElementById('infoPanel').innerText = "❌ 画像の読み込みに失敗しました。";
-        };
-    }
 
-    loadAndDraw();
+            infoPanel.innerHTML = `<strong>【受信内容】</strong><br>カードURL: ${imgUrl}<br>メッセージ: ${message.replace(/\n/g, ' / ')}`;
+        };
+        img.onerror = function() {
+            infoPanel.innerHTML = "❌ 画像の読み込みに失敗しました。URLを確認してください。";
+        };
+        img.src = imgUrl;
+    }
 </script>
 </body>
 </html>
