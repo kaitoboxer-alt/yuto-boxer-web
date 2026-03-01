@@ -1,449 +1,167 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boys Boxing & Professional wrestling prod. YUTO</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Release - yuto-boxer.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; min-height: 100vh; background-color: #000;
+            background: url('https://media.yuto-boxer.com/08_pressrelease/08_pressrelease.webp') center / cover no-repeat fixed;
+            font-family: sans-serif; color: #fff;
+        }
+        .back-btn { position: absolute; top: 30px; left: 30px; background: rgba(0,0,0,0.7); border: 1px solid #555; color: #fff; padding: 12px 20px; text-decoration: none; border-radius: 4px; transition: 0.3s; z-index: 100; }
+        .back-btn:hover { background: #fff; color: #000; }
 
-<link rel="stylesheet" href="https://use.typekit.net/iji1sdm.css">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+        .floating-send-btn { 
+            position: fixed; bottom: 30px; right: 30px; 
+            background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; 
+            padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 50px; 
+            transition: 0.3s; z-index: 200; backdrop-filter: blur(8px); cursor: pointer; 
+        }
+        .floating-send-btn:hover { background: #00f0ff; color: #000; box-shadow: 0 0 20px #00f0ff; }
 
-<style>
-    body { margin: 0; background-color: #000; overflow: hidden; font-family: 'Helvetica Neue', Arial, sans-serif; }
-
-    #splash-screen {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #000000;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
-        z-index: 9999; transition: opacity 1.5s ease;
-    }
-    #splash-logo { max-width: 200px; opacity: 0; transition: opacity 2s ease; margin-bottom: 30px; }
-    #splash-text {
-        color: #ffffff; font-family: el-paso, sans-serif; font-weight: 400; font-size: 1.2rem;
-        letter-spacing: 2px; text-align: center; opacity: 0; transition: opacity 2s ease;
-        line-height: 1.6; padding: 0 20px;
-    }
-
-    .bg-grid {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); z-index: -2;
-    }
-    .panel { background-size: cover; background-position: center; position: relative; overflow: hidden; }
-    .black-filter {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        background-color: rgba(0, 0, 0, 0.25); z-index: -1; pointer-events: none;
-    }
-
-    .content { position: relative; z-index: 1; color: white; text-align: center; padding-top: 35vh; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); }
-    .content h1 { font-family: el-paso, sans-serif; font-weight: 400; font-style: normal; font-size: 1.5rem; margin-bottom: 20px; letter-spacing: 2px; }
-    .content .enter-link { font-size: 1.2rem; letter-spacing: 2px; color: white; text-decoration: none; display: inline-block; animation: slowBlink 3s infinite ease-in-out; cursor: pointer; }
-    @keyframes slowBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-    .sub-menu { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 15px; z-index: 10; }
-    .sub-menu a {
-        background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 10px 15px; border-radius: 6px; color: rgba(255, 255, 255, 0.8); text-decoration: none;
-        font-size: 0.85rem; letter-spacing: 1px; transition: all 0.3s ease; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-    .sub-menu a:hover { background: rgba(50, 50, 50, 0.8); color: #fff; border-color: rgba(255, 255, 255, 0.6); transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7); }
-
-    .copyright { position: fixed; bottom: 15px; left: 0; width: 100%; text-align: center; color: rgba(255, 255, 255, 0.4); font-size: 0.75rem; letter-spacing: 1px; z-index: 1; pointer-events: none; }
-
-    .modal {
-        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center;
-        opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 100; backdrop-filter: blur(5px);
-    }
-    .modal.active { opacity: 1; pointer-events: auto; }
-    .modal-content { width: 80%; max-width: 600px; border-radius: 8px; overflow: hidden; text-align: left; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); display: flex; flex-direction: column; max-height: 90vh; }
-    .modal-header, .modal-tabs { flex-shrink: 0; }
-    .modal-header { background-color: #111111; color: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-    .modal-title { margin: 0; font-size: 1.2rem; letter-spacing: 2px; font-weight: bold; }
-    .modal-tabs { display: flex; background-color: #222; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-    .modal-tab { flex: 1; padding: 12px 0; background: none; border: none; border-right: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.5); cursor: pointer; font-size: 0.85rem; transition: background-color 0.3s, color 0.3s; text-align: center; font-family: inherit; }
-    .modal-tab:last-child { border-right: none; }
-    .modal-tab:hover { background-color: rgba(255, 255, 255, 0.1); color: #fff; }
-    .modal-tab.active { background-color: rgba(255, 255, 255, 0.2); color: #fff; font-weight: bold; }
-    .text-content { padding: 30px 40px; line-height: 1.8; font-size: 0.95rem; overflow-y: auto; }
-    .close-btn { font-size: 1.8rem; cursor: pointer; opacity: 0.7; transition: opacity 0.3s; line-height: 1; }
-    .close-btn:hover { opacity: 1; }
-
-    #modal-from .text-content { background-color: rgba(20, 120, 50, 0.85); color: #fff; }
-    #modal-ai .text-content { background-color: rgba(180, 0, 0, 0.85); color: #fff; }
-    #modal-copy .text-content { background-color: rgba(0, 30, 150, 0.85); color: #fff; }
-    #modal-age-check .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; text-align: center; }
-    .age-btn-container { margin-top: 30px; display: flex; justify-content: center; gap: 20px; }
-    .age-btn { padding: 10px 30px; border: 2px solid #333; background: transparent; cursor: pointer; font-weight: bold; transition: all 0.3s; }
-    .age-btn.yes { background: #000; color: #fff; }
-    .age-btn.yes:hover { background: #333; }
-    .age-btn.no:hover { background: #eee; }
-
-    #modal-generator .modal-content { max-width: 700px; }
-    #modal-generator .text-content { background-color: rgba(255, 255, 255, 0.95); color: #333; padding: 15px 25px; }
-    #modal-generator h3 { font-size: 1rem; margin-top: 0; margin-bottom: 8px; border-bottom: 2px solid #333; padding-bottom: 3px; }
-    .gen-canvas-container { margin-bottom: 10px; border-radius: 8px; overflow: hidden; background: #eee; }
-    .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
-    .gen-textarea {
-        width: 100%; box-sizing: border-box; height: 70px; padding: 8px;
-        font-size: 14px; border: 2px solid #ccc; border-radius: 6px; font-family: 'Zen Maru Gothic', inherit; resize: vertical; margin-bottom: 10px;
-    }
-    .gen-buttons { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 5px; }
-    .gen-btn { background-color: #333; color: white; border: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-    .gen-btn:hover { background-color: #000; }
-    .gen-btn-dl { background-color: #ff4500; }
-    .gen-btn-dl:hover { background-color: #cc3700; }
-    .gen-btn-submit { background-color: #28a745; width: 100%; padding: 12px; font-size: 16px; color: white; border: none; font-weight: bold; border-radius: 6px; cursor: pointer; }
-    .gen-btn-submit:hover { background-color: #218838; }
-    .gen-hr { margin: 12px 0; border: 0; border-top: 1px dashed #ccc; } 
-    .reply-notice { font-size: 12px; color: #444; margin-top: 10px; text-align: left; line-height: 1.4; background-color: #f8f9fa; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
-    .reply-notice a { color: #1da1f2; text-decoration: none; font-weight: bold; }
-    .reply-notice a:hover { text-decoration: underline; }
-</style>
+        /* Modal Styles */
+        .modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; display: none; justify-content: center; align-items: center; z-index: 10000; backdrop-filter: blur(10px); background: rgba(0,0,0,0.7); }
+        .modal.active { display: flex; }
+        .modal-content { width: 90%; max-width: 700px; background: #fff; color: #333; border-radius: 15px; overflow: hidden; display: flex; flex-direction: column; max-height: 90vh; }
+        .modal-header { background: #111; color: #fff; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; }
+        .close-btn { font-size: 2rem; cursor: pointer; line-height: 1; border: none; background: none; color: #fff; }
+        
+        .text-content { padding: 25px; overflow-y: auto; }
+        .gen-canvas-container { margin-bottom: 15px; border-radius: 8px; overflow: hidden; background: #eee; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); }
+        .gen-canvas-container canvas { width: 100%; height: auto; display: block; }
+        .gen-textarea { width: 100%; height: 100px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: 'Zen Maru Gothic', sans-serif; resize: none; margin-bottom: 15px; box-sizing: border-box; font-size: 16px; }
+        .gen-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+        .gen-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 0.9rem; }
+        .btn-random { background: #333; color: #fff; }
+        .btn-download { background: #ff4500; color: #fff; }
+        .gen-btn-submit { width: 100%; padding: 15px; background: #28a745; color: #fff; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+    </style>
 </head>
 <body>
-
-    <div id="splash-screen">
-        <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" id="splash-logo" alt="logo">
-        <div id="splash-text">
-            Where boys scatter their blood and sweat<br>
-            in boxing and professional wrestling.
-        </div>
-    </div>
-
-    <div class="bg-grid">
-        <div class="panel"></div><div class="panel"></div><div class="panel"></div>
-        <div class="panel"></div><div class="panel"></div><div class="panel"></div>
-    </div>
-    <div class="black-filter"></div>
-
-    <div class="content">
-        <img src="https://media.yuto-boxer.com/entrance/championbelt.webp" alt="logo" style="max-width: 300px; margin-bottom: 15px;">
-        <h1>Boys Boxing & Professional wrestling</h1>
-        <a onclick="checkAge()" class="enter-link">Enter the Ring...</a>
-    </div>
-
-    <div class="sub-menu">
-        <a onclick="openModal('modal-from')">From Yuto</a>
-        <a onclick="openGeneratorModal()">Send Message</a>
-        <a onclick="openModal('modal-ai')">AI Policy</a>
-        <a onclick="openModal('modal-copy')">Copyright</a>
-    </div>
-    <div class="copyright">&copy; 2026 yuto-boxer.com All Rights Reserved.</div>
-
-    <div id="modal-age-check" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Age Verification</h2></div>
-            <div class="text-content">
-                大変申し訳ありませんが、当サイトは表現の都合上、18歳以下の方の閲覧はお断りしております。<br>
-                18歳の誕生日を迎えてから、あらためてお越しいただけると嬉しいです。<br><br>
-                あなたは18歳以上ですか？
-                <div class="age-btn-container">
-                    <button class="age-btn yes" onclick="verifyAge(true)">はい（Enter）</button>
-                    <button class="age-btn no" onclick="verifyAge(false)">いいえ（Exit）</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-from" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-from')">×</span></div>
-            <div class="modal-tabs">
-                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from.txt', this)">日本語</button>
-                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-en.txt', this)">English</button>
-                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-zh-tw.txt', this)">繁體中文</button>
-                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-zh.txt', this)">简体中文</button>
-                <button class="modal-tab" onclick="loadTabText('modal-from', 'texts/message-from-ko.txt', this)">한국어</button>
-            </div>
-            <div class="text-content"></div>
-        </div>
-    </div>
-
-    <div id="modal-ai" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-ai')">×</span></div>
-            <div class="modal-tabs">
-                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai.txt', this)">日本語</button>
-                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-en.txt', this)">English</button>
-                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-zh-tw.txt', this)">繁體中文</button>
-                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-zh.txt', this)">简体中文</button>
-                <button class="modal-tab" onclick="loadTabText('modal-ai', 'texts/policy-ai-ko.txt', this)">한국어</button>
-            </div>
-            <div class="text-content"></div>
-        </div>
-    </div>
-
-    <div id="modal-copy" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Loading...</h2><span class="close-btn" onclick="closeModal('modal-copy')">×</span></div>
-            <div class="modal-tabs">
-                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy.txt', this)">日本語</button>
-                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-en.txt', this)">English</button>
-                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-zh-tw.txt', this)">繁體中文</button>
-                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-zh.txt', this)">简体中文</button>
-                <button class="modal-tab" onclick="loadTabText('modal-copy', 'texts/policy-copy-ko.txt', this)">한국어</button>
-            </div>
-            <div class="text-content"></div>
-        </div>
-    </div>
+    <a href="../clubroom/index.html" class="back-btn">← clubroomへ戻る</a>
+    <button onclick="openModal()" class="floating-send-btn">Send Message</button>
 
     <div id="modal-generator" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2 class="modal-title">Send Message</h2><span class="close-btn" onclick="closeGeneratorModal()">×</span></div>
+            <div class="modal-header">
+                <h2 style="margin:0; font-size:1.2rem;">Send Message Card</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
             <div class="text-content">
-                <h3 style="margin-top:0;">◆ メッセージカード生成</h3>
                 <div class="gen-canvas-container">
                     <canvas id="myCanvas" width="1280" height="720"></canvas>
                 </div>
-                
                 <div class="gen-buttons">
-                    <button class="gen-btn" type="button" onclick="changeRandomCard()">キャラを変える🎲</button>
-                    <button class="gen-btn gen-btn-dl" type="button" onclick="downloadCard()">この画像を保存💾</button>
+                    <button class="gen-btn btn-random" onclick="changeRandomCard()">キャラを変える🎲</button>
+                    <button class="gen-btn btn-download" onclick="downloadCard()">この画像を保存💾</button>
                 </div>
-
-                <hr class="gen-hr">
-                <h3 style="margin-top:0;">◆ ゆーとにメッセージを送る</h3>
                 <form id="myForm" action="https://formspree.io/f/xeelvqye" method="POST">
                     <input type="hidden" id="selectedCardUrl" name="Selected_Character_URL" value="">
                     <input type="hidden" id="adminMagicLink" name="Admin_Magic_Link" value="">
-                    <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="ここに応援メッセージや質問を入力すると、上のカードにリアルタイムで書き込まれます！"></textarea>
+                    
+                    <textarea id="cardInput" name="message" class="gen-textarea" required placeholder="ここにメッセージを入力すると上のカードに書き込まれます！"></textarea>
                     <button type="submit" class="gen-btn-submit">メッセージを送信する 🚀</button>
-                    <div class="reply-notice">
-                        ※お返事できるときはX（旧Twitter）の <a href="https://x.com/boxer_yuto" target="_blank" rel="noopener noreferrer">@boxer_yuto</a> からになります。<br>
-                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const splashScreen = document.getElementById('splash-screen');
-        const splashLogo = document.getElementById('splash-logo');
-        const splashText = document.getElementById('splash-text');
-        setTimeout(() => {
-            if (splashLogo) splashLogo.style.opacity = "1";
-            if (splashText) splashText.style.opacity = "1";
-        }, 500);
-        setTimeout(() => {
-            if (splashScreen) {
-                splashScreen.style.opacity = "0";
-                setTimeout(() => splashScreen.style.display = "none", 1500);
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        const cardInput = document.getElementById('cardInput');
+        let currentImage = new Image();
+
+        function openModal() { 
+            document.getElementById('modal-generator').classList.add('active'); 
+            if (!currentImage.src) changeRandomCard(); 
+        }
+        function closeModal() { document.getElementById('modal-generator').classList.remove('active'); }
+
+        function changeRandomCard() {
+            // 01〜20までのカードをランダム選択（64人の台紙ができたらここを64に変更）
+            const num = String(Math.floor(Math.random() * 20) + 1).padStart(2, '0');
+            const url = `https://media.yuto-boxer.com/card/card_${num}.png`;
+            updateCardImage(url);
+        }
+
+        function updateCardImage(url) {
+            document.getElementById('selectedCardUrl').value = url;
+            currentImage = new Image();
+            currentImage.crossOrigin = "anonymous";
+            currentImage.onload = draw;
+            currentImage.src = url + "?t=" + new Date().getTime(); 
+        }
+
+        // キャンバスの描画処理
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (currentImage.complete) {
+                ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
             }
-        }, 5000);
-    });
-
-    const totalImages = 93;
-    const imageUrls = [];
-    for (let i = 1; i <= totalImages; i++) {
-        imageUrls.push(`https://media.yuto-boxer.com/top/${String(i).padStart(3, '0')}.webp`);
-    }
-
-    const panels = document.querySelectorAll('.panel');
-    panels.forEach(panel => {
-        const randomImg = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-        panel.style.backgroundImage = `url('${randomImg}')`;
-    });
-
-    setInterval(() => {
-        const targetPanel = panels[Math.floor(Math.random() * panels.length)];
-        if (targetPanel.classList.contains('animating')) return;
-        targetPanel.classList.add('animating');
-        
-        const nextImgUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-        const tempImg = new Image();
-        
-        tempImg.onload = () => {
-            const crossfadeLayer = document.createElement('div');
-            crossfadeLayer.style.cssText = `position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('${nextImgUrl}'); background-size:cover; background-position:center; opacity:0; transition:opacity 2s ease-in-out;`;
-            targetPanel.appendChild(crossfadeLayer);
             
-            requestAnimationFrame(() => crossfadeLayer.style.opacity = '1');
-            
-            setTimeout(() => {
-                targetPanel.style.backgroundImage = `url('${nextImgUrl}')`;
-                targetPanel.removeChild(crossfadeLayer);
-                targetPanel.classList.remove('animating');
-            }, 2000);
-        };
-        tempImg.onerror = () => targetPanel.classList.remove('animating');
-        tempImg.src = nextImgUrl;
-    }, 3000);
-
-    function checkAge() { document.getElementById('modal-age-check').classList.add('active'); }
-    function verifyAge(isAdult) {
-        if (isAdult) window.location.href = "secret-ring/"; 
-        else { alert("また18歳になった時にお会いしましょう！"); window.location.href = "https://www.google.com"; }
-    }
-
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        modal.classList.add('active');
-        const firstTab = modal.querySelector('.modal-tab');
-        if (firstTab) firstTab.click();
-    }
-
-    function loadTabText(modalId, textFilePath, tabElement) {
-        const modal = document.getElementById(modalId);
-        const titleArea = modal.querySelector('.modal-title');
-        const contentArea = modal.querySelector('.text-content');
-        modal.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-        tabElement.classList.add('active');
-
-        fetch(textFilePath)
-            .then(response => { if (!response.ok) throw new Error(); return response.text(); })
-            .then(text => {
-                const lines = text.split('\n');
-                titleArea.innerText = lines.shift(); 
-                contentArea.innerHTML = lines.join('<br>');
-            })
-            .catch(() => {
-                titleArea.innerText = 'Error';
-                contentArea.innerHTML = '読み込みに失敗しました。';
-            });
-    }
-
-    function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
-    window.onclick = function(event) { if (event.target.classList.contains('modal')) event.target.classList.remove('active'); };
-
-    function openGeneratorModal() {
-        document.getElementById('modal-generator').classList.add('active');
-        changeRandomCard();
-    }
-    function closeGeneratorModal() { document.getElementById('modal-generator').classList.remove('active'); }
-
-    const canvas = document.getElementById('myCanvas');
-    const ctx = canvas.getContext('2d');
-    const cardInput = document.getElementById('cardInput');
-    let currentImage = new Image();
-
-    cardInput.addEventListener('input', drawCard);
-
-    function changeRandomCard() {
-        const currentCardNumber = Math.floor(Math.random() * 20) + 1;
-        // ▼ カード画像は2桁（01〜20）に修正 ▼
-        const paddedNum = String(currentCardNumber).padStart(1, '0');
-        const imageUrl = `https://media.yuto-boxer.com/card/card_${paddedNum}.png`;
-
-        document.getElementById('selectedCardUrl').value = imageUrl;
-
-        currentImage = new Image();
-        currentImage.crossOrigin = "anonymous";
-        currentImage.onload = () => drawCard();
-        currentImage.src = imageUrl + "?t=" + new Date().getTime();
-    }
-
-    function drawCard() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
-
-        const text = cardInput.value;
-        if (text.trim() !== "") {
-            // ▼ テキストエリアを拡張 (左寄せ・幅広・縦長) ▼
-            const textArea = { x:220, y: 90, width: 720, height: 500 };
-            drawTextWithAutoScale(ctx, text, textArea);
-        }
-
-        const currentUrl = document.getElementById('selectedCardUrl').value;
-        const magicLinkInput = document.getElementById('adminMagicLink');
-        if (magicLinkInput) {
-            const magicUrl = `https://yuto-boxer.com/admin_maker.html?img=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(text)}`;
-            magicLinkInput.value = magicUrl;
-        }
-    }
-
-    function drawTextWithAutoScale(ctx, text, area) {
-        let fontSize = 54;
-        const minFontSize = 24;
-        // ▼ 丸ゴシックを適用 ▼
-        const fontFamily = "'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif";
-        const lineHeightRatio = 1.4;
-        let lines = [];
-        let wrappedText = text.replace(/\r\n/g, '\n');
-        
-        // （※初回描画時にフォントが遅れて反映される場合がありますが、文字を打ち直すと適用されます）
-        document.fonts.ready.then(() => {
-            while (fontSize >= minFontSize) {
-                ctx.font = `bold ${fontSize}px ${fontFamily}`;
-                lines = wrapText(ctx, wrappedText, area.width);
-                if (lines.length * (fontSize * lineHeightRatio) <= area.height) break;
-                fontSize -= 2;
+            const text = cardInput.value;
+            if (text) {
+                ctx.fillStyle = "#333";
+                ctx.font = "bold 40px 'Zen Maru Gothic'";
+                ctx.textBaseline = "top";
                 
-                if (fontSize < minFontSize) {
-                    fontSize = minFontSize;
-                    ctx.font = `bold ${fontSize}px ${fontFamily}`;
-                    lines = wrapText(ctx, wrappedText, area.width);
-                    const maxLines = Math.floor(area.height / (fontSize * lineHeightRatio));
-                    lines = lines.slice(0, maxLines);
-                    if (lines.length > 0) {
-                        let lastLine = lines[lines.length - 1];
-                        lines[lines.length - 1] = lastLine.length > 2 ? lastLine.slice(0, -2) + "…" : lastLine + "…";
-                    }
-                    break;
+                const lines = text.split('\n');
+                lines.forEach((line, i) => {
+                    ctx.fillText(line, 220, 150 + (i * 50));
+                });
+            }
+
+            // 【Admin Magic Link】の生成
+            const currentImgUrl = document.getElementById('selectedCardUrl').value;
+            // admin_maker.htmlへ、画像とテキストを渡すリンクを構築
+            const magicLink = `https://yuto-boxer.com/admin_maker.html?img=${encodeURIComponent(currentImgUrl)}&text=${encodeURIComponent(text)}`;
+            document.getElementById('adminMagicLink').value = magicLink;
+        }
+
+        cardInput.addEventListener('input', draw);
+
+        function downloadCard() {
+            const link = document.createElement('a');
+            link.download = `Message_card_${new Date().getTime()}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
+
+        // 送信処理 (Formspree)
+        document.getElementById('myForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const status = confirm("メッセージを送信してもよろしいですか？");
+            if(!status) return;
+
+            const formData = new FormData(e.target);
+            try {
+                const res = await fetch(e.target.action, { 
+                    method: 'POST', 
+                    body: formData, 
+                    headers: {'Accept': 'application/json'} 
+                });
+                
+                if (res.ok) {
+                    alert("送信完了！プロデューサー、メッセージを受け付けました。");
+                    e.target.reset();
+                    closeModal();
+                    draw(); 
+                } else {
+                    alert("送信に失敗しました。");
                 }
+            } catch (error) {
+                alert("接続エラーが発生しました。");
             }
-
-            ctx.fillStyle = "#333333";
-            ctx.textBaseline = "top";
-            const totalTextHeight = lines.length * (fontSize * lineHeightRatio);
-            const startY = area.y + (area.height - totalTextHeight) / 2;
-
-            lines.forEach((line, index) => {
-                ctx.fillText(line, area.x, startY + index * (fontSize * lineHeightRatio));
-            });
         });
-    }
 
-    function wrapText(ctx, text, maxWidth) {
-        const kinsokuStart = "、。，．・：；？！゛゜´｀¨＾―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】";
-        const chars = text.split('');
-        let lines = [], currentLine = '';
-
-        for (let i = 0; i < chars.length; i++) {
-            const char = chars[i];
-            if (char === '\n') { lines.push(currentLine); currentLine = ''; continue; }
-            const testLine = currentLine + char;
-            if (ctx.measureText(testLine).width > maxWidth && currentLine !== '') {
-                if (kinsokuStart.includes(char)) { currentLine = testLine; }
-                else { lines.push(currentLine); currentLine = char; }
-            } else { currentLine = testLine; }
-        }
-        lines.push(currentLine);
-        return lines;
-    }
-
-    function downloadCard() {
-        const link = document.createElement('a');
-        link.download = `Message_card_${new Date().getTime()}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }
-
-    const form = document.getElementById('myForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-        fetch(form.action, { method: form.method, body: new FormData(form), headers: { 'Accept': 'application/json' } })
-        .then(response => {
-            if (response.ok) {
-                alert("メッセージを送信しました！ありがとうございます！");
-                form.reset(); drawCard(); closeGeneratorModal(); 
-            } else { alert("送信に失敗しました。もう一度お試しください。"); }
-        })
-        .catch(() => alert("通信エラーが発生しました。"));
-    });
-
-    // ▼ 今回追加した必須コード（外部からのSend Messageボタン連携用） ▼
-    window.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('open') === 'contact') {
-            const splashScreen = document.getElementById('splash-screen');
-            if (splashScreen) {
-                splashScreen.style.display = 'none';
-            }
-            // 少し遅延を入れてフォントやCanvasの準備完了を待ってから開く
-            setTimeout(() => {
-                openGeneratorModal();
-            }, 100);
-        }
-    });
-</script>
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-generator');
+            if (event.target == modal) closeModal();
+        };
+    </script>
 </body>
 </html>
