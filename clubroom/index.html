@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Clubroom - B.B.PW</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-offset-left: 150px;
+            --video-size: 45vh;
+            --video-opacity: 0.25;
+            --video-bottom: 250px;
+            --video-right: 130px;
+            --nav-bottom: 60px;
+        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'M PLUS 1 Code', monospace; }
+        
+        /* コピー・ドラッグ対策 */
+        img, video {
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .bg-fixed { position: fixed; top: 0; left: var(--bg-offset-left); width: calc(100% + var(--bg-offset-left)); height: 100%; background: url('https://media.yuto-boxer.com/02_clubroom/02_clubroom.webp') no-repeat left center; background-size: cover; filter: brightness(0.6); z-index: 1; }
+        .back-to-top { position: absolute; top: 30px; left: 30px; background: rgba(0, 0, 0, 0.8); border: 1.5px solid #fff; color: #fff; padding: 10px 25px; text-decoration: none; border-radius: 50px; font-size: 0.85rem; z-index: 2000; }
+        
+        .video-container { position: absolute; right: var(--video-right); transform: translateX(50%); bottom: var(--video-bottom); display: flex; flex-direction: column; align-items: center; gap: 12px; z-index: 10; }
+        .video-wrapper { height: var(--video-size); aspect-ratio: 9 / 16; border: 3px solid #333; box-shadow: 0 0 30px rgba(0,0,0,0.8); background: #000; overflow: hidden; border-radius: 8px; opacity: var(--video-opacity); }
+        #club-video { height: 100%; width: 100%; object-fit: contain; }
+        #mute-toggle { background: rgba(0, 0, 0, 0.7); border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 16px; border-radius: 50px; cursor: pointer; font-size: 0.75rem; backdrop-filter: blur(5px); z-index: 100; }
+
+        /* 共通ナビゲーション */
+        .bottom-nav { position: fixed; bottom: var(--nav-bottom); left: 30px; right: 30px; display: flex; gap: 10px; z-index: 1000; align-items: center; }
+        .nav-item { position: relative; background: rgba(0, 5, 15, 0.8); border: 1.5px solid rgba(255, 255, 255, 0.15); color: #fff; text-decoration: none; padding: 12px 18px; border-radius: 6px; font-size: 0.85rem; transition: 0.3s; white-space: nowrap; }
+        .nav-item:not(.current):hover { border-color: #00f0ff; transform: translateY(-3px); box-shadow: 0 0 15px rgba(0, 240, 255, 0.4); }
+        .nav-item.current { border-color: #bd00ff; box-shadow: 0 0 12px #bd00ff; cursor: default; pointer-events: none; }
+        .nav-item::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 15px); left: 50%; transform: translateX(-50%); background: rgba(0, 240, 255, 0.2); border: 1px solid #00f0ff; color: #00f0ff; padding: 6px 14px; border-radius: 4px; font-size: 0.75rem; opacity: 0; visibility: hidden; transition: 0.2s; }
+        .nav-item:hover::after { opacity: 1; visibility: visible; }
+        .send-message-btn { margin-left: auto; background: rgba(0, 240, 255, 0.15); border: 1.5px solid #00f0ff; color: #00f0ff; border-radius: 50px; font-weight: bold; min-width: 160px; text-align: center; pointer-events: auto !important; }
+    </style>
+</head>
+<body oncontextmenu="return false;" onselectstart="return false;" onmousedown="if(event.button==2) return false;">
+    <div class="bg-fixed"></div>
+    <a href="/index.html" class="back-to-top">← Back to TOP</a>
+    <div class="video-container">
+        <div class="video-wrapper"><video id="club-video" autoplay loop muted playsinline src="https://media.yuto-boxer.com/02_clubroom/movie/02_clubroom.mp4"></video></div>
+        <button id="mute-toggle">Unmute Sound 🔊</button>
+    </div>
+    <nav id="global-nav" class="bottom-nav"></nav>
+    <script>
+        const configPath = '/666_pP6PqS_frG-H_Friday-the-13th/00_text/00_System_text/config.json';
+        async function initNav() {
+            try {
+                const res = await fetch(configPath); const data = await res.json();
+                const nav = document.getElementById('global-nav'); const currentPath = window.location.pathname;
+                Object.keys(data.menu_items).forEach(key => {
+                    const item = data.menu_items[key]; if (!item.active) return;
+                    const a = document.createElement('a'); a.href = item.path; a.className = 'nav-item'; a.innerText = item.label; a.setAttribute('data-tooltip', item.jp);
+                    if (key === 'send_message') a.classList.add('send-message-btn');
+                    if (currentPath.indexOf(item.path) !== -1) a.classList.add('current');
+                    nav.appendChild(a);
+                });
+            } catch(e) {}
+        }
+        const v = document.getElementById('club-video'); const b = document.getElementById('mute-toggle');
+        b.onclick = () => { if (v.muted) { v.muted = false; b.innerText = "Mute Sound 🔇"; } else { v.muted = true; b.innerText = "Unmute Sound 🔊"; } };
+        window.onload = initNav;
+    </script>
+</body>
+</html>

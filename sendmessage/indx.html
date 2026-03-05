@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message - B.B.PW</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background: #000; color: #fff; font-family: 'Zen Maru Gothic', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        .container { width: 95%; max-width: 600px; padding: 12px; border: 2px solid #00f0ff; background: rgba(0, 5, 15, 0.98); border-radius: 12px; position: relative; display: flex; flex-direction: column; gap: 8px; }
+        .back-btn { position: absolute; top: -35px; left: 0; color: #ffd700; text-decoration: none; font-size: 0.85rem; }
+        #sendCanvas { width: 100%; height: auto; border-radius: 5px; background: #fff; }
+        .msg-input { width: 100%; height: 80px; background: #fff; color: #000; border: none; border-radius: 5px; padding: 10px; font-size: 1rem; box-sizing: border-box; resize: none; }
+        .controls { display: flex; justify-content: center; gap: 8px; }
+        .t-btn { padding: 6px 12px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer; border: 1px solid rgba(255,255,255,0.2); color: #fff; background: #444; }
+        .btn-send-main { width: 100%; height: 44px; border-radius: 50px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-send-main.is-open { background: rgba(0, 240, 255, 0.15); border: 1px solid #00f0ff; color: #00f0ff; }
+        .btn-send-main.is-closed { background: #333; border: 1px solid #555; color: #777; cursor: not-allowed; }
+        #send-note { font-size: 0.7rem; color: #ffcccc; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="javascript:history.back()" class="back-btn">Back</a>
+        <canvas id="sendCanvas" width="1280" height="720"></canvas>
+        <div class="controls">
+            <button class="t-btn" onclick="changeRandomCard()">Change Card</button>
+            <button class="t-btn" style="background:#ff4500;" onclick="downloadCard()">Save Image</button>
+        </div>
+        <textarea id="msgInput" class="msg-input" placeholder="Enter your message..."></textarea>
+        <div id="send-note"></div>
+        <button id="main-send-btn" class="btn-send-main">SEND CARD</button>
+    </div>
+    <script>
+        let cardImg = new Image();
+        const canvas = document.getElementById('sendCanvas');
+        const ctx = canvas.getContext('2d');
+        const msgInput = document.getElementById('msgInput');
+        const sendBtn = document.getElementById('main-send-btn');
+        async function init() {
+            try {
+                const res = await fetch('../666_pP6PqS_frG-H_Friday-the-13th/00_text/00_System_text/top_text.json');
+                const data = await res.json();
+                if (data.config.is_message_enabled) {
+                    sendBtn.classList.add('is-open'); sendBtn.innerText = "SEND CARD";
+                } else {
+                    sendBtn.classList.add('is-closed'); sendBtn.innerText = "MESSAGE CLOSED"; sendBtn.disabled = true;
+                }
+            } catch (e) { console.error("Config failed"); }
+            changeRandomCard();
+        }
+        function changeRandomCard() {
+            const num = String(Math.floor(Math.random() * 20) + 1).padStart(2, '0');
+            cardImg = new Image(); cardImg.crossOrigin = "anonymous";
+            cardImg.onload = draw;
+            cardImg.src = `https://media.yuto-boxer.com/card/card_${num}.png?t=${new Date().getTime()}`;
+        }
+        function draw() {
+            ctx.clearRect(0,0,1280,720); ctx.drawImage(cardImg, 0, 0, 1280, 720);
+            const text = msgInput.value; const lines = text.split('\n');
+            let fSize = (text.length > 50) ? 32 : 42;
+            ctx.fillStyle = "#333"; ctx.font = `bold ${fSize}px 'Zen Maru Gothic'`;
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            const startY = 360 - ((lines.length - 1) * fSize * 1.2) / 2;
+            lines.forEach((line, i) => { ctx.fillText(line, 640, startY + (i * fSize * 1.2)); });
+        }
+        msgInput.addEventListener('input', draw);
+        init();
+    </script>
+</body>
+</html>

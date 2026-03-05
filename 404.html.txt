@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Lost Champion - B.B.PW</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #000; color: #fff;
+            font-family: 'M PLUS 1 Code', monospace;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* チャンピオンベルト（右下配置） */
+        .belt-bg {
+            position: absolute; bottom: 0; right: 0;
+            width: 60%; max-width: 800px;
+            pointer-events: none; opacity: 0.6;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative; z-index: 10; text-align: left;
+            width: 80%; max-width: 900px; padding-bottom: 100px;
+        }
+
+        .error-code {
+            font-size: 8rem; color: #ffd700; margin: 0;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            line-height: 1;
+        }
+
+        .message-en {
+            font-size: 1.5rem; letter-spacing: 0.2rem; margin: 20px 0 10px 0;
+            color: #eee; text-transform: uppercase;
+        }
+
+        .message-ja {
+            font-size: 1rem; color: #aaa; margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .back-link {
+            display: inline-block; padding: 12px 30px;
+            border: 1px solid #ffd700; color: #ffd700;
+            text-decoration: none; transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            background: #ffd700; color: #000;
+            box-shadow: 0 0 20px #ffd700;
+        }
+
+        /* コピー対策 [cite: 2026-03-03] */
+        img { pointer-events: none; user-select: none; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <img src="https://media.yuto-boxer.com/99_system/championbelt_fade.webp" class="belt-bg" alt="Champion Belt">
+
+    <div class="container">
+        <p class="error-code">404</p>
+        <p class="message-en">The ring you seek is no longer here.</p>
+        <p class="message-ja">
+            お探しのページ（栄光）は見つかりませんでした。<br>
+            道を見失った挑戦者よ、一度ホームへ戻り、体勢を立て直せ。
+        </p>
+        <a href="/" class="back-link">RETURN TO RING (HOME)</a>
+    </div>
+
+</body>
+</html>

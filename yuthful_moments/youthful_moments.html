@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Youthful Moments - B.B.PW</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'M PLUS 1 Code', monospace; }
+
+        /* 映画館の暗がり背景 */
+        .theater-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.95)); z-index: 1;
+        }
+
+        /* メインスクリーン */
+        .screen-container {
+            position: absolute; top: 42%; left: 50%; transform: translate(-50%, -50%);
+            width: 80%; aspect-ratio: 16 / 9; z-index: 10;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.05); border: 2px solid #111;
+        }
+        #main-photo { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.5s; }
+
+        /* 観客の3人（最前面） */
+        .audience-layer {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 1400px; z-index: 50; pointer-events: none;
+        }
+        #audience-img { width: 100%; height: auto; display: block; filter: brightness(0.6) contrast(1.1); }
+
+        /* 会話吹き出し */
+        .comment-overlay {
+            position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+            width: 70%; z-index: 100; display: flex; gap: 15px; justify-content: center;
+        }
+        .bubble {
+            background: rgba(245, 245, 235, 0.9); border-radius: 6px; padding: 12px 18px;
+            font-size: 0.85rem; color: #222; opacity: 0; transition: 0.4s; transform: translateY(10px);
+            box-shadow: 4px 4px 15px rgba(0,0,0,0.6); border-bottom: 3px solid #ccc;
+        }
+        .bubble.active { opacity: 1; transform: translateY(0); }
+
+        /* フィルムロール選択バー */
+        .film-roll {
+            position: fixed; bottom: 20px; left: 0; width: 100%; height: 90px;
+            z-index: 1000; display: flex; gap: 12px; padding: 0 20px;
+            overflow-x: auto; scroll-behavior: smooth; align-items: center;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); border-top: 1px solid #333;
+        }
+        .thumb {
+            flex: 0 0 120px; height: 68px; border: 2px solid #444; cursor: pointer;
+            transition: 0.3s; opacity: 0.5; overflow: hidden;
+        }
+        .thumb:hover, .thumb.active { opacity: 1; border-color: #00f0ff; transform: scale(1.05); }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* コピー対策 */
+        img { pointer-events: none; user-select: none; -webkit-user-select: none; }
+        .film-roll::-webkit-scrollbar { height: 4px; }
+        .film-roll::-webkit-scrollbar-thumb { background: #555; border-radius: 2px; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="theater-bg"></div>
+
+    <div class="screen-container">
+        <img id="main-photo" src="" alt="Daily Moment">
+    </div>
+
+    <div class="comment-overlay" id="comment-area">
+        <div id="msg-A" class="bubble"></div>
+        <div id="msg-B" class="bubble"></div>
+        <div id="msg-C" class="bubble"></div>
+    </div>
+
+    <div class="audience-layer">
+        <img id="audience-img" src="https://media.yuto-boxer.com/05_YouthfulMoments/3boys.webp">
+    </div>
+
+    <nav class="film-roll" id="thumb-list"></nav>
+
+    <script>
+        const configPath = '/666_pP6PqS_frG-H_Friday-the-13th/youthful_moments.json';
+        let momentsData = [];
+
+        async function initTheater() {
+            try {
+                const response = await fetch(configPath);
+                momentsData = await response.json();
+                renderThumbs();
+                loadMoment(0);
+            } catch (e) { console.error("Config Load Error:", e); }
+        }
+
+        function renderThumbs() {
+            const list = document.getElementById('thumb-list');
+            momentsData.forEach((d, i) => {
+                const div = document.createElement('div');
+                div.className = 'thumb';
+                div.innerHTML = `<img src="${d.img}">`;
+                div.onclick = () => loadMoment(i);
+                list.appendChild(div);
+            });
+        }
+
+        function loadMoment(index) {
+            const data = momentsData[index];
+            const photo = document.getElementById('main-photo');
+            
+            photo.style.opacity = 0;
+            setTimeout(() => {
+                photo.src = data.img;
+                photo.style.opacity = 1;
+            }, 300);
+            
+            ['msg-A', 'msg-B', 'msg-C'].forEach((id, i) => {
+                const el = document.getElementById(id);
+                el.classList.remove('active');
+                setTimeout(() => {
+                    el.innerText = data.comments[i];
+                    el.classList.add('active');
+                }, 500 + (i * 400));
+            });
+
+            document.querySelectorAll('.thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === index);
+            });
+        }
+
+        window.onload = initTheater;
+    </script>
+</body>
+</html>

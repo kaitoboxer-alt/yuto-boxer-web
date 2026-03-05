@@ -1,0 +1,22 @@
+[
+  {
+    "id": "y01",
+    "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y01.webp",
+    "comments": ["学ラン「このシーン、いつ見てもいいよな」", "ブレザー「あいつの努力、報われてよかったぜ」", "Tシャツ「腹減った…売店まだ開いてるかな」"]
+  },
+  {
+    "id": "y02",
+    "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y02.webp",
+    "comments": ["学ラン「これ、あの時の合宿か？」", "ブレザー「地獄のメニューだったよな」", "Tシャツ「俺、この後アイス食いに行ったわ」"]
+  },
+  { "id": "y03", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y03.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y04", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y04.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y05", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y05.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y06", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y06.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y07", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y07.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y08", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y08.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y09", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y09.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y10", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y10.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y11", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y11.webp", "comments": ["コメントA", "コメントB", "コメントC"] },
+  { "id": "y12", "img": "https://media.yuto-boxer.com/05_YouthfulMoments/20260306_y12.webp", "comments": ["コメントA", "コメントB", "コメントC"] }
+]

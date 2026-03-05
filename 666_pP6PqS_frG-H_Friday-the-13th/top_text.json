@@ -1,0 +1,20 @@
+{
+  "config": {
+    "is_open": false,
+    "is_message_enabled": false
+  },
+  "splash": {
+    "jp": "ここは少年たちが互いのプライドを賭けて相手を屈服させる場所……",
+    "en": "Where young boys stake their pride to bring their rivals to submission..."
+  },
+  "age_verification": {
+    "title": "AGE VERIFICATION / 年齢確認",
+    "notice_jp1": "本サイトには未成年の方の閲覧に相応しくない表現が含まれています。",
+    "notice_jp2": "そのため、本サイトのコンテンツ閲覧は、自らの行動に責任を持ち、その自覚がある18歳以上の「成人」の方に限らせていただきます。",
+    "question": "あなたは「成人」の方ですか？ / Are you an adult?",
+    "btn_yes_open": "はい、大人で間違いないよー / Yes, I am an adult.",
+    "btn_yes_closed": "ただいま入口を閉鎖しています / Entrance Closed",
+    "btn_no": "それとも「未成年」の方ですか？ / Or are you a minor?",
+    "note": "うん、そう……（大変申し訳ありませんが18歳の誕生日までお待ちください）"
+  }
+}

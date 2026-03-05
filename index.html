@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>B.B.PW - Entrance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Zen Maru Gothic', sans-serif; overflow: hidden; }
+        /* スプラッシュ演出 */
+        #splash { position: fixed; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 1.5s; }
+        #splash-text { font-size: 1.2rem; letter-spacing: 0.2rem; opacity: 0; transition: opacity 2s; }
+        /* 背景動画 */
+        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; filter: brightness(0.4); }
+        /* 年齢確認モーダル */
+        #age-modal { display: none; position: fixed; z-index: 10000; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .modal-content { background: rgba(0,5,15,0.95); border: 2.5px solid #00f0ff; padding: 30px; border-radius: 15px; max-width: 600px; text-align: center; }
+        .btn-yes { background: rgba(0,240,255,0.2); border: 1px solid #00f0ff; color: #00f0ff; padding: 15px 30px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; transition: 0.3s; }
+        .btn-yes:disabled { border-color: #555; color: #777; background: #222; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div id="splash"><div id="splash-text"></div></div>
+    <video id="bg-video" autoplay loop muted playsinline src="https://media.yuto-boxer.com/00_top/00_top.mp4"></video>
+
+    <div id="age-modal">
+        <div class="modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-desc"></p>
+            <button id="btn-yes" class="btn-yes"></button>
+            <div id="minor-note" style="margin-top:20px; font-size:0.8rem; color:#aaa;"></div>
+        </div>
+    </div>
+
+    <script>
+        const configPath = './666_pP6PqS_frG-H_Friday-the-13th/00_text/00_System_text/top_text.json';
+        
+        async function startSequence() {
+            const res = await fetch(configPath);
+            const data = await res.json();
+            
+            // スプラッシュ演出
+            const splashText = document.getElementById('splash-text');
+            splashText.innerText = data.splash.jp;
+            splashText.style.opacity = 1;
+            
+            setTimeout(() => {
+                document.getElementById('splash').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('splash').style.display = 'none';
+                    showModal(data);
+                }, 1500);
+            }, 3000);
+        }
+
+        function showModal(data) {
+            const modal = document.getElementById('age-modal');
+            const btn = document.getElementById('btn-yes');
+            document.getElementById('modal-title').innerText = data.age_verification.title;
+            document.getElementById('modal-desc').innerText = data.age_verification.notice_jp1;
+            
+            if (data.config.is_open) {
+                btn.innerText = data.age_verification.btn_yes_open;
+                btn.onclick = () => location.href = '/clubroom/index.html';
+            } else {
+                btn.innerText = data.age_verification.btn_yes_closed;
+                btn.disabled = true;
+            }
+            modal.style.display = 'flex';
+        }
+
+        window.onload = startSequence;
+    </script>
+</body>
+</html>

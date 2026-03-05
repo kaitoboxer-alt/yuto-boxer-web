@@ -1,0 +1,13 @@
+{
+  "menu_items": {
+    "clubroom": { "label": "CLUBROOM", "jp": "部室へ戻る", "path": "/clubroom/", "active": true },
+    "gallery": { "label": "GALLERY", "jp": "イラストギャラリー", "path": "/gallery/", "active": true },
+    "novel": { "label": "NOVEL", "jp": "ボクシング小説本", "path": "/novel/", "active": true },
+    "youthful_moments": { "label": "YOUTHFUL MOMENTS", "jp": "青春の一瞬", "path": "/youthful_moments/", "active": true },
+    "pressrelease": { "label": "PRESS RELEASE", "jp": "公式ニュース速報", "path": "/pressrelease/", "active": true },
+    "downloads": { "label": "DOWNLOADS", "jp": "PDF・素材配布", "path": "/downloads/", "active": true },
+    "archive": { "label": "ARCHIVE", "jp": "過去の全記録", "path": "/archive/", "active": true },
+    "yuto_room": { "label": "YUTO'S ROOM", "jp": "管理人の独り言", "path": "/yuto-room/", "active": true },
+    "send_message": { "label": "SEND MESSAGE", "jp": "メッセージを送る", "path": "/sendmessage/", "active": true }
+  }
+}
