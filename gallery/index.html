@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@700&display=swap" rel="stylesheet">
     <style>
         body, html { margin: 0; padding: 0; background: #000; font-family: 'M PLUS 1 Code', monospace; color: #fff; overflow-x: hidden; }
-        
+
         /* コピー対策：基本は全て禁止 [cite: 2026-03-03] */
         img { pointer-events: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 
@@ -15,15 +15,15 @@
         .title { color: #ffd700; font-size: 2.5rem; letter-spacing: 0.5rem; margin-bottom: 60px; text-shadow: 0 0 20px rgba(255,215,0,0.4); }
 
         .gallery-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
-        
+
         /* ポラロイド風カードデザイン [cite: 2026-03-01] */
-        .art-card { 
-            background: #fdfdfd; padding: 12px 12px 40px 12px; border-radius: 2px; 
-            box-shadow: 5px 15px 35px rgba(0,0,0,0.8); transition: 0.4s; cursor: pointer; 
+        .art-card {
+            background: #fdfdfd; padding: 12px 12px 40px 12px; border-radius: 2px;
+            box-shadow: 5px 15px 35px rgba(0,0,0,0.8); transition: 0.4s; cursor: pointer;
             border: 1px solid #ddd; pointer-events: auto;
         }
         .art-card img { width: 100%; height: auto; display: block; filter: contrast(1.05); }
-        
+
         /* ランダムな傾き演出 [cite: 2026-03-01] */
         .art-card:nth-child(3n+1) { transform: rotate(-2deg); }
         .art-card:nth-child(3n+2) { transform: rotate(3deg) translateY(10px); }
@@ -58,33 +58,29 @@
     <script>
         // 縦向き・横向き全15枚の統合リスト [cite: 2026-03-05, 2026-03-06]
         const images = [
-            // 縦向き (v01 - v09)
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v01.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v02.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v03.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v04.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v05.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v06.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v07.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v08.webp",
-            "https://media.yuto-boxer.com/03_gallery/Vertical/20260305_v09.webp",
             // 横向き (l01 - l06)
             "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l01.png",
             "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l02.webp",
             "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l03.webp",
             "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l04.webp",
             "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l05.webp",
-            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l06.webp"
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l06.webp",
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l06.webp",
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l07.webp",
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l08.webp",
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l09.webp",
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l10.webp",
+            "https://media.yuto-boxer.com/03_gallery/landscape/20260306_l1.webp"
         ];
 
         const grid = document.getElementById('main-grid');
         images.forEach(src => {
             const card = document.createElement('div');
             card.className = 'art-card';
-            
+
             // 縦横比に応じてカードの最大幅を調整 [cite: 2026-03-01]
             if (src.includes('/landscape/')) {
-                card.style.maxWidth = '340px'; 
+                card.style.maxWidth = '340px';
             } else {
                 card.style.maxWidth = '260px';
             }
